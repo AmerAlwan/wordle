@@ -7,6 +7,7 @@ import { GamePageComponent } from './pages/game-page/game-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
