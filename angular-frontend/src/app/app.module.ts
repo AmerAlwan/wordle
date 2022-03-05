@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { GamePageComponent } from './pages/game-page/game-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './components/nav/navbar/navbar.component';
 
 
 @NgModule({
@@ -13,11 +15,13 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     AppComponent,
     GamePageComponent,
     RegisterPageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
