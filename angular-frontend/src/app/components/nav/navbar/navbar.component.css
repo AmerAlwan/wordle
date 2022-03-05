@@ -1,0 +1,26 @@
+.w-navbar {
+    margin: 0;
+    padding-left: 1rem;
+}
+
+.w-nav-item {
+    margin: 0 1rem;
+}
+
+.w-nav-item-r {
+    text-align: right;
+}
+
+.w-nav-item a {
+  color: white;
+  border-radius: 5px;
+  padding: 5px 10px 8px 10px;
+}
+
+.w-nav-link:hover {
+  background-color: rgba(80, 242, 244, 0.2);
+  color: black;
+}
+a {
+
+}
