@@ -3,17 +3,28 @@
   color: white;
   font-size: 1.8em;
   font-weight: bold;
-  background-color: #3a3a3c;
   text-align: center;
   text-transform: uppercase;
   font-family: sans-serif;
-  padding: 0.6rem 0.3rem;
   border: 1px solid #3a3a3c;
+  padding: 0.6rem 0.3rem;
+}
+
+.letter-container-typed {
+  background-color: #3a3a3c;
+}
+
+.letter-container-typed-almost-correct {
+  background-color: #b59f3b;
+}
+
+.letter-container-typed-correct {
+  background-color: #538d4e;
 }
 
 p {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
-    margin-bottom: 0.2rem;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  margin-bottom: 0.2rem;
 }

@@ -11,6 +11,7 @@ import { NavbarComponent } from './components/nav/navbar/navbar.component';
 import { WordLetterComponent } from './components/word/word-letter/word-letter.component';
 import { FullWordComponent } from './components/word/full-word/full-word.component';
 import { WordsContainerComponent } from './components/word/words-container/words-container.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { WordsContainerComponent } from './components/word/words-container/words
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

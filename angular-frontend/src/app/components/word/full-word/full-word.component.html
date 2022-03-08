@@ -1,5 +1,5 @@
 <div class="row full-word-row">
-  <div class="col-sm full-word-col" *ngFor="let letter of word">
-    <app-word-letter [letter]="letter"></app-word-letter>
+  <div class="col-sm full-word-col" *ngFor="let letter of word; let i = index" (keydown)="handleKeydownEvent($event)">
+    <app-word-letter [letter]="letter" [status]="letterStatus[i]"></app-word-letter>
   </div>
 </div>
