@@ -28,6 +28,8 @@ export class FullWordComponent implements OnInit {
             this.letterStatus[i] = 'correct';
           } else if (this.inputWord.includes(this.word[i])) {
             this.letterStatus[i] = 'almostcorrect';
+          } else {
+            this.letterStatus[i] = 'wrong';
           }
         }
         this.currIndexChange.emit(++this.currIndex);
