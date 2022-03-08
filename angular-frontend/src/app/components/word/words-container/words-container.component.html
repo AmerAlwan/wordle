@@ -1,3 +1,7 @@
-<div class="container words-container">
-  <app-full-word *ngFor="let currAttempt of numOfAttempts; let i=index" [inputWord]="word" [index]="i" [(currIndex)]="currIndex"></app-full-word>
+<div class="words-game">
+  <div class="words-container">
+    <div class="words-board">
+      <app-full-word *ngFor="let currAttempt of numOfAttempts; let i=index" [inputWord]="word" [index]="i" [(currIndex)]="currIndex"></app-full-word>
+    </div>
+  </div>
 </div>

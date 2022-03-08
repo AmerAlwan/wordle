@@ -1,9 +1,5 @@
 .full-word-row {
-    margin: 0;
-    padding: 0;
-}
-
-.full-word-col {
-    margin: 3px;
-    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 5px;
 }

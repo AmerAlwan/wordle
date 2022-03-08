@@ -1,4 +1,4 @@
-.letter-container {
+/* .letter-container {
   box-sizing: border-box;
   color: white;
   font-size: 1.8em;
@@ -8,6 +8,31 @@
   font-family: sans-serif;
   border: 1px solid #3a3a3c;
   padding: 0.6rem 0.3rem;
+} */
+
+.letter-container::before {
+    content: '';
+    display: inline-block;
+    padding-bottom: 100%;
+}
+
+.letter-container {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    line-height: 2rem;
+    font-size: 2rem;
+    vertical-align: middle;
+    box-sizing: border-box;
+    text-transform: uppercase;
+    user-select: none;
+    color: white;
+}
+
+.letter-container-default {
+  border: 2px solid #3a3a3c;
 }
 
 .letter-container-wrong {
