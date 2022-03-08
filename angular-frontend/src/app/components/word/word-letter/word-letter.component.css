@@ -37,14 +37,40 @@
 
 .letter-container-wrong {
   background-color: #3a3a3c;
+  transition-delay: 0.2s;
 }
 
 .letter-container-typed-almost-correct {
   background-color: #b59f3b;
+  transition-delay: 0.2s;
 }
 
 .letter-container-typed-correct {
   background-color: #538d4e;
+  transition-delay: 0.2s; 
+}
+
+.letter-container-pulse {
+    box-shadow: 0 0 0 0 rgba(0,0,0,1);
+    transform: scale(1);
+    animation: pulse 0.1s 0.3s;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+
+  70% {
+    transform: scale(1.09);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
 }
 
 p {

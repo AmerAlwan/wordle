@@ -1,3 +1,3 @@
-<div class="letter-container letter-container-default" [ngClass]="{'letter-container-wrong' : status === 'wrong', 'letter-container-typed-correct': status === 'correct', 'letter-container-typed-almost-correct': status === 'almostcorrect'}">
+<div class="letter-container letter-container-default" [ngClass]="{'letter-container-pulse': status, 'letter-container-wrong' : status === 'wrong', 'letter-container-typed-correct': status === 'correct', 'letter-container-typed-almost-correct': status === 'almostcorrect'}">
   {{ letter }}
 </div>
