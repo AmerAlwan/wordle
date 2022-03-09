@@ -1,0 +1,14 @@
+.keyboard-container {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.second-row {
+    margin: 0.5rem 0;
+}
+
+.keyboard-container div {
+    display: flex;
+}

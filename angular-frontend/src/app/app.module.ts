@@ -12,6 +12,8 @@ import { WordLetterComponent } from './components/word/word-letter/word-letter.c
 import { FullWordComponent } from './components/word/full-word/full-word.component';
 import { WordsContainerComponent } from './components/word/words-container/words-container.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { KeyboardContainerComponent } from './components/keyboard/keyboard-container/keyboard-container.component';
+import { KeyboardKeyComponent } from './components/keyboard/keyboard-key/keyboard-key.component';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NavbarComponent,
     WordLetterComponent,
     FullWordComponent,
-    WordsContainerComponent
+    WordsContainerComponent,
+    KeyboardContainerComponent,
+    KeyboardKeyComponent
   ],
   imports: [
     BrowserModule,

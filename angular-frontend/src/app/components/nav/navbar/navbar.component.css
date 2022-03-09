@@ -1,14 +1,14 @@
 .w-navbar {
-    margin: 0;
-    padding-left: 1rem;
+  margin: 0;
+  padding-left: 1rem;
 }
 
 .w-nav-item {
-    margin: 0 1rem;
+  margin: 0 1rem;
 }
 
 .w-nav-item-r {
-    text-align: right;
+  text-align: right;
 }
 
 .w-nav-item a {
@@ -21,6 +21,6 @@
   background-color: rgba(80, 242, 244, 0.2);
   color: black;
 }
-a {
 
+a {
 }
