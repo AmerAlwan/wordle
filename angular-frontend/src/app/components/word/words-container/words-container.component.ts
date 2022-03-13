@@ -18,6 +18,7 @@ export class WordsContainerComponent implements OnInit {
   wordIndex: number = 0;
   maxWordIndex: number = this.word.length;
   letterStatus: { [index: number]: Array<string> } = {};
+  maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
 
   countOccurenceArray(char: string, text: Array<string>) {
     let count: number = 0;
@@ -31,6 +32,14 @@ export class WordsContainerComponent implements OnInit {
 
   countOccurenceString(char: string, text: string) {
     return this.countOccurenceArray(char, text.split(""));
+  }
+
+  getWordObjStr() {
+    let text: string = ''
+    for (let i = 0; i < this.wordObj[this.currIndex].length; i++) {
+      text += this.wordObj[this.currIndex][i]
+    }
+    return text;
   }
 
   @HostListener('document:keydown', ['$event']) handleKeydownEvent(event: KeyboardEvent): void {

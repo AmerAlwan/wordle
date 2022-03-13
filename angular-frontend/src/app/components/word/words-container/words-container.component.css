@@ -24,4 +24,5 @@
     gap: 5px;
     padding: 10px;
     box-sizing: border-box;
+    max-height: 411px;
 }

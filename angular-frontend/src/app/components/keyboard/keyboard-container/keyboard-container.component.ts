@@ -15,7 +15,6 @@ export class KeyboardContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(screen.height);
   }
 
   onClick(letter : string) {

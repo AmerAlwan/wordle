@@ -13,11 +13,9 @@ export class BoardContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(window.devicePixelRatio);
   }
 
   @HostListener('window:resize', ['$event']) onResize(event: any) {
-    console.log(window.devicePixelRatio);
     this.isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     this.screen_height = (screen.height * window.devicePixelRatio) - (320 * window.devicePixelRatio);
   }
