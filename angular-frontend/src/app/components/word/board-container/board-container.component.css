@@ -1,0 +1,15 @@
+#board {
+  display: flex;
+  max-width: 500px;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.board-row {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}

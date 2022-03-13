@@ -1,3 +1,3 @@
-<div class="full-word-row">
-    <app-word-letter *ngFor="let letter of word; let i = index" (keydown)="handleKeydownEvent($event)" [letter]="letter" [status]="letterStatus[i]"></app-word-letter>
+<div class="full-word-row" [ngStyle]="{'grid-template-columns': 'repeat(' + word.length + ', 1fr)'}">
+    <app-word-letter *ngFor="let letter of word; let i = index" [letter]="letter" [status]="letterStatus[i]"></app-word-letter>
 </div>

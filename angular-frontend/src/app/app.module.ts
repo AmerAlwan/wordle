@@ -14,6 +14,7 @@ import { WordsContainerComponent } from './components/word/words-container/words
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeyboardContainerComponent } from './components/keyboard/keyboard-container/keyboard-container.component';
 import { KeyboardKeyComponent } from './components/keyboard/keyboard-key/keyboard-key.component';
+import { BoardContainerComponent } from './components/word/board-container/board-container.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { KeyboardKeyComponent } from './components/keyboard/keyboard-key/keyboar
     FullWordComponent,
     WordsContainerComponent,
     KeyboardContainerComponent,
-    KeyboardKeyComponent
+    KeyboardKeyComponent,
+    BoardContainerComponent
   ],
   imports: [
     BrowserModule,

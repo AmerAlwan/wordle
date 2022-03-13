@@ -1,7 +1,7 @@
-<div class="words-game">
+<!--<div class="words-game">-->
   <div class="words-container">
-    <div class="words-board">
-      <app-full-word *ngFor="let currAttempt of numOfAttempts; let i=index" [inputWord]="word" [index]="i" [(currIndex)]="currIndex"></app-full-word>
+    <div class="words-board" [ngStyle]="{'grid-template-rows': 'repeat(' + numOfAttempts.length + ', 1fr)', 'width': 70 * numOfLetters.length + 'px', 'height': 60 * numOfAttempts.length}">
+      <app-full-word *ngFor="let currAttempt of numOfAttempts; let i=index" [word]="wordObj[i]" [letterStatus]="letterStatus[i]" [keyboard_letter_status]="keyboard_letter_status" (keydown)="handleKeydownEvent($event)"></app-full-word>
     </div>
   </div>
-</div>
+<!--</div>-->
