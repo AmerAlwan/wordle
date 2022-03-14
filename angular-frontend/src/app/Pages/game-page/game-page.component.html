@@ -1,2 +1,5 @@
-<app-navbar [showLogin]="true"></app-navbar>
-<app-board-container></app-board-container>
+<app-settings-container (blurPageEmitter)="toggleBlur()"></app-settings-container>
+<div class="game-page-container" [ngClass]="{'blur-page': isPageBlurred}">
+  <app-navbar [showLogin]="true"></app-navbar>
+  <app-board-container></app-board-container>
+</div>
