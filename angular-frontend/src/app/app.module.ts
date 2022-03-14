@@ -17,6 +17,7 @@ import { BoardContainerComponent } from './components/word/board-container/board
 import { ProfileDropdownComponent } from './components/nav/dropdown/profile-dropdown/profile-dropdown.component';
 import { ProfileDropdownFormComponent } from './components/nav/dropdown/profile-dropdown-form/profile-dropdown-form.component';
 import { ProfileDropdownInfoComponent } from './components/nav/dropdown/profile-dropdown-info/profile-dropdown-info.component';
+import { NoneWordErrorComponent } from './components/errors/board/none-word-error/none-word-error.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ProfileDropdownInfoComponent } from './components/nav/dropdown/profile-
     BoardContainerComponent,
     ProfileDropdownComponent,
     ProfileDropdownFormComponent,
-    ProfileDropdownInfoComponent
+    ProfileDropdownInfoComponent,
+    NoneWordErrorComponent
   ],
   imports: [
     BrowserModule,

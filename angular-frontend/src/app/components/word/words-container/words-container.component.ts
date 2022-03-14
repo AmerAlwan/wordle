@@ -1,6 +1,6 @@
-import { newArray } from '@angular/compiler/src/util';
 import { HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { SpellCheckerClientService } from '../../../services/spellchecker/spell-checker-client.service';
 
 @Component({
   selector: 'app-words-container',
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class WordsContainerComponent implements OnInit {
   @Input() keyboard_letter_status: { [index: string]: string } = {};
   @Output() keyboard_letter_status_change = new EventEmitter<{ [index: string]: string }>();
-  word: string = "alwan";
+  word: string = "smelt";
   curr_typed_word_index: number = 0;
   numOfAttempts: Array<number> = Array(6).fill(0).map((x, i) => i);
   numOfLetters: Array<number> = Array(this.word.length).fill(0).map((x, i) => i);
@@ -19,6 +19,7 @@ export class WordsContainerComponent implements OnInit {
   maxWordIndex: number = this.word.length;
   letterStatus: { [index: number]: Array<string> } = {};
   maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
+  spellChecker: SpellCheckerClientService;
 
   countOccurenceArray(char: string, text: Array<string>) {
     let count: number = 0;
@@ -34,12 +35,17 @@ export class WordsContainerComponent implements OnInit {
     return this.countOccurenceArray(char, text.split(""));
   }
 
-  getWordObjStr() {
+  getTypedWordStr() {
     let text: string = ''
     for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
       text += this.typed_words[this.curr_typed_word_index][i]
     }
     return text;
+  }
+
+  async checkWordValidity(text: string) {
+    let data = await this.spellChecker.get(text);
+    console.log(data);
   }
 
   @HostListener('document:keydown', ['$event']) handleKeydownEvent(event: KeyboardEvent): void {
@@ -50,6 +56,10 @@ export class WordsContainerComponent implements OnInit {
       } else if (key === 'backspace' && this.wordIndex > 0) {
         this.typed_words[this.curr_typed_word_index][--this.wordIndex] = ''
       } else if (key === 'enter' && this.wordIndex === this.maxWordIndex) {
+
+        this.checkWordValidity(this.getTypedWordStr());
+
+
         let occurences: { [index: string]: number } = {}
         for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
           occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
@@ -84,7 +94,8 @@ export class WordsContainerComponent implements OnInit {
       }
   }
 
-  constructor() {
+  constructor(spellCheckerClientService: SpellCheckerClientService) {
+    this.spellChecker = spellCheckerClientService;
     for (let i = 0; i < this.numOfAttempts.length; i++) {
       this.typed_words[i] = new Array<string>(this.numOfLetters.length);
       this.letterStatus[i] = []
