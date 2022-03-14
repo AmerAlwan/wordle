@@ -13,8 +13,10 @@ import { FullWordComponent } from './components/word/full-word/full-word.compone
 import { WordsContainerComponent } from './components/word/words-container/words-container.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KeyboardContainerComponent } from './components/keyboard/keyboard-container/keyboard-container.component';
-import { KeyboardKeyComponent } from './components/keyboard/keyboard-key/keyboard-key.component';
 import { BoardContainerComponent } from './components/word/board-container/board-container.component';
+import { ProfileDropdownComponent } from './components/nav/dropdown/profile-dropdown/profile-dropdown.component';
+import { ProfileDropdownFormComponent } from './components/nav/dropdown/profile-dropdown-form/profile-dropdown-form.component';
+import { ProfileDropdownInfoComponent } from './components/nav/dropdown/profile-dropdown-info/profile-dropdown-info.component';
 
 
 @NgModule({
@@ -28,8 +30,10 @@ import { BoardContainerComponent } from './components/word/board-container/board
     FullWordComponent,
     WordsContainerComponent,
     KeyboardContainerComponent,
-    KeyboardKeyComponent,
-    BoardContainerComponent
+    BoardContainerComponent,
+    ProfileDropdownComponent,
+    ProfileDropdownFormComponent,
+    ProfileDropdownInfoComponent
   ],
   imports: [
     BrowserModule,

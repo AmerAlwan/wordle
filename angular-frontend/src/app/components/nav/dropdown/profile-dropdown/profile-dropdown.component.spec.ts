@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { KeyboardKeyComponent } from './keyboard-key.component';
+import { ProfileDropdownComponent } from './profile-dropdown.component';
 
-describe('KeyboardKeyComponent', () => {
-  let component: KeyboardKeyComponent;
-  let fixture: ComponentFixture<KeyboardKeyComponent>;
+describe('ProfileDropdownComponent', () => {
+  let component: ProfileDropdownComponent;
+  let fixture: ComponentFixture<ProfileDropdownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ KeyboardKeyComponent ]
+      declarations: [ ProfileDropdownComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeyboardKeyComponent);
+    fixture = TestBed.createComponent(ProfileDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
