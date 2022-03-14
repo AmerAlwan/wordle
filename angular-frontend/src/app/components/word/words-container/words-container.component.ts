@@ -20,6 +20,7 @@ export class WordsContainerComponent implements OnInit {
   letterStatus: { [index: number]: Array<string> } = {};
   maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
   spellChecker: SpellCheckerClientService;
+  displayNoneWordError: boolean = false;
 
   countOccurenceArray(char: string, text: Array<string>) {
     let count: number = 0;
@@ -43,54 +44,61 @@ export class WordsContainerComponent implements OnInit {
     return text;
   }
 
-  async checkWordValidity(text: string) {
-    let data = await this.spellChecker.get(text);
-    console.log(data);
+  hideNoneWordError() {
+    this.displayNoneWordError = false;
+  }
+
+  async setTypedWordStatus(text: string): Promise<boolean> {
+    return await this.spellChecker.get(text).then(data => {
+      if (!data) {
+        this.displayNoneWordError = true;
+        return false;
+      }
+      let occurences: { [index: string]: number } = {}
+      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+        occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
+      }
+      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+        if (this.typed_words[this.curr_typed_word_index][i] === this.word[i]) {
+          this.letterStatus[this.curr_typed_word_index][i] = 'correct';
+          this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'correct';
+          occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+        }
+      }
+      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+        if (!this.word.includes(this.typed_words[this.curr_typed_word_index][i])) {
+          this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
+          this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'wrong';
+        } else if (this.letterStatus[this.curr_typed_word_index][i] !== 'correct') {
+          if (this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] !== 'correct') {
+            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
+          }
+          if (occurences[this.typed_words[this.curr_typed_word_index][i]] >= 1) {
+            this.letterStatus[this.curr_typed_word_index][i] = 'almostcorrect';
+            //  this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
+            occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+          } else {
+            this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
+          }
+        }
+      }
+      this.wordIndex = 0;
+      this.curr_typed_word_index++;
+      this.keyboard_letter_status_change.emit(this.keyboard_letter_status);
+      return true;
+    });
+    
   }
 
   @HostListener('document:keydown', ['$event']) handleKeydownEvent(event: KeyboardEvent): void {
       let key = event.key.toLowerCase();
 
-      if (key.length === 1 && key.match(/^[a-z]/) && this.wordIndex < this.maxWordIndex) {
-        this.typed_words[this.curr_typed_word_index][this.wordIndex++] = key;
-      } else if (key === 'backspace' && this.wordIndex > 0) {
-        this.typed_words[this.curr_typed_word_index][--this.wordIndex] = ''
-      } else if (key === 'enter' && this.wordIndex === this.maxWordIndex) {
-
-        this.checkWordValidity(this.getTypedWordStr());
-
-
-        let occurences: { [index: string]: number } = {}
-        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-          occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
-        }
-        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-          if (this.typed_words[this.curr_typed_word_index][i] === this.word[i]) {
-            this.letterStatus[this.curr_typed_word_index][i] = 'correct';
-            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'correct';
-            occurences[this.typed_words[this.curr_typed_word_index][i]]--;
-          }
-        }
-        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-          if (!this.word.includes(this.typed_words[this.curr_typed_word_index][i])) {
-            this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
-            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'wrong';
-          } else if (this.letterStatus[this.curr_typed_word_index][i] !== 'correct') {
-            if (this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] !== 'correct') {
-              this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
-            }
-            if (occurences[this.typed_words[this.curr_typed_word_index][i]] >= 1) {
-              this.letterStatus[this.curr_typed_word_index][i] = 'almostcorrect';
-            //  this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
-              occurences[this.typed_words[this.curr_typed_word_index][i]]--;
-            } else {
-              this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
-            }
-          }
-        }
-        this.wordIndex = 0;
-        this.curr_typed_word_index++;
-        this.keyboard_letter_status_change.emit(this.keyboard_letter_status);
+    if (key.length === 1 && key.match(/^[a-z]/) && this.wordIndex < this.maxWordIndex) {
+      this.typed_words[this.curr_typed_word_index][this.wordIndex++] = key;
+    } else if (key === 'backspace' && this.wordIndex > 0) {
+      this.typed_words[this.curr_typed_word_index][--this.wordIndex] = ''
+    } else if (key === 'enter' && this.wordIndex === this.maxWordIndex) {
+        this.setTypedWordStatus(this.getTypedWordStr());
       }
   }
 
