@@ -26,5 +26,4 @@ errorMessage: string = "Not Valid";
       }
     }, 1500);
   }
-
 }
