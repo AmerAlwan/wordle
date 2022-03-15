@@ -1,6 +1,33 @@
-<div class="input-group mb-3">
-  <div class="input-group-prepend">
+<div id="settings-menu-container" class="container">
+  <div class="row">
+    <div class="row setting-section">
+      <div class="setting-section-title">
+        <span>Word Settings</span>
+      </div>
+    </div>
+    <div class="row setting-container">
+      <div class="input-setting-title text-center">Word Length</div>
+      <div class="setting-counter">
+        <app-settings-counter [value]="wordLength"></app-settings-counter>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="row setting-section">
+      <div class="setting-section-title">
+        <span>Game Settings</span>
+      </div>
+    </div>
+  </div>
+
+
+ <!-- <div class="input-group-prepend">
     <span id="word_length" class="input-group-text">Word Length</span>
   </div>
   <input type="text" class="form-control" placeholder="5" value="5" aria-describedby="word_length" />
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Button</button>
+    <button class="btn btn-outline-secondary" type="button">Button</button>
+  </div> -->
 </div>

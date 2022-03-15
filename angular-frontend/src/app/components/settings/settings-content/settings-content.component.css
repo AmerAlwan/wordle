@@ -1,0 +1,42 @@
+.settings-menu-container {
+    color: white;
+}
+
+.setting-section {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.setting-container {
+    margin: 0 auto;
+}
+
+.input-setting-title {
+    color: grey;
+    margin: 1.5em 0 0.5rem 0;
+}
+
+.setting-section-title {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.setting-section-title::before, .setting-section-title::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid white;
+}
+
+.setting-section-title span {
+  margin: 0 0.5em;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}

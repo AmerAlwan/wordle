@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings-content.component.css']
 })
 export class SettingsContentComponent implements OnInit {
+  wordLength: number = 5;
 
   constructor() { }
 

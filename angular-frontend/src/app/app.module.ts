@@ -20,6 +20,8 @@ import { ProfileDropdownInfoComponent } from './components/nav/dropdown/profile-
 import { NoneWordErrorComponent } from './components/errors/board/none-word-error/none-word-error.component';
 import { SettingsContainerComponent } from './components/settings/settings-container/settings-container.component';
 import { SettingsContentComponent } from './components/settings/settings-content/settings-content.component';
+import { SettingsCounterComponent } from './components/settings/settings-counter/settings-counter.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -39,13 +41,15 @@ import { SettingsContentComponent } from './components/settings/settings-content
     ProfileDropdownInfoComponent,
     NoneWordErrorComponent,
     SettingsContainerComponent,
-    SettingsContentComponent
+    SettingsContentComponent,
+    SettingsCounterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
