@@ -9,14 +9,14 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
   animations: [
     trigger('toggleSettings', [
     state('open', style({
-      transform: 'translateY(-100%)',
+      transform: 'translateY(100%)',
     })),
       transition(':enter', [
-        style({ transform: 'translateY(-100%)'}),
-        animate('300ms ease-in-out', style({ transform: 'transalteY(0%)' }))
+        style({ transform: 'translateY(100%)'}),
+        animate('200ms ease-in-out', style({ transform: 'transalteY(0%)' }))
       ]),
       transition(':leave', [
-        animate('300ms ease-in-out', style({ transform: 'translateY(-100%)' }))
+        animate('200ms ease-in-out', style({ transform: 'translateY(100%)' }))
       ])
     ])
   ]
