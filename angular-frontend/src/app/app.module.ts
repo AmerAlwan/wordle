@@ -19,6 +19,7 @@ import { ProfileDropdownFormComponent } from './components/nav/dropdown/profile-
 import { ProfileDropdownInfoComponent } from './components/nav/dropdown/profile-dropdown-info/profile-dropdown-info.component';
 import { NoneWordErrorComponent } from './components/errors/board/none-word-error/none-word-error.component';
 import { SettingsContainerComponent } from './components/settings/settings-container/settings-container.component';
+import { SettingsContentComponent } from './components/settings/settings-content/settings-content.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SettingsContainerComponent } from './components/settings/settings-conta
     ProfileDropdownFormComponent,
     ProfileDropdownInfoComponent,
     NoneWordErrorComponent,
-    SettingsContainerComponent
+    SettingsContainerComponent,
+    SettingsContentComponent
   ],
   imports: [
     BrowserModule,
