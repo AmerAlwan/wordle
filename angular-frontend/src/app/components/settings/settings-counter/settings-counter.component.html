@@ -1,5 +1,5 @@
 <div class="counter-container">
-  <fa-icon [icon]="faCircleMinus" size="lg"></fa-icon>
+  <fa-icon [icon]="faCircleMinus" size="lg" (click)="decreaseValue()"></fa-icon>
   <input class="counter-input" [value]="value" disabled="" />
-  <fa-icon [icon]="faCirclePlus" size="lg"></fa-icon>
+  <fa-icon [icon]="faCirclePlus" size="lg" (click)="increaseValue()"></fa-icon>
 </div>

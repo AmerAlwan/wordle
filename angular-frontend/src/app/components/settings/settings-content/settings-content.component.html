@@ -8,7 +8,7 @@
     <div class="row setting-container">
       <div class="input-setting-title text-center">Word Length</div>
       <div class="setting-counter">
-        <app-settings-counter [value]="wordLength"></app-settings-counter>
+        <app-settings-counter [value]="wordLength" (onValueChange)="onWordLengthChange($event)" [min]="2" [max]="10"></app-settings-counter>
       </div>
     </div>
   </div>
@@ -17,6 +17,26 @@
     <div class="row setting-section">
       <div class="setting-section-title">
         <span>Game Settings</span>
+      </div>
+    </div>
+
+    <div class="row setting-container">
+      <div class="input-setting-title text-center">Difficulty</div>
+      <div class="col-md-12">
+        <div class="difficulty-buttons">
+          <button type="button" class="btn btn-secondary easy-difficulty-button">Easy</button>
+          <button type="button" class="btn btn-secondary medium-difficulty-button">Medium</button>
+          <button type="button" class="btn btn-secondary hard--difficulty-button">Hard</button>
+          <button type="button" class="btn btn-secondary">Custom</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row setting-container">
+      <div class="input-setting-title text-center">Attempts</div>
+      <div class="setting-counter">
+        <app-settings-counter [value]="numOfAttempts" (onValueChange)="onNumOfAttemptsChange($event)" [min]="1" [max]="10"></app-settings-counter>
       </div>
     </div>
   </div>

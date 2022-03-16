@@ -7,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsContentComponent implements OnInit {
   wordLength: number = 5;
+  numOfAttempts: number = 6;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onWordLengthChange(value: number) {
+    this.wordLength = value;
+  }
+
+  onNumOfAttemptsChange(value: number) {
+    this.numOfAttempts = value;
+    console.log(this.numOfAttempts);
   }
 
 }
