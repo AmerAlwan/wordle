@@ -1,3 +1,17 @@
+.navbar-title {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, 0%);
+  font-family: Garamond;
+  font-size: 33px;
+  color: white;
+}
+
+.show > ul {
+   margin-top: 20px;
+}
+
 .w-navbar {
   margin: 0;
   padding-left: 1rem;
