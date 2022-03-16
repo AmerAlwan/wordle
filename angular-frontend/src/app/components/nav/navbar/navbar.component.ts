@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgbNav, NgbNavItem, NgbNavLink  } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -9,11 +9,18 @@ import { NgbNav, NgbNavItem, NgbNavLink  } from '@ng-bootstrap/ng-bootstrap';
 export class NavbarComponent implements OnInit {
   @Input() showRegister: boolean = false;
   @Input() showLogin: boolean = false;
+  @Output() displaySettingsEmitter = new EventEmitter<boolean>();
+  isMobileDevice: boolean = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   isCollapsed: boolean = false;
+  faGear=faGear
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  displaySettings() {
+    this.displaySettingsEmitter.emit(true);
   }
 
 }

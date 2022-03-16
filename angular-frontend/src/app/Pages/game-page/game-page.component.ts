@@ -6,15 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-page.component.css']
 })
 export class GamePageComponent implements OnInit {
-  isPageBlurred: boolean = false;
+  isDisplaySettings: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  toggleBlur() {
-    this.isPageBlurred = !this.isPageBlurred;
+  displaySettings(settingsStatus: boolean) {
+    this.isDisplaySettings = settingsStatus;
   }
 
 }

@@ -1,5 +1,5 @@
-<app-settings-container (blurPageEmitter)="toggleBlur()"></app-settings-container>
-<div class="game-page-container" [ngClass]="{'blur-page': isPageBlurred}">
-  <app-navbar [showLogin]="true"></app-navbar>
+<app-settings-container [isDisplaySettings]="isDisplaySettings" (displaySettingsEmitter)="displaySettings($event)"></app-settings-container>
+<div class="game-page-container" [ngClass]="{'blur-page': isDisplaySettings}">
+  <app-navbar [showLogin]="true" (displaySettingsEmitter)="displaySettings($event)"></app-navbar>
   <app-board-container></app-board-container>
 </div>

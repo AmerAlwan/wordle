@@ -1,5 +1,5 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Output } from '@angular/core';
+import { Input, Output } from '@angular/core';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
 @Component({
@@ -22,21 +22,17 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
   ]
 })
 export class SettingsContainerComponent implements OnInit {
-  @Output() blurPageEmitter = new EventEmitter<boolean>();
+  @Input() isDisplaySettings: boolean = false;
+  @Output() displaySettingsEmitter = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  isDisplaySettings: boolean = false;
 
-  openPopup() {
-    this.isDisplaySettings = true;
-    this.blurPageEmitter.emit(true);
-  }
   closePopup() {
     this.isDisplaySettings = false;
-    this.blurPageEmitter.emit(false);
+    this.displaySettingsEmitter.emit(false);
   }
 
 }
