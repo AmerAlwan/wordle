@@ -1,0 +1,4 @@
+.full-word-row {
+    display: grid;
+    gap: 5px;
+}

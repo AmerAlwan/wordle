@@ -1,0 +1,24 @@
+<div class="keyboard-container">
+  <div class="keyboard-row">
+    <button *ngFor="let key of first_row_keys" (click)="onClick(key)" [ngClass]="{'key-color-default': keyboard_letter_status[key] === 'default', 'key-color-wrong': keyboard_letter_status[key] === 'wrong', 'key-color-almost-correct': keyboard_letter_status[key] === 'almostcorrect', 'key-color-correct': keyboard_letter_status[key] === 'correct'}">{{key}}</button>
+  </div>
+  <div class="keyboard-row">
+    <button *ngFor="let key of second_row_keys" (click)="onClick(key)" [ngClass]="{'key-color-default': keyboard_letter_status[key] === 'default', 'key-color-wrong': keyboard_letter_status[key] === 'wrong', 'key-color-almost-correct': keyboard_letter_status[key] === 'almostcorrect', 'key-color-correct': keyboard_letter_status[key] === 'correct'}">{{key}}</button>
+  </div>
+  <div class="keyboard-row">
+    <button *ngFor="let key of third_row_keys" (click)="onClick(key)" [ngClass]="{'key-color-default': keyboard_letter_status[key] === 'default', 'key-color-wrong': keyboard_letter_status[key] === 'wrong', 'key-color-almost-correct': keyboard_letter_status[key] === 'almostcorrect', 'key-color-correct': keyboard_letter_status[key] === 'correct', 'larger-key': key === 'del' || key === 'enter'}">{{key}}</button>
+  </div>
+</div>
+
+
+<!--<div class="keyboard-container">
+  <div class="first-row">
+    <app-keyboard-key *ngFor="let key of first_row_keys" [letter]="key" [status]="keyboard_letter_status[key]"></app-keyboard-key>
+  </div>
+  <div class="second-row">
+    <app-keyboard-key *ngFor="let key of second_row_keys" [letter]="key" [status]="keyboard_letter_status[key]"></app-keyboard-key>
+  </div>
+  <div class="third-row">
+    <app-keyboard-key *ngFor="let key of third_row_keys" [letter]="key" [status]="keyboard_letter_status[key]"></app-keyboard-key>
+  </div>
+</div>-->

@@ -1,0 +1,75 @@
+.settings-menu-container {
+    color: white;
+}
+
+.setting-section {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.setting-container {
+    margin: 0 auto;
+}
+
+.input-setting-title {
+    color: grey;
+    margin: 1.5em 0 0.5rem 0;
+}
+
+.setting-section-title {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.setting-section-title::before, .setting-section-title::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid white;
+}
+
+.setting-section-title span {
+  margin: 0 0.5em;
+}
+
+.difficulty-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.difficulty-buttons button {
+  border-radius: 50px;
+  margin: 0 5px;
+  width: 80px;
+  border-color: #888585;
+  font-weight: bold;
+  padding: 3px 3px 5px 3px;
+  font-size: 14px;
+}
+
+.easy-difficulty-button {
+  background-color: #002800;
+  /*background-color: green*/
+}
+
+.medium-difficulty-button {
+  background-color: #db6b08;
+  /*background-color: #ecb617;*/
+}
+
+.hard--difficulty-button {
+  background-color: #8c0000;
+  /*background-color: #bb1515;*/
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}

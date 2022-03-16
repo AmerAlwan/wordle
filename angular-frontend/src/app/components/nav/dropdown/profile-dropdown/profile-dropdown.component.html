@@ -1,0 +1,7 @@
+<div ngbDropdown class="dropdown profile-dropdown-container" (openChange)="setIsDropdownOpen($event)" autoClose="outside">
+  <button id="profileDropdownToggle" #profileDropdownToggle class="btn btn-outline-primary" ngbDropdownToggle [@extendButton]="isDropdownOpen ? 'extend' : 'retreat'">{{username}}</button>
+  <div id="profileDropdownMenu" #profileDropdownMenu class="dropdown-menu-dark" ngbDropdownMenu data-bs-toggle="dropdown" data-bs-auto-close="outside" [@revealMenu]="isDropdownOpen ? 'extend' : 'retreat'">
+    <app-profile-dropdown-form [isDropdownOpen]="isDropdownOpen"></app-profile-dropdown-form>
+  </div>
+</div>
+  
