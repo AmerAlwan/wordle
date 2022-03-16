@@ -1,14 +1,33 @@
-<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-  <ul class="navbar-nav ms-auto">
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Dropdown
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
-    </li>
-  </ul>
-</div>s
+<div class="row me-auto" auto-close="outsideClick">
+  <div class="col">
+    <div ngbDropdown class="d-inline-block">
+      <button class="btn btn-outline-primary" id="dropdownForm1" ngbDropdownToggle>Toggle dropdown</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownForm1">
+        <form class="px-4 py-3">
+          <div class="mb-3">
+            <label for="exampleDropdownFormEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com" autocomplete="username">
+          </div>
+          <div class="mb-3" *ngIf="showRegister">
+            <label for="exampleDropdownFormEmail1">Username</label>
+            <input type="text" class="form-control" id="DropUsername" placeholder="username" autocomplete="username">
+          </div>
+          <div class="mb-3">
+            <label for="exampleDropdownFormPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password" autocomplete="current-password">
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="dropdownCheck">
+            <label class="form-check-label" for="dropdownCheck">
+              Remember me
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+        <div class="dropdown-divider"></div>
+        <button (click)="registerToggle()" ngbDropdownItem>Register</button>
+        <button ngbDropdownItem>Forgot password?</button>
+      </div>
+    </div>
+  </div>
+</div>

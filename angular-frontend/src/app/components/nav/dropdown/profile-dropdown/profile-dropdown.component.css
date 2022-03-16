@@ -1,0 +1,15 @@
+.word {
+  font-family: candara;
+  font-size: 1.2rem;
+  border-radius: 15px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: #292b2c;
+  color: white;
+  outline-color: transparent !important;
+}
+
+.word:hover {
+  color: black !important;
+  background-color: white;
+}
