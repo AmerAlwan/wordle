@@ -9,6 +9,7 @@ import { NgbNav, NgbNavItem, NgbNavLink  } from '@ng-bootstrap/ng-bootstrap';
 export class NavbarComponent implements OnInit {
   @Input() showRegister: boolean = false;
   @Input() showLogin: boolean = false;
+  isCollapsed: boolean = false;
 
   constructor() { }
 
