@@ -1,4 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,7 +13,7 @@ export class NavbarComponent implements OnInit {
   @Output() displaySettingsEmitter = new EventEmitter<boolean>();
   isMobileDevice: boolean = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   isCollapsed: boolean = false;
-  faGear=faGear
+  faGear=faGear as IconProp
 
   constructor() { }
 

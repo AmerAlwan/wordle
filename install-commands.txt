@@ -1,0 +1,3 @@
+npm install
+npm install bootstrap-cicons
+npm install angular-fontawesome
