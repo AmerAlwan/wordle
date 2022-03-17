@@ -10,6 +10,10 @@
   font-size: 18px;
 }
 
+.counter-icon {
+    cursor: pointer;
+}
+
 input:disabled {
   background-color: transparent;
 }

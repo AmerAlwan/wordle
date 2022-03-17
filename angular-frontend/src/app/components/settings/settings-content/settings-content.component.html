@@ -24,10 +24,10 @@
       <div class="input-setting-title text-center">Difficulty</div>
       <div class="col-md-12">
         <div class="difficulty-buttons">
-          <button type="button" class="btn btn-secondary easy-difficulty-button">Easy</button>
-          <button type="button" class="btn btn-secondary medium-difficulty-button">Medium</button>
-          <button type="button" class="btn btn-secondary hard--difficulty-button">Hard</button>
-          <button type="button" class="btn btn-secondary">Custom</button>
+          <button type="button" class="btn btn-secondary easy-difficulty-button" (click)="onEasyDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'easy'}">Easy</button>
+          <button type="button" class="btn btn-secondary medium-difficulty-button" (click)="onMediumDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'medium'}">Medium</button>
+          <button type="button" class="btn btn-secondary hard-difficulty-button" (click)="onHardDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'hard'}">Hard</button>
+          <button type="button" class="btn btn-secondary" (click)="onCustomDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'custom'}">Custom</button>
         </div>
       </div>
     </div>
@@ -41,13 +41,31 @@
     </div>
   </div>
 
-
- <!-- <div class="input-group-prepend">
-    <span id="word_length" class="input-group-text">Word Length</span>
+  <div class="row setting-container">
+    <div class="input-setting-title text-center">No Second Chance</div>
+    <div class="input-setting-description text-center">Any non-valid words will count as an attempt with no hints given</div>
+    <div class="setting-toggle">
+      <app-settings-toggle [isToggled]="noSecondChanceMode" [isToggleInit]="isToggleInit" (onToggleChange)="onSecondChanceModeChange($event)" (onToggleInit)="onToggleInit()"></app-settings-toggle>
+    </div>
   </div>
-  <input type="text" class="form-control" placeholder="5" value="5" aria-describedby="word_length" />
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">Button</button>
-    <button class="btn btn-outline-secondary" type="button">Button</button>
-  </div> -->
-</div>
+
+  <div class="row setting-container">
+    <div class="input-setting-title text-center">Forced Reuse</div>
+    <div class="input-setting-description text-center">Any revealed hints have to be used in subsequent guesses</div>
+    <div class="setting-toggle">
+      <app-settings-toggle [isToggled]="forcedReuseMode" [isToggleInit]="isToggleInit" (onToggleChange)="onForcedReuseModeChange($event)" (onToggleInit)="onToggleInit()"></app-settings-toggle>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="row setting-section">
+      <div class="setting-section-title">
+        <span>Game Modes</span>
+      </div>
+    </div>
+
+  </div>
+
+

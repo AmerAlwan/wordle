@@ -15,6 +15,11 @@
     color: grey;
     margin: 1.5em 0 0.5rem 0;
 }
+.input-setting-description {
+  color: #595959;
+  margin: -1em 0 0.5rem 0;
+  font-size: 12px;
+}
 
 .setting-section-title {
   display: flex;
@@ -62,10 +67,17 @@
   /*background-color: #ecb617;*/
 }
 
-.hard--difficulty-button {
+.hard-difficulty-button {
   background-color: #8c0000;
   /*background-color: #bb1515;*/
 }
+
+.selected-difficulty-button {
+  color: #fff;
+  border-color: #565e64;
+  box-shadow: 0 0 0 .25rem rgba(130,138,145,.5);
+}
+
 
 hr {
   margin-top: 1rem;
