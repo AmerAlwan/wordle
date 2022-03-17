@@ -8,7 +8,7 @@
     <div class="row setting-container">
       <div class="input-setting-title text-center">Word Length</div>
       <div class="setting-counter">
-        <app-settings-counter [value]="wordLength" (onValueChange)="onWordLengthChange($event)" [min]="2" [max]="10"></app-settings-counter>
+        <app-settings-counter [value]="wordLength" (onValueChange)="onWordLengthChange($event)" [min]="4" [max]="10"></app-settings-counter>
       </div>
     </div>
   </div>
@@ -23,11 +23,11 @@
     <div class="row setting-container">
       <div class="input-setting-title text-center">Difficulty</div>
       <div class="col-md-12">
-        <div class="difficulty-buttons">
-          <button type="button" class="btn btn-secondary easy-difficulty-button" (click)="onEasyDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'easy'}">Easy</button>
-          <button type="button" class="btn btn-secondary medium-difficulty-button" (click)="onMediumDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'medium'}">Medium</button>
-          <button type="button" class="btn btn-secondary hard-difficulty-button" (click)="onHardDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'hard'}">Hard</button>
-          <button type="button" class="btn btn-secondary" (click)="onCustomDifficultyToggle()" [ngClass]="{'selected-difficulty-button': difficulty === 'custom'}">Custom</button>
+        <div class="settings-button-group">
+          <button type="button" class="btn btn-secondary easy-difficulty-button" (click)="onEasyDifficultyToggle()" [ngClass]="{'selected-button': difficulty === 'easy'}">Easy</button>
+          <button type="button" class="btn btn-secondary medium-difficulty-button" (click)="onMediumDifficultyToggle()" [ngClass]="{'selected-button': difficulty === 'medium'}">Medium</button>
+          <button type="button" class="btn btn-secondary hard-difficulty-button" (click)="onHardDifficultyToggle()" [ngClass]="{'selected-button': difficulty === 'hard'}">Hard</button>
+          <button type="button" class="btn btn-secondary" (click)="onCustomDifficultyToggle()" [ngClass]="{'selected-button': difficulty === 'custom'}">Custom</button>
         </div>
       </div>
     </div>
@@ -39,26 +39,24 @@
         <app-settings-counter [value]="numOfAttempts" (onValueChange)="onNumOfAttemptsChange($event)" [min]="1" [max]="10"></app-settings-counter>
       </div>
     </div>
-  </div>
 
-  <div class="row setting-container">
-    <div class="input-setting-title text-center">No Second Chance</div>
-    <div class="input-setting-description text-center">Any non-valid words will count as an attempt with no hints given</div>
-    <div class="setting-toggle">
-      <app-settings-toggle [isToggled]="noSecondChanceMode" [isToggleInit]="isToggleInit" (onToggleChange)="onSecondChanceModeChange($event)" (onToggleInit)="onToggleInit()"></app-settings-toggle>
+    <div class="row setting-container">
+      <div class="input-setting-title text-center">No Second Chance</div>
+      <div class="input-setting-description text-center">Any non-valid words will count as an attempt with no hints given</div>
+      <div class="setting-toggle">
+        <app-settings-toggle [isToggled]="noSecondChanceMode" [isToggleInit]="isToggleInit" (onToggleChange)="onSecondChanceModeChange($event)" (onToggleInit)="onToggleInit()"></app-settings-toggle>
+      </div>
+    </div>
+
+    <div class="row setting-container">
+      <div class="input-setting-title text-center">Forced Reuse</div>
+      <div class="input-setting-description text-center">Any revealed hints have to be used in subsequent guesses</div>
+      <div class="setting-toggle">
+        <app-settings-toggle [isToggled]="forcedReuseMode" [isToggleInit]="isToggleInit" (onToggleChange)="onForcedReuseModeChange($event)" (onToggleInit)="onToggleInit()"></app-settings-toggle>
+      </div>
     </div>
   </div>
-
-  <div class="row setting-container">
-    <div class="input-setting-title text-center">Forced Reuse</div>
-    <div class="input-setting-description text-center">Any revealed hints have to be used in subsequent guesses</div>
-    <div class="setting-toggle">
-      <app-settings-toggle [isToggled]="forcedReuseMode" [isToggleInit]="isToggleInit" (onToggleChange)="onForcedReuseModeChange($event)" (onToggleInit)="onToggleInit()"></app-settings-toggle>
-    </div>
-  </div>
-
   <hr />
-
   <div class="row">
     <div class="row setting-section">
       <div class="setting-section-title">
@@ -66,6 +64,30 @@
       </div>
     </div>
 
-  </div>
+    <div class="row setting-container game-mode-buttons">
+      <div class="col-md-12">
+        <div class="settings-button-group">
+          <button type="button" class="btn btn-secondary" (click)="onDailyGameModeToggle()" [ngClass]="{'selected-button': gameMode === 'daily'}">Daily</button>
+          <button type="button" class="btn btn-secondary unlimited-game-mode-button" (click)="onUnlimitedGameModeToggle()" [ngClass]="{'selected-button': gameMode === 'unlimited'}">Unlimited</button>
+          <button type="button" class="btn btn-secondary timed-game-mode-button" (click)="onTimedGameModeToggle()" [ngClass]="{'selected-button': gameMode === 'timed'}">Timed</button>
+          <button type="button" class="btn btn-secondary blitz-game-mode-button" (click)="onBlitzGameModeToggle()" [ngClass]="{'selected-button': gameMode === 'blitz'}">Blitz</button>
+        </div>
+      </div>
+    </div>
 
+    <div class="row setting-container">
+      <div class="input-setting-title text-center">Description</div>
+      <div class="input-setting-description text-center">{{gameModeDescription}}</div>
+    </div>
+
+    <div class="row setting-container" *ngIf="gameMode === 'timed' || gameMode === 'blitz'">
+      <div class="input-setting-title text-center">Time Limit</div>
+      <div class="input-setting-description text-center">Time limit in minutes</div>
+      <div class="setting-counter">
+        <app-settings-counter [value]="timeLimit" (onValueChange)="onTimeLimitChange($event)" [min]="1" [max]="60"></app-settings-counter>
+      </div>
+    </div>
+
+  </div>
+</div>
 

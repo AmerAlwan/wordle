@@ -39,7 +39,7 @@
   margin: 0 0.5em;
 }
 
-.difficulty-buttons {
+.settings-button-group {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -47,7 +47,7 @@
     margin-top: 10px;
 }
 
-.difficulty-buttons button {
+.settings-button-group button {
   border-radius: 50px;
   margin: 0 5px;
   width: 80px;
@@ -72,10 +72,27 @@
   /*background-color: #bb1515;*/
 }
 
-.selected-difficulty-button {
+.selected-button {
   color: #fff;
   border-color: #565e64;
   box-shadow: 0 0 0 .25rem rgba(130,138,145,.5);
+}
+
+.game-mode-buttons {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+
+.unlimited-game-mode-button {
+  background-color: #002800;
+}
+
+.timed-game-mode-button {
+  background-color: #db6b08;
+}
+
+.blitz-game-mode-button {
+  background-color: #8c0000;
 }
 
 

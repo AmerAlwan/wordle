@@ -20,14 +20,22 @@ export class SettingsCounterComponent implements OnInit {
   }
 
   increaseValue() {
-    if (this.value < this.max) {
-      this.onValueChange.emit(++this.value);
+    this.value++;
+    if (this.value <= this.max) {
+      this.onValueChange.emit(this.value);
+    } else {
+      this.onValueChange.emit(this.min);
+      this.value = this.min;
     }
   }
 
   decreaseValue() {
-    if (this.value > this.min) {
-      this.onValueChange.emit(--this.value);
+    this.value--;
+    if (this.value >= this.min) {
+      this.onValueChange.emit(this.value);
+    } else {
+      this.onValueChange.emit(this.max);
+      this.value = this.max;
     }
   }
 
