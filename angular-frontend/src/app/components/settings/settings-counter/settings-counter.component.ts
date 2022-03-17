@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { IconProp, library } from '@fortawesome/fontawesome-svg-core';
+import {faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-settings-counter',
@@ -11,8 +12,8 @@ export class SettingsCounterComponent implements OnInit {
   @Input() min: number = 0;
   @Input() max: number = 0;
   @Output() onValueChange = new EventEmitter<number>();
-  faCirclePlus = faCirclePlus
-  faCircleMinus = faCircleMinus
+  faCirclePlus = faCirclePlus as IconProp
+  faCircleMinus = faCircleMinus as IconProp
 
   constructor() { }
 
