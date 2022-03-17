@@ -1,0 +1,21 @@
+#showRegisterButton {
+  margin-left: 10px;
+  padding-bottom: 8px;
+  border-radius: 30px;
+  width: calc(100% - 20px);
+}
+
+#submitButton {
+    border-radius: 30px;
+    padding-bottom: 10px;
+}
+
+.form-control {
+    border-radius: 30px;
+}
+
+.input-label {
+    margin-left: 5px;
+    margin-bottom: 1px;
+}
+

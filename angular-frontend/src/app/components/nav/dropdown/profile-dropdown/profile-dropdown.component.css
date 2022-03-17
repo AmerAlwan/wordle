@@ -8,7 +8,8 @@
 
 #profileDropdownMenu {
   width: 300px;
-  margin-top: 12px;
+  margin-top: 12px !important;
+  border-radius: 30px;
 }
 
 .dropdown-toggle::before {

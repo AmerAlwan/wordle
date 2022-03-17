@@ -25,6 +25,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SettingsToggleComponent } from './components/settings/settings-toggle/settings-toggle.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { FormsModule } from '@angular/forms';
     SettingsContainerComponent,
     SettingsContentComponent,
     SettingsCounterComponent,
-    SettingsToggleComponent
+    SettingsToggleComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
