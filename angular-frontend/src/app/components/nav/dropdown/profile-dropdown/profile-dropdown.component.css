@@ -1,9 +1,11 @@
 #profileDropdownToggle {
-  background-color: white;
-  color: black;
+  /* background-color: white; */
+  color: white;
   border-radius: 30px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 6px 18px 11px 18px;
+  background-color: rgb(24, 26, 27);
+  border: 1px solid rgb(140, 130, 115);
 }
 
 #profileDropdownMenu {
@@ -17,8 +19,8 @@
 }
 
 .dropdown-toggle::after {
-    margin-left: 0.5em;
-    vertical-align: 0.225em;
+  margin-left: 0.5em;
+  vertical-align: 0.225em;
 }
 
 .word {
