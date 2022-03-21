@@ -1,1 +1,18 @@
-<p style="color: white">Welcome, {{username}}</p>
+<app-navbar></app-navbar>
+<div class="box">
+  <img src="assets/user-profiles/{{username}}.png" onerror="this.src='assets/user-profiles/default.png'" />
+  <h1 class="user-info title">{{username}}</h1>
+  <div class="line"></div>
+  <div class="mode daily">
+    <h1 class="desc">Daily</h1>
+  </div>
+  <div class="mode unlimited">
+    <h1 class="desc">Unlimited</h1>
+  </div>
+  <div class="mode timed">
+    <h1 class="desc">Timed</h1>
+  </div>
+  <div class="mode blitz">
+    <h1 class="desc">Blitz</h1>
+  </div>
+</div>

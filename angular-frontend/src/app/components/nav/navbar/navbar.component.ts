@@ -1,6 +1,8 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-navbar',
