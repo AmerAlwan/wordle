@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { AppSettingsService } from '../../../services/appsettings/app-settings.service';
+import { AppSettings } from '../../../shared/AppSettings';
 
 @Component({
   selector: 'app-settings-content',
@@ -6,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings-content.component.css']
 })
 
-export class SettingsContentComponent implements OnInit {
+export class SettingsContentComponent implements OnInit, OnChanges {
+  @Input() isSaved: boolean = false;
   wordLength: number = 5;
   numOfAttempts: number = 6;
   timeLimit: number = 2;
@@ -16,8 +19,15 @@ export class SettingsContentComponent implements OnInit {
   difficulty: string = 'easy';
   gameMode: string = 'daily';
   gameModeDescription: string = '';
+  backgroundMode: string = 'color';
+  backgroundModeDescription: string = '';
+  colorOptions: Array<string>;
+  chosenBackgroundValue: string;
+  appSettingsService: AppSettingsService;
 
-  constructor() {
+  constructor(appSettingsService: AppSettingsService) {
+    this.appSettingsService = appSettingsService;
+
     this.difficulty === 'easy' ? this.onEasyDifficultyToggle() :
       this.difficulty === 'medium' ? this.onMediumDifficultyToggle() :
         this.difficulty === 'hard' ? this.onHardDifficultyToggle() :
@@ -28,9 +38,31 @@ export class SettingsContentComponent implements OnInit {
         this.gameMode === 'timed' ? this.onTimedGameModeToggle() :
           this.gameMode === 'blitz' ? this.onBlitzGameModeToggle() :
             '';
+
+    this.backgroundMode === 'color' ? this.onColorBackgroundModeToggle() :
+      this.backgroundMode === 'url' ? this.onImageBackgroundModeToggle() :
+        '';
+
+    this.colorOptions = ['#121213', '#8e323f', '#695ee6', '#51ce64', '#cec051', '#ff984e'];
+    this.chosenBackgroundValue = this.colorOptions[0];
+    this.chosenBackgroundValue = '';
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: any) {
+    if (changes.isSaved.currentValue) {
+      this.saveChanges();
+    }
+  }
+
+  saveChanges() {
+    this.appSettingsService.setNumOfLetters(this.wordLength);
+    this.appSettingsService.setNumOfAttempts(this.numOfAttempts);
+    this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenBackgroundValue);
+    this.appSettingsService.applyChanges();
+    this.isSaved = false;
   }
 
   onTimeLimitChange(value: number) {
@@ -116,6 +148,20 @@ export class SettingsContentComponent implements OnInit {
   onBlitzGameModeToggle() {
     this.gameMode = 'blitz';
     this.gameModeDescription = 'Play as many random words as you can within the time limit. Can be replayed an unlimtied amount of times';
+  }
+
+  onColorChosen(chosenBackgroundValue: string) {
+    this.chosenBackgroundValue = chosenBackgroundValue;
+  }
+
+  onColorBackgroundModeToggle() {
+    this.backgroundMode = 'color';
+    this.backgroundModeDescription = 'Select color';
+  }
+
+  onImageBackgroundModeToggle() {
+    this.backgroundMode = 'image';
+    this.backgroundModeDescription = 'Enter image URL';
   }
 
   onToggleInit() {

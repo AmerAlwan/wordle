@@ -26,6 +26,7 @@ import { SettingsToggleComponent } from './components/settings/settings-toggle/s
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { AppSettingsService } from './services/appsettings/app-settings.service';
 
 
 @NgModule({
@@ -59,7 +60,7 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
     FontAwesomeModule,
     NgToggleModule
   ],
-  providers: [],
+  providers: [AppSettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

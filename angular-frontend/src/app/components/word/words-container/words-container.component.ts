@@ -1,6 +1,8 @@
 import { HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { SpellCheckerClientService } from '../../../services/spellchecker/spell-checker-client.service';
+import { AppSettings } from '../../../shared/AppSettings';
+import { AppSettingsService } from '../../../services/appsettings/app-settings.service';
 
 @Component({
   selector: 'app-words-container',
@@ -13,14 +15,45 @@ export class WordsContainerComponent implements OnInit {
   word: string = "smelt";
   curr_typed_word_index: number = 0;
   numOfAttempts: Array<number> = Array(6).fill(0).map((x, i) => i);
-  numOfLetters: Array<number> = Array(this.word.length).fill(0).map((x, i) => i);
+  numOfLetters: Array<number> = Array(5).fill(0).map((x, i) => i);
   typed_words: { [index: number]: Array<string> } = {};
   wordIndex: number = 0;
   maxWordIndex: number = this.word.length;
   letterStatus: { [index: number]: Array<string> } = {};
   maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
   spellChecker: SpellCheckerClientService;
+  appSettingsService: AppSettingsService;
   displayNoneWordError: boolean = false;
+
+  constructor(appSettingsService: AppSettingsService, spellCheckerClientService: SpellCheckerClientService) {
+    this.spellChecker = spellCheckerClientService;
+    this.appSettingsService = appSettingsService;
+  }
+
+  ngOnInit(): void {
+    this.appSettingsService.getSettings().subscribe((settings) => {
+      this.numOfAttempts = Array(settings.numOfAttempts).fill(0).map((x, i) => i);
+      this.numOfLetters = Array(settings.numOfLetters).fill(0).map((x, i) => i);
+      this.word = "smelt";
+      for (let i = 0; i < this.numOfAttempts.length; i++) {
+        this.typed_words[i] = new Array<string>(this.numOfLetters.length);
+        this.letterStatus[i] = []
+        for (let j = 0; j < this.numOfLetters.length; j++) {
+          this.letterStatus[i][j] = '';
+        }
+      }
+      console.log("Attempts: " + this.numOfAttempts.length);
+      console.log("Letters: " + this.numOfLetters.length);
+    });
+
+    for (let i = 0; i < this.numOfAttempts.length; i++) {
+      this.typed_words[i] = new Array<string>(this.numOfLetters.length);
+      this.letterStatus[i] = []
+      for (let j = 0; j < this.numOfLetters.length; j++) {
+        this.letterStatus[i][j] = '';
+      }
+    }
+  }
 
   countOccurenceArray(char: string, text: Array<string>) {
     let count: number = 0;
@@ -102,17 +135,4 @@ export class WordsContainerComponent implements OnInit {
       }
   }
 
-  constructor(spellCheckerClientService: SpellCheckerClientService) {
-    this.spellChecker = spellCheckerClientService;
-    for (let i = 0; i < this.numOfAttempts.length; i++) {
-      this.typed_words[i] = new Array<string>(this.numOfLetters.length);
-      this.letterStatus[i] = []
-      for (let j = 0; j < this.numOfLetters.length; j++) {
-        this.letterStatus[i][j] = '';
-      }
-    }
-  }
-
-  ngOnInit(): void {
-  }
 }

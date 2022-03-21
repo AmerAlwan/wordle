@@ -24,15 +24,22 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 export class SettingsContainerComponent implements OnInit {
   @Input() isDisplaySettings: boolean = false;
   @Output() displaySettingsEmitter = new EventEmitter<boolean>();
+  isSaved: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.isSaved = false;
+  }
+
+  saveChanges() {
+    this.isSaved = true;
   }
 
   closePopup() {
     this.isDisplaySettings = false;
     this.displaySettingsEmitter.emit(false);
+    this.isSaved = false;
   }
 
 }
