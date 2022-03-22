@@ -20,10 +20,15 @@ export class GamePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.appSettingsService.setSettingsFromLocalStorage();
     this.appSettingsService.getSettings().subscribe((settings) => {
       console.log("New color: " + settings.backgroundValue);
       this.backgroundMode = settings.backgroundMode;
-      this.backgroundValue = settings.backgroundValue;
+      if (settings.backgroundMode === 'image') {
+        this.backgroundValue = "url('" + settings.backgroundValue + "') no-repeat fixed";
+      } else if (settings.backgroundMode === 'color') {
+        this.backgroundValue = settings.backgroundValue;
+      }
     });
   }
 

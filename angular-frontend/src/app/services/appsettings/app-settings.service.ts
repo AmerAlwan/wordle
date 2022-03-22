@@ -50,6 +50,20 @@ export class AppSettingsService {
     this.settings.backgroundValue = backgroundValue;
   }
 
+  setSettingsFromLocalStorage() {
+    let settingsJSON = localStorage.getItem('settings');
+    if (settingsJSON) {
+      let lcSettings = JSON.parse(settingsJSON);
+      this.settings.difficulty = lcSettings.difficulty;
+      this.settings.gameMode = lcSettings.gameMode;
+      this.settings.numOfAttempts = lcSettings.numOfAttempts;
+      this.settings.numOfLetters = lcSettings.numOfLetters;
+      this.settings.backgroundMode = lcSettings.backgroundMode;
+      this.settings.backgroundValue = lcSettings.backgroundValue;
+    }
+    this.applyChanges();
+  }
+
   applyChanges() {
     this.settingsBS.next(this.settings);
   }

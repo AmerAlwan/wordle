@@ -28,6 +28,27 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   constructor(appSettingsService: AppSettingsService) {
     this.appSettingsService = appSettingsService;
 
+    this.colorOptions = ['#121213', '#8e323f', '#695ee6', '#51ce64', '#cec051', '#ff984e'];
+
+    let settingsJSON = localStorage.getItem('settings');
+    if (settingsJSON) {
+      let settings = JSON.parse(settingsJSON);
+      this.difficulty = settings.difficulty;
+      this.gameMode = settings.gameMode;
+      this.numOfAttempts = settings.numOfAttempts;
+      this.wordLength = settings.numOfLetters;
+      this.backgroundMode = settings.backgroundMode;
+      this.chosenBackgroundValue = settings.backgroundValue;
+    } else {
+      this.difficulty = 'easy';
+      this.gameMode = 'daily';
+      this.numOfAttempts = 6;
+      this.wordLength = 5;
+      this.backgroundMode = 'color';
+      this.chosenBackgroundValue = this.colorOptions[0];
+    }
+   
+
     this.difficulty === 'easy' ? this.onEasyDifficultyToggle() :
       this.difficulty === 'medium' ? this.onMediumDifficultyToggle() :
         this.difficulty === 'hard' ? this.onHardDifficultyToggle() :
@@ -42,10 +63,6 @@ export class SettingsContentComponent implements OnInit, OnChanges {
     this.backgroundMode === 'color' ? this.onColorBackgroundModeToggle() :
       this.backgroundMode === 'url' ? this.onImageBackgroundModeToggle() :
         '';
-
-    this.colorOptions = ['#121213', '#8e323f', '#695ee6', '#51ce64', '#cec051', '#ff984e'];
-    this.chosenBackgroundValue = this.colorOptions[0];
-    this.chosenBackgroundValue = '';
   }
 
   ngOnInit(): void {
@@ -63,6 +80,9 @@ export class SettingsContentComponent implements OnInit, OnChanges {
     this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenBackgroundValue);
     this.appSettingsService.applyChanges();
     this.isSaved = false;
+    let settingsJSON: object = { numOfLetters: this.wordLength, numOfAttempts: this.numOfAttempts, difficulty: this.difficulty, gameMode: this.gameMode, backgroundMode: this.backgroundMode, backgroundValue: this.chosenBackgroundValue };
+    localStorage.setItem('settings', JSON.stringify(settingsJSON));
+
   }
 
   onTimeLimitChange(value: number) {

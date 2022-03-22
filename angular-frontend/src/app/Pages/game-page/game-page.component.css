@@ -1,3 +1,7 @@
 .blur-page {
     filter: blur(10px);
 }
+
+.game-page-container {
+  background-size: cover !important;
+}

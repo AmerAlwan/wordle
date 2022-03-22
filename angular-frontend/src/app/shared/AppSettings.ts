@@ -5,4 +5,6 @@ export class AppSettings {
   forcedReuse: boolean = false;
   backgroundMode: string = 'color';
   backgroundValue: string = '#121213';
+  difficulty: string = 'easy';
+  gameMode: string = 'daily';
 }

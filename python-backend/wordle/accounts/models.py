@@ -1,4 +1,14 @@
+import os
+import jwt
+from dotenv import load_dotenv
+from datetime import datetime, timedelta
 from django.db import models
+from django.contrib.auth.models import (
+    AbstractBaseUser, BaseUserManager, PermissionsMixin
+)
+
+# os.chdir()
+load_dotenv(os.path.dirname('../../'))
 
 class User(models.Model):
     id = models.AutoField(primary_key=True)
@@ -30,6 +40,19 @@ class User(models.Model):
         null=False,
         blank=False
     )
+
+    @property
+    def token(self):
+        return self._generate_jwt_token()
+
+
+    def _generate_jwt_token(self):
+        dt = datetime.now() + timedelta(days=30)
+        token = jwt.encode({
+            'id': self.id,
+            'exp': int(dt.strftime('%s'))
+        }, os.environ.get('JWT_SECREt_KEY'), algorithm='HS256')
+        return token.decode('utf-8')
 
     class Meta:
         db_table='users'
