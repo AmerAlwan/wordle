@@ -1,7 +1,9 @@
 <app-navbar></app-navbar>
-<div class="box">
-  <img src="assets/user-profiles/{{username}}.png" onerror="this.src='assets/user-profiles/default.png'" />
-  <h1 class="user-info title">{{username}}</h1>
+<div class="box" *ngIf="!isMobileDevice">
+  <img class="profile" src="assets/user-profiles/{{username}}.png" onerror="this.src='assets/user-profiles/default.png'" />
+  <div class="name">
+    <h1 class="user-info title">{{display_name}}</h1>
+  </div>
   <div class="line"></div>
   <div class="mode daily">
     <h1 class="desc">Daily</h1>
@@ -14,5 +16,23 @@
   </div>
   <div class="mode blitz">
     <h1 class="desc">Blitz</h1>
+  </div>
+</div>
+<div *ngIf="isMobileDevice">
+  <img class="m-img" src="assets/user-profiles/{{username}}.png"
+       onerror="this.src='assets/user-profiles/default.png'" />
+  <h1 class="m-text">{{display_name}}</h1>
+  <div class="m-line"></div>
+  <div class="m-mode daily">
+    <h1 class="m-text">Daily</h1>
+  </div>
+  <div class="m-mode unlimited">
+    <h1 class="m-text">Unlimited</h1>
+  </div>
+  <div class="m-mode timed">
+    <h1 class="m-text">Timed</h1>
+  </div>
+  <div class="m-mode blitz">
+    <h1 class="m-text">Blitz</h1>
   </div>
 </div>

@@ -1,12 +1,14 @@
 .box {
-  border: 1px;
   padding: 70px;
   margin: 2rem;
-  margin-top: 0;
   border-radius: 20px;
   background-color: #292b2c;
 }
-img {
+.name{
+    padding-block: 0px;
+    margin-left: 290px;
+}
+.profile {
   margin-left: 1rem;
   border-radius: 10px;
   border: 2px solid black;
@@ -20,7 +22,6 @@ img {
 }
 .user-info {
     font-family: candara;
-    padding-left: 290px;
     color: white;
 }
 .title {
@@ -56,4 +57,34 @@ img {
   font-family: candara;
   font-weight: bold;
   padding-left: 2rem;
+}
+
+
+.m-box {
+  background-color: #292b2c;
+}
+.m-img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+  width: 50%;
+  height: auto;
+  display: block;
+}
+.m-text {
+  color: white;
+  text-align: center
+}
+.m-line {
+  border-bottom: 2px solid #565e64;
+  padding-bottom: 20px;
+}
+.m-mode {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border: 2px solid #565e64;
+  margin-top: 20px;
+  border-radius: 30px;
+  padding-block: 20px;
 }
