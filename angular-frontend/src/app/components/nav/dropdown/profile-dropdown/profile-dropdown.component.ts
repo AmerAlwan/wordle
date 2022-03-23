@@ -3,6 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ViewChild } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
+import { KeydownService } from '../../../../services/keydown/keydown.service';
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -39,9 +40,10 @@ import { AfterViewInit } from '@angular/core';
 export class ProfileDropdownComponent implements OnInit, AfterViewInit {
   username: string = "Anonymous";
   isDropdownOpen: boolean = false;
+  keydownService: KeydownService;
 
-  constructor(private renderer: Renderer2) {
-    
+  constructor(private renderer: Renderer2, keydownService: KeydownService) {
+    this.keydownService = keydownService;
   }
 
   ngOnInit(): void {
@@ -53,6 +55,8 @@ export class ProfileDropdownComponent implements OnInit, AfterViewInit {
 
   setIsDropdownOpen(open: boolean) {
     this.isDropdownOpen = open;
+    if (this.isDropdownOpen) this.keydownService.disableKeydown();
+    else this.keydownService.enableKeydown();
   }
 
 }

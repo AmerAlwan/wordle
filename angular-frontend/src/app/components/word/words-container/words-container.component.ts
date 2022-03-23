@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpellCheckerClientService } from '../../../services/spellchecker/spell-checker-client.service';
 import { AppSettings } from '../../../shared/AppSettings';
 import { AppSettingsService } from '../../../services/appsettings/app-settings.service';
+import { KeydownService } from '../../../services/keydown/keydown.service';
 
 @Component({
   selector: 'app-words-container',
@@ -23,11 +24,13 @@ export class WordsContainerComponent implements OnInit {
   maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
   spellChecker: SpellCheckerClientService;
   appSettingsService: AppSettingsService;
+  keydownService: KeydownService;
   displayNoneWordError: boolean = false;
 
-  constructor(appSettingsService: AppSettingsService, spellCheckerClientService: SpellCheckerClientService) {
+  constructor(appSettingsService: AppSettingsService, spellCheckerClientService: SpellCheckerClientService, keydownService: KeydownService) {
     this.spellChecker = spellCheckerClientService;
     this.appSettingsService = appSettingsService;
+    this.keydownService = keydownService;
   }
 
   ngOnInit(): void {
@@ -125,14 +128,15 @@ export class WordsContainerComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event']) handleKeydownEvent(event: KeyboardEvent): void {
       let key = event.key.toLowerCase();
-
-    if (key.length === 1 && key.match(/^[a-z]/) && this.wordIndex < this.maxWordIndex) {
-      this.typed_words[this.curr_typed_word_index][this.wordIndex++] = key;
-    } else if (key === 'backspace' && this.wordIndex > 0) {
-      this.typed_words[this.curr_typed_word_index][--this.wordIndex] = ''
-    } else if (key === 'enter' && this.wordIndex === this.maxWordIndex) {
+    if (this.keydownService.isEnabled()) {
+      if (key.length === 1 && key.match(/^[a-z]/) && this.wordIndex < this.maxWordIndex) {
+        this.typed_words[this.curr_typed_word_index][this.wordIndex++] = key;
+      } else if (key === 'backspace' && this.wordIndex > 0) {
+        this.typed_words[this.curr_typed_word_index][--this.wordIndex] = ''
+      } else if (key === 'enter' && this.wordIndex === this.maxWordIndex) {
         this.setTypedWordStatus(this.getTypedWordStr());
       }
+    }
   }
 
 }

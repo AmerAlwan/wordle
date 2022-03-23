@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppSettingsService } from '../../services/appsettings/app-settings.service';
+import { KeydownService } from '../../services/keydown/keydown.service';
 
 @Component({
   selector: 'app-game-page',
@@ -10,12 +11,14 @@ import { AppSettingsService } from '../../services/appsettings/app-settings.serv
 export class GamePageComponent implements OnInit {
   isDisplaySettings: boolean = false;
   appSettingsService: AppSettingsService;
+  keydownService: KeydownService;
   backgroundMode: string = 'background-color'
   backgroundValue: string = '#121213';
   changeDetectorRef: ChangeDetectorRef;
 
-  constructor(appSettingsService: AppSettingsService, changeDetectorRef: ChangeDetectorRef) {
+  constructor(appSettingsService: AppSettingsService, keydownService: KeydownService, changeDetectorRef: ChangeDetectorRef) {
     this.appSettingsService = appSettingsService;
+    this.keydownService = keydownService;
     this.changeDetectorRef = changeDetectorRef;
   }
 
@@ -39,6 +42,8 @@ export class GamePageComponent implements OnInit {
 
   displaySettings(settingsStatus: boolean) {
     this.isDisplaySettings = settingsStatus;
+    if (this.isDisplaySettings) this.keydownService.disableKeydown()
+    else this.keydownService.enableKeydown()
   }
 
 }
