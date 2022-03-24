@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-dropdown-info',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile-dropdown-info.component.css']
 })
 export class ProfileDropdownInfoComponent implements OnInit {
+  @Input() isDropdownOpen: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  onMyProfileButtonClick() {
+    this.router.navigate(['/user']);
   }
 
 }

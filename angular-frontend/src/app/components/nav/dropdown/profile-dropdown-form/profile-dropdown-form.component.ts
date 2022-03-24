@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges, Input, Output } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { BackendService } from '../../../../services/backend/backend.service';
+import { UserService } from '../../../../services/user/user.service';
 
 @Component({
   selector: 'app-profile-dropdown-form',
@@ -27,6 +28,7 @@ import { BackendService } from '../../../../services/backend/backend.service';
 export class ProfileDropdownFormComponent implements OnInit, OnChanges {
   @Input() isDropdownOpen: boolean = false;
   backendService: BackendService;
+  userService: UserService;
   isRegisterMode: boolean = false;
   username: string = '';
   email: string = '';
@@ -37,8 +39,9 @@ export class ProfileDropdownFormComponent implements OnInit, OnChanges {
   responseMessage: string = '';
 
 
-  constructor(backendService: BackendService) {
+  constructor(backendService: BackendService, userService: UserService) {
     this.backendService = backendService;
+    this.userService = userService;
   }
 
   ngOnInit(): void {
@@ -69,6 +72,11 @@ export class ProfileDropdownFormComponent implements OnInit, OnChanges {
             this.isError = false;
             this.isSuccess = true;
             this.responseMessage = 'Successfully logged in as ' + response.data.username;
+
+            let data = response.data;
+            this.userService.setIsLoggedIn(true);
+            this.userService.setUser(data.username, data.token);
+
           } else if (response.status === 400) {
             this.isError = true;
             this.isSuccess = false;
