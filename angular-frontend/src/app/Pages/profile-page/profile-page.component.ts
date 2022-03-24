@@ -10,11 +10,13 @@ import { Observable } from 'rxjs';
 
 export class ProfilePageComponent implements OnInit {
   username: string = 'anonymous';
-  default: string = "assets/user-profiles/default.png";
+  display_name: string = '';
+  isMobileDevice: boolean = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   constructor(private route: ActivatedRoute) {
     this.route.params.subscribe((params: Params) => {
-      this.username = params['username'];
+      this.username = params['username'].toLowerCase();
+      this.display_name = this.username.toUpperCase();
     })
   }
 
