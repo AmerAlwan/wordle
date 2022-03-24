@@ -8,12 +8,13 @@ import { User } from '../../shared/UserInfo';
 })
 export class UserService {
 
-  user: User;
-  isLoggedIn: boolean;
-  userBS: BehaviorSubject<User>;
+  private user: User;
+  private isLoggedIn: boolean;
+  private userBS: BehaviorSubject<User>;
+
   constructor() {
     this.isLoggedIn = false;
-    this.user = { username: 'Anonymous', token: '' };
+    this.user = this.getAnonymousUser();
     this.userBS = new BehaviorSubject<User>(this.user);
   }
 
@@ -35,7 +36,11 @@ export class UserService {
 
   getIsLoggedIn(): boolean {
     return this.isLoggedIn;
-}
+  }
+
+  getAnonymousUser() {
+    return { username: 'Anonymous', token: '' };
+  }
 
   setUser(username: string, token: string) {
     this.user = { username: username, token: token }
@@ -46,6 +51,26 @@ export class UserService {
     this.isLoggedIn = true;
   }
 
+  loadUserFromLocalStorage() {
+    let jsonUser = localStorage.getItem('user');
+    if (jsonUser) {
+      this.user = JSON.parse(jsonUser);
+      this.setIsLoggedIn(true);
+      this.applyChanges();
+    }
+  }
+
+  saveUserToLocalStorage() {
+    localStorage.setItem('user', JSON.stringify(this.user));
+  }
+
+  logout() {
+    this.user = this.getAnonymousUser();
+    this.setIsLoggedIn(false);
+    localStorage.removeItem('user');
+    this.applyChanges();
+    window.location.reload();
+  }
 
   applyChanges() {
     this.userBS.next(this.user);

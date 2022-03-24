@@ -39,28 +39,24 @@ import { UserService } from '../../../../services/user/user.service';
   ]
 })
 
-
 export class ProfileDropdownComponent implements OnInit, AfterViewInit {
   username: string;
   isDropdownOpen: boolean = false;
-  isLoggedIn: boolean = false;
-  keydownService: KeydownService;
-  userService: UserService;
+  isLoggedIn: boolean;
 
-  constructor(private renderer: Renderer2, keydownService: KeydownService, userService: UserService) {
-    this.keydownService = keydownService;
-    this.userService = userService;
+  constructor(private renderer: Renderer2, private keydownService: KeydownService, private userService: UserService) {
     this.username = this.userService.getUsername();
+    this.isLoggedIn = this.userService.getIsLoggedIn();
   }
 
   ngOnInit(): void {
     this.userService.watchUser().subscribe(user => {
       this.username = user.username;
-    })
+      this.isLoggedIn = this.userService.getIsLoggedIn();
+    });
   }
 
   ngAfterViewInit() {
-  
   }
 
   setIsDropdownOpen(open: boolean) {

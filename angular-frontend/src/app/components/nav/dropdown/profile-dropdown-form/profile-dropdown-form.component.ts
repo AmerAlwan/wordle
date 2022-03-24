@@ -76,6 +76,7 @@ export class ProfileDropdownFormComponent implements OnInit, OnChanges {
             let data = response.data;
             this.userService.setIsLoggedIn(true);
             this.userService.setUser(data.username, data.token);
+            this.userService.saveUserToLocalStorage();
 
           } else if (response.status === 400) {
             this.isError = true;
