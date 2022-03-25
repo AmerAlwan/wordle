@@ -1,5 +1,6 @@
 <app-settings-container [isDisplaySettings]="isDisplaySettings" (displaySettingsEmitter)="displaySettings($event)"></app-settings-container>
-<div class="game-page-container" [ngClass]="{'blur-page': isDisplaySettings}" [ngStyle]="{'background' : backgroundValue}">
-  <app-navbar [showLogin]="true" (displaySettingsEmitter)="displaySettings($event)"></app-navbar>
+<app-game-over-container [isDisplayGameOver]="isDisplayGameOver" (displayGameOverEmitter)="displayGameOver($event)"></app-game-over-container>
+<div class="game-page-container" [ngClass]="{'blur-page': isBlurPage}" [ngStyle]="{'background' : backgroundValue, 'height': screenHeight + 'px'}">
+  <app-navbar [showLogin]="true" (displaySettingsEmitter)="displaySettings($event)" (displayGameOverEmitter)="displayGameOver($event)"></app-navbar>
   <app-board-container></app-board-container>
 </div>

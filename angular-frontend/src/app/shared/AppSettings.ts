@@ -7,4 +7,5 @@ export class AppSettings {
   backgroundValue: string = '#121213';
   difficulty: string = 'easy';
   gameMode: string = 'daily';
+  screenHeight: number = window.innerHeight;
 }

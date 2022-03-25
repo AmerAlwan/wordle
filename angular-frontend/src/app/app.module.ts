@@ -27,6 +27,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { AppSettingsService } from './services/appsettings/app-settings.service';
+import { GameOverContainerComponent } from './components/stats/game-over-container/game-over-container.component';
+import { GameOverContentComponent } from './components/stats/game-over-content/game-over-content.component';
 
 
 @NgModule({
@@ -49,7 +51,9 @@ import { AppSettingsService } from './services/appsettings/app-settings.service'
     SettingsContentComponent,
     SettingsCounterComponent,
     SettingsToggleComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    GameOverContainerComponent,
+    GameOverContentComponent
   ],
   imports: [
     BrowserModule,

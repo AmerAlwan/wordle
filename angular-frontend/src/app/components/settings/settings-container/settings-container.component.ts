@@ -1,6 +1,6 @@
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Input, Output } from '@angular/core';
 import { Component, OnInit, EventEmitter } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-settings-container',

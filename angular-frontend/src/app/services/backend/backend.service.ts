@@ -6,10 +6,8 @@ import axios, { AxiosInstance, AxiosError } from "axios";
 })
 export class BackendService {
   private axiosInstance: AxiosInstance;
-  private errorHandler: ErrorHandler;
 
-  constructor(errorHandler: ErrorHandler) {
-    this.errorHandler = errorHandler;
+  constructor(private errorHandler: ErrorHandler) {
     this.axiosInstance = axios.create({
       timeout: 3000
     });

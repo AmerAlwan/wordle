@@ -9,8 +9,8 @@ import { AppSettings } from '../../shared/AppSettings';
 })
 export class AppSettingsService {
 
-  private settingsBS: BehaviorSubject<AppSettings>;
   private settings: AppSettings;
+  private settingsBS: BehaviorSubject<AppSettings>;
 
   constructor() {
     this.settings = new AppSettings();
@@ -37,12 +37,22 @@ export class AppSettingsService {
     return this.settings.backgroundValue;
   }
 
+  getScreenHeight(): number {
+    return this.settings.screenHeight;
+  }
+
   setNumOfAttempts(value: number) {
     this.settings.numOfAttempts = value;
   }
 
   setNumOfLetters(value: number) {
     this.settings.numOfLetters = value;
+  }
+
+  setScreenHeight(value: number = 0) {
+    if (value === 0) this.settings.screenHeight = this.calcScreenHeight();
+    else this.settings.screenHeight = value;
+    this.applyChanges();
   }
 
   setBackgroundValues(backgroundMode: string, backgroundValue: string) {
@@ -60,12 +70,18 @@ export class AppSettingsService {
       this.settings.numOfLetters = lcSettings.numOfLetters;
       this.settings.backgroundMode = lcSettings.backgroundMode;
       this.settings.backgroundValue = lcSettings.backgroundValue;
+      this.settings.screenHeight = this.calcScreenHeight();
     }
     this.applyChanges();
   }
 
   applyChanges() {
     this.settingsBS.next(this.settings);
+  }
+
+  calcScreenHeight() : number {
+    return Math.max(document.body.scrollHeight, document.body.offsetHeight,
+      document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
   }
 
 }

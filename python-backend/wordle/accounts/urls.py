@@ -6,4 +6,5 @@ urlpatterns = [
     path('users/<int:id>', views.UserView.as_view()),
     path('users/register', views.RegistrationView.as_view()),
     path('users/login', views.LoginView.as_view()),
+    path('word/get', views.WordView.as_view()),
 ]

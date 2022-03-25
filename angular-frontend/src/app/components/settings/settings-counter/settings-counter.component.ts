@@ -14,6 +14,7 @@ export class SettingsCounterComponent implements OnInit {
   @Output() onValueChange = new EventEmitter<number>();
   faCirclePlus = faCirclePlus as IconProp
   faCircleMinus = faCircleMinus as IconProp
+  isMobileDevice: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   constructor() { }
 

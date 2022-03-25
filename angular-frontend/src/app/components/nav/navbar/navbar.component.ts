@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
   @Input() showRegister: boolean = false;
   @Input() showLogin: boolean = false;
   @Output() displaySettingsEmitter = new EventEmitter<boolean>();
+  @Output() displayGameOverEmitter = new EventEmitter<boolean>();
   isMobileDevice: boolean = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   isCollapsed: boolean = false;
   faGear=faGear as IconProp
@@ -24,6 +25,10 @@ export class NavbarComponent implements OnInit {
 
   displaySettings() {
     this.displaySettingsEmitter.emit(true);
+  }
+
+  displayGameOver() {
+    this.displayGameOverEmitter.emit(true);
   }
 
 }
