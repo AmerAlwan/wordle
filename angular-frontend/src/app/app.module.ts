@@ -27,8 +27,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { AppSettingsService } from './services/appsettings/app-settings.service';
-import { GameOverContainerComponent } from './components/stats/game-over-container/game-over-container.component';
-import { GameOverContentComponent } from './components/stats/game-over-content/game-over-content.component';
+import { GameInfoContainerComponent } from './components/stats/gameinfo/game-info-container/game-info-container.component';
+import { GameInfoContentComponent } from './components/stats/gameinfo/game-info-content/game-info-content.component';
 
 
 @NgModule({
@@ -52,8 +52,8 @@ import { GameOverContentComponent } from './components/stats/game-over-content/g
     SettingsCounterComponent,
     SettingsToggleComponent,
     ProfilePageComponent,
-    GameOverContainerComponent,
-    GameOverContentComponent
+    GameInfoContainerComponent,
+    GameInfoContentComponent
   ],
   imports: [
     BrowserModule,

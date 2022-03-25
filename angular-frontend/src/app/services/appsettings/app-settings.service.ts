@@ -37,6 +37,10 @@ export class AppSettingsService {
     return this.settings.backgroundValue;
   }
 
+  getGameMode(): string {
+    return this.settings.gameMode;
+  }
+
   getScreenHeight(): number {
     return this.settings.screenHeight;
   }

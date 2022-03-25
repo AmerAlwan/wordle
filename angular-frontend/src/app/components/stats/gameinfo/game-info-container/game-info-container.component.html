@@ -1,0 +1,25 @@
+<div @toggleGameInfo
+     class="modal"
+     id="game-info-container"
+     tabindex="-1"
+     role="dialog"
+     *ngIf="isDisplayGameInfo">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Game Info</h4>
+      </div>
+      <app-game-info-content></app-game-info-content>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger"
+                (click)="closePopup()">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary"
+                (click)="togglePlayAgain()">
+          Play Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

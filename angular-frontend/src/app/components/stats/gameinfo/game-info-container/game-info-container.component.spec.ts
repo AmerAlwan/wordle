@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameOverContentComponent } from './game-over-content.component';
+import { GameInfoContainerComponent } from './game-info-container.component';
 
-describe('GameOverContentComponent', () => {
-  let component: GameOverContentComponent;
-  let fixture: ComponentFixture<GameOverContentComponent>;
+describe('GameInfoContainerComponent', () => {
+  let component: GameInfoContainerComponent;
+  let fixture: ComponentFixture<GameInfoContainerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameOverContentComponent ]
+      declarations: [ GameInfoContainerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameOverContentComponent);
+    fixture = TestBed.createComponent(GameInfoContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

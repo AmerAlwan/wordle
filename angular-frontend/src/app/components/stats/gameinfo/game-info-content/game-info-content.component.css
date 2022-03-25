@@ -1,0 +1,43 @@
+.game-info-container {
+    color: white;
+}
+
+.game-section {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.game-container {
+  margin: 0 auto;
+}
+
+.game-section-title {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.game-info-title {
+  color: grey;
+  margin: 1.5em 0 0.5rem 0;
+  font-size: 20px;
+}
+
+.game-info-description {
+  color: #595959;
+  margin: -1em 0 0.5rem 0;
+  font-size: 12px;
+}
+
+.game-section-title::before, .game-section-title::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid white;
+}
+
+
+.game-status {
+
+}

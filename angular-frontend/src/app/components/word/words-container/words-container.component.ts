@@ -5,6 +5,8 @@ import { AppSettings } from '../../../shared/AppSettings';
 import { AppSettingsService } from '../../../services/appsettings/app-settings.service';
 import { KeydownService } from '../../../services/keydown/keydown.service';
 import { WordService } from '../../../services/word/word.service';
+import { GameInfoService } from '../../../services/gameinfo/game-info.service';
+import { GameInfo } from '../../../shared/GameInfo';
 
 @Component({
   selector: 'app-words-container',
@@ -26,7 +28,7 @@ export class WordsContainerComponent implements OnInit {
   maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
   displayNoneWordError: boolean = false;
 
-  constructor(private appSettingsService: AppSettingsService, private spellChecker: SpellCheckerClientService, private keydownService: KeydownService, private wordService: WordService) {
+  constructor(private appSettingsService: AppSettingsService, private spellChecker: SpellCheckerClientService, private keydownService: KeydownService, private wordService: WordService, private gameInfoService: GameInfoService) {
     this.word = "";
     this.wordIndex = 0;
     this.curr_typed_word_index = 0;
@@ -88,6 +90,14 @@ export class WordsContainerComponent implements OnInit {
       console.log("Letters: " + this.numOfLetters.length);
     });
 
+    this.wordService.watchCurrWord().subscribe(word => {
+      if (this.wordService.getCurrWord() !== this.word) {
+        this.resetValues();
+        this.word = this.wordService.getCurrWord();
+        this.maxWordIndex = this.word.length;
+      }
+    });
+
     for (let i = 0; i < this.numOfAttempts.length; i++) {
       this.typed_words[i] = new Array<string>(this.numOfLetters.length);
       this.letterStatus[i] = [];
@@ -104,6 +114,13 @@ export class WordsContainerComponent implements OnInit {
     this.curr_typed_word_index = 0;
     this.maxWordIndex = this.word.length;
     this.keyboard_letter_status_reset_emitter.emit(true);
+    for (let i = 0; i < this.numOfAttempts.length; i++) {
+      this.typed_words[i] = new Array<string>(this.numOfLetters.length);
+      this.letterStatus[i] = [];
+      for (let j = 0; j < this.numOfLetters.length; j++) {
+        this.letterStatus[i][j] = '';
+      }
+    }
   }
 
   getNumRowsOverflowingHeight(freeSpace: number, maxRows: number, rowSize: number): number {
@@ -150,6 +167,20 @@ export class WordsContainerComponent implements OnInit {
     this.displayNoneWordError = false;
   }
 
+  isGameWon(): boolean {
+    let isGameWon: boolean = true;
+    for (let i = 0; i < this.numOfLetters.length; i++) {
+      if (this.letterStatus[this.curr_typed_word_index === this.numOfAttempts.length - 1 ? this.curr_typed_word_index : this.curr_typed_word_index > 0 ? this.curr_typed_word_index - 1 : 0][i] !== 'correct') {  
+        isGameWon = false;
+      }
+    }
+    return isGameWon;
+  }
+
+  isGameLost(): boolean {
+    return !this.isGameWon() && this.curr_typed_word_index === this.numOfAttempts.length;
+  }
+
   async setTypedWordStatus(text: string): Promise<boolean> {
     return await this.spellChecker.get(text).then(data => {
       if (!data) {
@@ -187,19 +218,26 @@ export class WordsContainerComponent implements OnInit {
       this.wordIndex = 0;
       this.curr_typed_word_index++;
       this.keyboard_letter_status_change.emit(this.keyboard_letter_status);
+
+      if (this.isGameWon()) {
+        console.log('WIN');
+        setTimeout(() => this.gameInfoService.setGameStatus('win'), 1500);
+      } else if (this.isGameLost()) {
+        console.log('LOST');
+        setTimeout(() => this.gameInfoService.setGameStatus('lose'), 1500);
+      }
+
       return true;
     });
     
   }
 
   setNewWord() {
-    this.wordService.requestUnlimitedWord(this.numOfLetters.length).then(response => {
+    this.wordService.requestUnlimitedWord().then(response => {
       if (response) {
         this.resetValues();
         this.word = response.data.word;
         this.maxWordIndex = this.word.length;
-        this.wordService.setUnlimitedWord(this.word);
-        this.wordService.setUnlimitedDefinition(response.data.definition);
       }
     });
   }

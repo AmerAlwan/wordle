@@ -1,35 +1,59 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import axios, { AxiosInstance, AxiosError } from "axios";
+import { AppSettingsService } from '../appsettings/app-settings.service';
+import { Word } from '../../shared/Word';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WordService {
 
-  private dailyWord: string = '';
-  private dailyDefinition: string = '';
-  private unlimitedWord: string = '';
-  private unlimitedDefinition: string = '';
-  private timedWord: string = '';
-  private timedDefinition: string = '';
-  private blitzWord: string = '';
-  private blitzDefinition: string = '';
+  private currWord: Word;
+  private currDefinition: Word;
+  private lastWord: Word;
+  private lastDefinition: Word;
+  private currAttempt: number;
 
   private axiosInstance: AxiosInstance;
 
-  constructor(private errorHandler: ErrorHandler) {
+  private currWordBS: BehaviorSubject<Word>;
+
+  constructor(private errorHandler: ErrorHandler, private appSettingsService: AppSettingsService) {
+    this.currWord = this.getDefaultWord();
+
+    this.currDefinition = this.getDefaultWord();
+
+    this.lastWord = this.getDefaultWord();
+
+    this.lastDefinition = this.getDefaultWord();
+
+    this.currAttempt = 0;
+
+    this.currWordBS = new BehaviorSubject<Word>(this.currWord);
+   
     this.axiosInstance = axios.create({
       timeout: 3000
     });
   }
 
-  public async requestUnlimitedWord(num_of_letters: number) {
+  watchCurrWord(): Observable<Word> {
+    return this.currWordBS.asObservable();
+  }
+
+  public async requestUnlimitedWord() {
+    this.setLastWord(this.getCurrWord() !== this.getLastWord() ? this.getCurrWord() : '');
+    this.setLastDefinition(this.getCurrWord() !== this.getLastWord() ? this.getCurrWord() : '');
+    this.lastDefinition.unlimited = this.currDefinition.unlimited;
     try {
       var response = await this.axiosInstance.request({
         method: "post",
         url: "http://127.0.0.1:8000/api/word/get",
-        data: { num_of_letters: num_of_letters }
+        data: { num_of_letters: this.appSettingsService.getNumOfLetters() }
       });
+      this.setCurrWord(response.data.word);
+      this.setCurrDefinition(response.data.definition);
+      this.applyChanges();
       console.log(response.data);
       return response;
     } catch (error) {
@@ -38,68 +62,93 @@ export class WordService {
     }
   }
 
-  getDailyWord(): string {
-    return this.dailyWord;
+  setCurrAttempt(value: number) {
+    this.currAttempt = value;
   }
 
-  getUnlimitedWord(): string {
-    return this.unlimitedWord;
+  setCurrWord(value: string) {
+    let gameMode = this.appSettingsService.getGameMode();
+    if (gameMode === 'daily') this.currWord.daily = value;
+    if (gameMode === 'unlimited') this.currWord.unlimited = value;
+    if (gameMode === 'timed') this.currWord.timed = value;
+    if (gameMode === 'blitz') this.currWord.blitz = value;
   }
 
-  getTimedWord(): string {
-    return this.timedWord;
+  setCurrDefinition(value: string) {
+    let gameMode = this.appSettingsService.getGameMode();
+    if (gameMode === 'daily') this.currDefinition.daily = value;
+    if (gameMode === 'unlimited') this.currDefinition.unlimited = value;
+    if (gameMode === 'timed') this.currDefinition.timed = value;
+    if (gameMode === 'blitz') this.currDefinition.blitz = value;
   }
 
-  getBlitzWord(): string {
-    return this.blitzWord;
+  setLastWord(value: string) {
+    let gameMode = this.appSettingsService.getGameMode();
+    if (gameMode === 'daily') this.lastWord.daily = value;
+    if (gameMode === 'unlimited') this.lastWord.unlimited = value;
+    if (gameMode === 'timed') this.lastWord.timed = value;
+    if (gameMode === 'blitz') this.lastWord.blitz = value;
   }
 
-  getDailyDefinition(): string {
-    return this.dailyDefinition;
+  setLastDefinition(value: string) {
+    let gameMode = this.appSettingsService.getGameMode();
+    if (gameMode === 'daily') this.lastDefinition.daily = value;
+    if (gameMode === 'unlimited') this.lastDefinition.unlimited = value;
+    if (gameMode === 'timed') this.lastDefinition.timed = value;
+    if (gameMode === 'blitz') this.lastDefinition.blitz = value;
   }
 
-  getUnlimitedDefinition(): string {
-    return this.unlimitedDefinition;
+  getCurrWord(): string {
+    let gameMode = this.appSettingsService.getGameMode();
+    return gameMode === 'daily' ? this.currWord.daily :
+      gameMode === 'unlimited' ? this.currWord.unlimited :
+        gameMode === 'timed' ? this.currWord.timed :
+          gameMode === 'blitz' ? this.currWord.blitz :
+            '';
   }
 
-  getTimedDefinition(): string {
-    return this.timedDefinition;
+  getLastWord(): string {
+    let gameMode = this.appSettingsService.getGameMode();
+    return gameMode === 'daily' ? this.lastWord.daily :
+      gameMode === 'unlimited' ? this.lastWord.unlimited :
+        gameMode === 'timed' ? this.lastWord.timed :
+          gameMode === 'blitz' ? this.lastWord.blitz :
+            '';
   }
 
-  getBlitzDefinition(): string {
-    return this.blitzDefinition;
+  getCurrDefinition(): string {
+    let gameMode = this.appSettingsService.getGameMode();
+    return gameMode === 'daily' ? this.currDefinition.daily :
+      gameMode === 'unlimited' ? this.currDefinition.unlimited :
+        gameMode === 'timed' ? this.currDefinition.timed :
+          gameMode === 'blitz' ? this.currDefinition.blitz :
+            '';
   }
 
-  setDailyWord(value: string) {
-    this.dailyWord = value;
+  getLastDefinition(): string {
+    let gameMode = this.appSettingsService.getGameMode();
+    return gameMode === 'daily' ? this.lastDefinition.daily :
+      gameMode === 'unlimited' ? this.lastDefinition.unlimited :
+        gameMode === 'timed' ? this.lastDefinition.timed :
+          gameMode === 'blitz' ? this.lastDefinition.blitz :
+            '';
   }
 
-  setUnlimitedWord(value: string) {
-    this.unlimitedWord = value;
+  getCurrAttempt(): number {
+    return this.currAttempt;
   }
 
-  setTimedWord(value: string) {
-    this.timedWord = value;
+  getDefaultWord(): Word {
+    return {
+      daily: '',
+      unlimited: '',
+      timed: '',
+      blitz: ''
+    };
   }
 
-  setBlitzWord(value: string) {
-    this.blitzWord = value;
-  }
-
-  setDailyDefinition(value: string) {
-    this.dailyDefinition = value;
-  }
-
-  setUnlimitedDefinition(value: string) {
-    this.unlimitedDefinition = value;
-  }
-
-  setTimedDefinition(value: string) {
-    this.timedDefinition = value;
-  }
-
-  setBlitzDefinition(value: string) {
-    this.blitzDefinition = value;
+  applyChanges() {
+    this.currWordBS.next(this.currWord);
   }
 
 }
