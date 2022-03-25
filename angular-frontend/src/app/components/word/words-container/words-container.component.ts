@@ -41,12 +41,13 @@ export class WordsContainerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getNewWord();
     this.appSettingsService.getSettings().subscribe((settings) => {
 
       if (settings.numOfAttempts < this.numOfAttempts.length || this.numOfLetters.length !== settings.numOfLetters) {
         this.numOfAttempts = Array(settings.numOfAttempts).fill(0).map((x, i) => i);
         this.numOfLetters = Array(settings.numOfLetters).fill(0).map((x, i) => i);
-        this.setNewWord();
+        this.getNewWord();  
         for (let i = 0; i < this.numOfAttempts.length; i++) {
           this.typed_words[i] = new Array<string>(this.numOfLetters.length);
           this.letterStatus[i] = [];
@@ -92,9 +93,7 @@ export class WordsContainerComponent implements OnInit {
 
     this.wordService.watchCurrWord().subscribe(word => {
       if (this.wordService.getCurrWord() !== this.word) {
-        this.resetValues();
-        this.word = this.wordService.getCurrWord();
-        this.maxWordIndex = this.word.length;
+        this.setNewWord();
       }
     });
 
@@ -233,13 +232,13 @@ export class WordsContainerComponent implements OnInit {
   }
 
   setNewWord() {
-    this.wordService.requestUnlimitedWord().then(response => {
-      if (response) {
-        this.resetValues();
-        this.word = response.data.word;
-        this.maxWordIndex = this.word.length;
-      }
-    });
+    this.resetValues();
+    this.word = this.wordService.getCurrWord();
+    this.maxWordIndex = this.word.length;
+  }
+
+  getNewWord() {
+    this.wordService.requestUnlimitedWord().then(() => this.gameInfoService.setGameStatus('ongoing'));
   }
 
   @HostListener('document:keydown', ['$event']) handleKeydownEvent(event: KeyboardEvent): void {
