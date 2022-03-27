@@ -45,7 +45,6 @@ export class WordsContainerComponent implements OnInit {
     this.appSettingsService.getSettings().subscribe((settings) => {
 
       if (settings.numOfAttempts < this.numOfAttempts.length || this.numOfLetters.length !== settings.numOfLetters) {
-        console.log("Change");
         this.numOfAttempts = Array(settings.numOfAttempts).fill(0).map((x, i) => i);
         this.numOfLetters = Array(settings.numOfLetters).fill(0).map((x, i) => i);
         this.getNewWord();  
@@ -181,63 +180,37 @@ export class WordsContainerComponent implements OnInit {
     return !this.isGameWon() && this.curr_typed_word_index === this.numOfAttempts.length;
   }
 
-  isAllLettersReused(): boolean {
-    if (this.curr_typed_word_index === 0) {
-      return true;
-    }
-    let prev_typed_word_index = this.curr_typed_word_index - 1;
-    for (let i = 0; i < this.numOfLetters.length; i++) {
-      if (this.letterStatus[prev_typed_word_index][i] !== 'wrong' && !this.typed_words[this.curr_typed_word_index].includes(this.typed_words[prev_typed_word_index][i])) {
-        return false;
-      }
-    }
-    return true;
-  }
-
   async setTypedWordStatus(text: string): Promise<boolean> {
     return await this.spellChecker.get(text).then(data => {
-      // Word Not Valid without No Second Chance Mode
-      if (!data && !this.appSettingsService.getIsNoSecondChanceMode()) {
+      if (!data) {
         this.displayNoneWordError = true;
         return false;
       }
-      // Word Not Valid in No Second Chance Mode
-      else if (!data && this.appSettingsService.getIsNoSecondChanceMode()) {
-        for (let i = 0; i < this.numOfLetters.length; i++) {
+      let occurences: { [index: string]: number } = {}
+      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+        occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
+      }
+      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+        if (this.typed_words[this.curr_typed_word_index][i] === this.word[i]) {
+          this.letterStatus[this.curr_typed_word_index][i] = 'correct';
+          this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'correct';
+          occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+        }
+      }
+      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+        if (!this.word.includes(this.typed_words[this.curr_typed_word_index][i])) {
           this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
-        }
-      }
-      else if (this.appSettingsService.getForcedReuseMode() && !this.isAllLettersReused()) {
-        this.displayNoneWordError = true;
-        return false;
-      }
-      else {
-        let occurences: { [index: string]: number } = {}
-        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-          occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
-        }
-        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-          if (this.typed_words[this.curr_typed_word_index][i] === this.word[i]) {
-            this.letterStatus[this.curr_typed_word_index][i] = 'correct';
-            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'correct';
-            occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+          this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'wrong';
+        } else if (this.letterStatus[this.curr_typed_word_index][i] !== 'correct') {
+          if (this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] !== 'correct') {
+            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
           }
-        }
-        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-          if (!this.word.includes(this.typed_words[this.curr_typed_word_index][i])) {
+          if (occurences[this.typed_words[this.curr_typed_word_index][i]] >= 1) {
+            this.letterStatus[this.curr_typed_word_index][i] = 'almostcorrect';
+            //  this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
+            occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+          } else {
             this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
-            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'wrong';
-          } else if (this.letterStatus[this.curr_typed_word_index][i] !== 'correct') {
-            if (this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] !== 'correct') {
-              this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
-            }
-            if (occurences[this.typed_words[this.curr_typed_word_index][i]] >= 1) {
-              this.letterStatus[this.curr_typed_word_index][i] = 'almostcorrect';
-              //  this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
-              occurences[this.typed_words[this.curr_typed_word_index][i]]--;
-            } else {
-              this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
-            }
           }
         }
       }
