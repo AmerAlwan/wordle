@@ -48,7 +48,7 @@ export class WordService {
     try {
       var response = await this.axiosInstance.request({
         method: "post",
-        url: "http://127.0.0.1:8000/api/word/get",
+        url: "http://127.0.0.1:8000/api/word/unlimited/get",
         data: { num_of_letters: this.appSettingsService.getNumOfLetters() }
       });
       this.setCurrWord(response.data.word);
