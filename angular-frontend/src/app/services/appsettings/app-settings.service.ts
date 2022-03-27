@@ -45,12 +45,28 @@ export class AppSettingsService {
     return this.settings.screenHeight;
   }
 
+  getIsNoSecondChanceMode() {
+    return this.settings.noSecondChance;
+  }
+
+  getForcedReuseMode() {
+    return this.settings.forcedReuse;
+  }
+
   setNumOfAttempts(value: number) {
     this.settings.numOfAttempts = value;
   }
 
   setNumOfLetters(value: number) {
     this.settings.numOfLetters = value;
+  }
+
+  setNoSecondChanceMode(value: boolean) {
+    this.settings.noSecondChance = value;
+  }
+
+  setForcedReuseMode(value: boolean) {
+    this.settings.forcedReuse = value;
   }
 
   setScreenHeight(value: number = 0) {
@@ -75,6 +91,8 @@ export class AppSettingsService {
       this.settings.backgroundMode = lcSettings.backgroundMode;
       this.settings.backgroundValue = lcSettings.backgroundValue;
       this.settings.screenHeight = this.calcScreenHeight();
+      this.settings.forcedReuse = lcSettings.forcedReuse;
+      this.settings.noSecondChance = lcSettings.noSecondChance;
     }
     this.applyChanges();
   }

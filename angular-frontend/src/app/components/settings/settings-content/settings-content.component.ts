@@ -13,8 +13,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   wordLength: number = 5;
   numOfAttempts: number = 6;
   timeLimit: number = 2;
-  forcedReuseMode: boolean = false;
-  noSecondChanceMode: boolean = false;
+  forcedReuseMode: boolean;
+  noSecondChanceMode: boolean;
   isToggleInit: boolean = false;
   difficulty: string = 'easy';
   gameMode: string = 'daily';
@@ -37,6 +37,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       this.gameMode = settings.gameMode;
       this.numOfAttempts = settings.numOfAttempts;
       this.wordLength = settings.numOfLetters;
+      this.noSecondChanceMode = settings.noSecondChance;
+      this.forcedReuseMode = settings.forcedReuse;
       this.backgroundMode = settings.backgroundMode;
       this.chosenBackgroundValue = settings.backgroundValue;
     } else {
@@ -44,6 +46,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       this.gameMode = 'daily';
       this.numOfAttempts = 6;
       this.wordLength = 5;
+      this.noSecondChanceMode = false;
+      this.forcedReuseMode = false;
       this.backgroundMode = 'color';
       this.chosenBackgroundValue = this.colorOptions[0];
     }
@@ -78,9 +82,11 @@ export class SettingsContentComponent implements OnInit, OnChanges {
     this.appSettingsService.setNumOfLetters(this.wordLength);
     this.appSettingsService.setNumOfAttempts(this.numOfAttempts);
     this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenBackgroundValue);
+    this.appSettingsService.setNoSecondChanceMode(this.noSecondChanceMode);
+    this.appSettingsService.setForcedReuseMode(this.forcedReuseMode);
     this.appSettingsService.applyChanges();
     this.isSaved = false;
-    let settingsJSON: object = { numOfLetters: this.wordLength, numOfAttempts: this.numOfAttempts, difficulty: this.difficulty, gameMode: this.gameMode, backgroundMode: this.backgroundMode, backgroundValue: this.chosenBackgroundValue };
+    let settingsJSON: object = { numOfLetters: this.wordLength, numOfAttempts: this.numOfAttempts, difficulty: this.difficulty, gameMode: this.gameMode, backgroundMode: this.backgroundMode, backgroundValue: this.chosenBackgroundValue, noSecondChance: this.noSecondChanceMode, forcedReuse: this.forcedReuseMode };
     localStorage.setItem('settings', JSON.stringify(settingsJSON));
 
   }
@@ -129,9 +135,9 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   onMediumDifficultyToggle() {
     this.numOfAttempts = this.wordLength;
     this.difficulty = 'medium';
-    if (!(!this.forcedReuseMode && this.noSecondChanceMode)) {
-      this.noSecondChanceMode = true;
-      this.forcedReuseMode = false;
+    if (!(this.forcedReuseMode && !this.noSecondChanceMode)) {
+      this.noSecondChanceMode = false;
+      this.forcedReuseMode = true;
       this.isToggleInit = false;
     }
   }
