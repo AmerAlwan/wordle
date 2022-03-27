@@ -169,7 +169,7 @@ export class WordsContainerComponent implements OnInit {
   isGameWon(): boolean {
     let isGameWon: boolean = true;
     for (let i = 0; i < this.numOfLetters.length; i++) {
-      if (this.letterStatus[this.curr_typed_word_index === this.numOfAttempts.length - 1 ? this.curr_typed_word_index : this.curr_typed_word_index > 0 ? this.curr_typed_word_index - 1 : 0][i] !== 'correct') {  
+      if (this.letterStatus[this.curr_typed_word_index === 0 ? 0 : this.curr_typed_word_index - 1][i] !== 'correct') {  
         isGameWon = false;
       }
     }

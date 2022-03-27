@@ -4,7 +4,8 @@ export class AppSettings {
   noSecondChance: boolean = false;
   forcedReuse: boolean = false;
   backgroundMode: string = 'color';
-  backgroundValue: string = '#121213';
+  colorValue: string = '121213';
+  backgroundValue: string = '';
   difficulty: string = 'easy';
   gameMode: string = 'daily';
   screenHeight: number = window.innerHeight;

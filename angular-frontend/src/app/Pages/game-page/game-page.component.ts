@@ -17,11 +17,13 @@ export class GamePageComponent implements OnInit {
   backgroundValue: string = '#121213';
   changeDetectorRef: ChangeDetectorRef;
   screenHeight: number;
+  screenWidth: number;
 
   constructor(private appSettingsService: AppSettingsService, private keydownService: KeydownService, private gameInfoService: GameInfoService, changeDetectorRef: ChangeDetectorRef) {
     this.changeDetectorRef = changeDetectorRef;
 
     this.screenHeight = appSettingsService.getScreenHeight();
+    this.screenWidth = window.innerWidth;
   }
 
   ngOnInit(): void {
@@ -30,12 +32,13 @@ export class GamePageComponent implements OnInit {
       console.log("New color: " + settings.backgroundValue);
       this.backgroundMode = settings.backgroundMode;
       if (settings.backgroundMode === 'image') {
-        this.backgroundValue = "url('" + settings.backgroundValue + "') no-repeat fixed";
+        this.backgroundValue = "rgba(0,0,0,0) url('" + settings.backgroundValue + "') no-repeat fixed";
       } else if (settings.backgroundMode === 'color') {
-        this.backgroundValue = settings.backgroundValue;
+        this.backgroundValue = settings.colorValue;
       }
       
-        this.screenHeight = settings.screenHeight;
+      this.screenHeight = settings.screenHeight;
+      this.screenWidth = window.innerWidth;
     });
 
     this.gameInfoService.watchGameInfo().subscribe(gameInfo => {

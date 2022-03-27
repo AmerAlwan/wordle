@@ -59,8 +59,9 @@ export class AppSettingsService {
     this.applyChanges();
   }
 
-  setBackgroundValues(backgroundMode: string, backgroundValue: string) {
+  setBackgroundValues(backgroundMode: string, colorValue:string, backgroundValue: string) {
     this.settings.backgroundMode = backgroundMode;
+    this.settings.colorValue = colorValue;
     this.settings.backgroundValue = backgroundValue;
   }
 
@@ -73,6 +74,7 @@ export class AppSettingsService {
       this.settings.numOfAttempts = lcSettings.numOfAttempts;
       this.settings.numOfLetters = lcSettings.numOfLetters;
       this.settings.backgroundMode = lcSettings.backgroundMode;
+      this.settings.colorValue = lcSettings.colorValue;
       this.settings.backgroundValue = lcSettings.backgroundValue;
       this.settings.screenHeight = this.calcScreenHeight();
     }

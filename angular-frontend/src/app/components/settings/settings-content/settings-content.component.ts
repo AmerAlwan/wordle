@@ -20,8 +20,10 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   gameMode: string = 'daily';
   gameModeDescription: string = '';
   backgroundMode: string = 'color';
+  settingsBackgroundMode: string = 'color';
   backgroundModeDescription: string = '';
   colorOptions: Array<string>;
+  chosenColorValue: string;
   chosenBackgroundValue: string;
   appSettingsService: AppSettingsService;
 
@@ -39,13 +41,15 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       this.wordLength = settings.numOfLetters;
       this.backgroundMode = settings.backgroundMode;
       this.chosenBackgroundValue = settings.backgroundValue;
+      this.chosenColorValue = settings.colorValue;
     } else {
       this.difficulty = 'easy';
       this.gameMode = 'daily';
       this.numOfAttempts = 6;
       this.wordLength = 5;
       this.backgroundMode = 'color';
-      this.chosenBackgroundValue = this.colorOptions[0];
+      this.chosenBackgroundValue = '';
+      this.chosenColorValue = this.colorOptions[0];
     }
    
 
@@ -77,10 +81,10 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   saveChanges() {
     this.appSettingsService.setNumOfLetters(this.wordLength);
     this.appSettingsService.setNumOfAttempts(this.numOfAttempts);
-    this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenBackgroundValue);
+    this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenColorValue, this.chosenBackgroundValue);
     this.appSettingsService.applyChanges();
     this.isSaved = false;
-    let settingsJSON: object = { numOfLetters: this.wordLength, numOfAttempts: this.numOfAttempts, difficulty: this.difficulty, gameMode: this.gameMode, backgroundMode: this.backgroundMode, backgroundValue: this.chosenBackgroundValue };
+    let settingsJSON: object = { numOfLetters: this.wordLength, numOfAttempts: this.numOfAttempts, difficulty: this.difficulty, gameMode: this.gameMode, backgroundMode: this.backgroundMode, colorValue: this.chosenColorValue, backgroundValue: this.chosenBackgroundValue };
     localStorage.setItem('settings', JSON.stringify(settingsJSON));
 
   }
@@ -170,8 +174,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
     this.gameModeDescription = 'Play as many random words as you can within the time limit. Can be replayed an unlimtied amount of times';
   }
 
-  onColorChosen(chosenBackgroundValue: string) {
-    this.chosenBackgroundValue = chosenBackgroundValue;
+  onColorChosen(chosenColorValue: string) {
+    this.chosenColorValue = chosenColorValue;
   }
 
   onColorBackgroundModeToggle() {
