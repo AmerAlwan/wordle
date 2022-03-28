@@ -9,16 +9,24 @@ import { AppSettings } from '../../shared/AppSettings';
 })
 export class AppSettingsService {
 
+  private prevSettings: AppSettings;
   private settings: AppSettings;
   private settingsBS: BehaviorSubject<AppSettings>;
 
   constructor() {
     this.settings = new AppSettings();
+    this.prevSettings = new AppSettings();
     this.settingsBS = new BehaviorSubject<AppSettings>(this.settings);
   }
 
   getSettings(): Observable<AppSettings> {
-    return this.settingsBS.asObservable()
+    return this.settingsBS.asObservable();
+  }
+
+  getPrevSettings(): AppSettings {
+    let prevSettingsCopy = Object.assign(Object.create(Object.getPrototypeOf(this.prevSettings)), this.prevSettings);
+    this.savePrevSettings();
+    return prevSettingsCopy;
   }
 
   getNumOfAttempts(): number {
@@ -45,12 +53,40 @@ export class AppSettingsService {
     return this.settings.screenHeight;
   }
 
+  getDifficulty(): string {
+    return this.settings.difficulty;
+  }
+
+  setGameMode(value: string) {
+    this.savePrevSettings();
+    this.settings.gameMode = value;
+  }
+
   setNumOfAttempts(value: number) {
     this.settings.numOfAttempts = value;
   }
 
   setNumOfLetters(value: number) {
     this.settings.numOfLetters = value;
+  }
+
+  setDifficulty(value: string) {
+    this.settings.difficulty = value;
+    if (value !== 'custom') {
+      if (value === 'easy') {
+        this.settings.numOfAttempts = this.settings.numOfLetters + 1;
+        this.settings.forcedReuse = false;
+        this.settings.noSecondChance = false;
+      } else if (value === 'medium') {
+        this.settings.numOfAttempts = this.settings.numOfLetters;
+        this.settings.forcedReuse = true;
+        this.settings.noSecondChance = false;
+      } else if (value === 'hard') {
+        this.settings.numOfAttempts = this.settings.numOfLetters - 1;
+        this.settings.forcedReuse = true;
+        this.settings.noSecondChance = true;
+      }
+    }
   }
 
   setScreenHeight(value: number = 0) {
@@ -79,6 +115,10 @@ export class AppSettingsService {
       this.settings.screenHeight = this.calcScreenHeight();
     }
     this.applyChanges();
+  }
+
+  savePrevSettings() {
+    this.prevSettings = Object.assign(Object.create(Object.getPrototypeOf(this.settings)), this.settings)
   }
 
   applyChanges() {

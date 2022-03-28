@@ -39,7 +39,7 @@ export class GameInfoContainerComponent implements OnInit {
   }
 
   togglePlayAgain() {
-    this.wordService.requestUnlimitedWord().then(response => '');
+    this.wordService.requestWord();
     this.gameInfoService.setGameStatus('ongoing');
     setTimeout(() => this.displayGameInfoEmitter.emit(false), 1000);
   }

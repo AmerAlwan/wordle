@@ -81,6 +81,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   saveChanges() {
     this.appSettingsService.setNumOfLetters(this.wordLength);
     this.appSettingsService.setNumOfAttempts(this.numOfAttempts);
+    this.appSettingsService.setGameMode(this.gameMode);
+    this.appSettingsService.setDifficulty(this.difficulty);
     this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenColorValue, this.chosenBackgroundValue);
     this.appSettingsService.applyChanges();
     this.isSaved = false;

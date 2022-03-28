@@ -44,21 +44,21 @@ export class WordsContainerComponent implements OnInit {
     this.getNewWord();
     this.appSettingsService.getSettings().subscribe((settings) => {
 
-      if (settings.numOfAttempts < this.numOfAttempts.length || this.numOfLetters.length !== settings.numOfLetters) {
+      let prevGameMode = this.appSettingsService.getPrevSettings().gameMode;
+      console.log("Prev Game Mode: " + prevGameMode);
+      console.log("Curr Game Mode: " + settings.gameMode);
+      if (settings.gameMode !== prevGameMode) {
+        this.getNewWord();
+      }
+      else if (settings.numOfAttempts < this.numOfAttempts.length || this.numOfLetters.length !== settings.numOfLetters) {
         this.numOfAttempts = Array(settings.numOfAttempts).fill(0).map((x, i) => i);
         this.numOfLetters = Array(settings.numOfLetters).fill(0).map((x, i) => i);
-        this.getNewWord();  
-        for (let i = 0; i < this.numOfAttempts.length; i++) {
-          this.typed_words[i] = new Array<string>(this.numOfLetters.length);
-          this.letterStatus[i] = [];
-          for (let j = 0; j < this.numOfLetters.length; j++) {
-            this.letterStatus[i][j] = '';
-          }
-        }
-      } else if (settings.numOfAttempts > this.numOfAttempts.length && settings.numOfLetters === this.numOfLetters.length) {
+        this.getNewWord();
+      }
+      else if (settings.numOfAttempts > this.numOfAttempts.length && settings.numOfLetters === this.numOfLetters.length) {
         console.log("No Change");
         for (let i = this.numOfAttempts.length; i < settings.numOfAttempts; i++) {
-          this.typed_words[i] = new Array<string>(this.numOfLetters.length);  
+          this.typed_words[i] = new Array<string>(this.numOfLetters.length);
           this.letterStatus[i] = [];
           for (let j = 0; j < this.numOfLetters.length; j++) {
             this.letterStatus[i][j] = '';
@@ -113,6 +113,8 @@ export class WordsContainerComponent implements OnInit {
     this.curr_typed_word_index = 0;
     this.maxWordIndex = this.word.length;
     this.keyboard_letter_status_reset_emitter.emit(true);
+   // this.numOfAttempts = Array(0).fill(0).map((x, i) => i);
+   // this.numOfLetters = Array(0).fill(0).map((x, i) => i);
     for (let i = 0; i < this.numOfAttempts.length; i++) {
       this.typed_words[i] = new Array<string>(this.numOfLetters.length);
       this.letterStatus[i] = [];
@@ -238,7 +240,8 @@ export class WordsContainerComponent implements OnInit {
   }
 
   getNewWord() {
-    this.wordService.requestUnlimitedWord().then(() => this.gameInfoService.setGameStatus('ongoing'));
+    this.wordService.requestWord(() => this.gameInfoService.setGameStatus('ongoing'));
+    this.setNewWord();
   }
 
   @HostListener('document:keydown', ['$event']) handleKeydownEvent(event: KeyboardEvent): void {

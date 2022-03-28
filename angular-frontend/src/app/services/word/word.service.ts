@@ -41,20 +41,53 @@ export class WordService {
     return this.currWordBS.asObservable();
   }
 
-  public async requestUnlimitedWord() {
+  public requestWord(customFunction: Function = (() => true)) {
     this.setLastWord(this.getCurrWord() !== this.getLastWord() ? this.getCurrWord() : '');
     this.setLastDefinition(this.getCurrWord() !== this.getLastWord() ? this.getCurrWord() : '');
-    this.lastDefinition.unlimited = this.currDefinition.unlimited;
+    let data = {word: '', definition: ''}
+    if (this.appSettingsService.getGameMode() === 'daily') {
+      this.requestDailyWord().then(response => {
+        if (response) {
+          this.setCurrWord(response.data.word);
+          this.setCurrDefinition(response.data.definition);
+          this.applyChanges();
+          customFunction();
+        }
+      });
+    } else if (this.appSettingsService.getGameMode() === 'unlimited') {
+      this.requestUnlimitedWord().then(response => {
+        if (response) {
+          this.setCurrWord(response.data.word);
+          this.setCurrDefinition(response.data.definition);
+          this.applyChanges();
+          customFunction();
+        }
+      });
+    }
+    console.log(data);
+    return true;
+  }
+
+  public async requestDailyWord() {
+    try {
+      var response = await this.axiosInstance.request({
+        method: "get",
+        url: "http://127.0.0.1:8000/api/word/daily/get"
+      });
+      return response;
+    } catch (error) {
+      const err = error as AxiosError;
+      return err.response;
+    }
+  }
+
+  public async requestUnlimitedWord() {
     try {
       var response = await this.axiosInstance.request({
         method: "post",
         url: "http://127.0.0.1:8000/api/word/unlimited/get",
-        data: { num_of_letters: this.appSettingsService.getNumOfLetters() }
+        data: { num_of_letters: this.appSettingsService.getNumOfLetters(), num_of_words: 3000 }
       });
-      this.setCurrWord(response.data.word);
-      this.setCurrDefinition(response.data.definition);
-      this.applyChanges();
-      console.log(response.data);
       return response;
     } catch (error) {
       const err = error as AxiosError;
@@ -72,6 +105,9 @@ export class WordService {
     if (gameMode === 'unlimited') this.currWord.unlimited = value;
     if (gameMode === 'timed') this.currWord.timed = value;
     if (gameMode === 'blitz') this.currWord.blitz = value;
+    this.appSettingsService.setNumOfLetters(value.length);
+    this.appSettingsService.setDifficulty(this.appSettingsService.getDifficulty());
+    this.appSettingsService.applyChanges();
   }
 
   setCurrDefinition(value: string) {
