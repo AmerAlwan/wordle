@@ -1,0 +1,6 @@
+.info-button {
+  margin-left: 10px;
+  padding-bottom: 8px;
+  border-radius: 30px;
+  width: calc(100% - 20px);
+}

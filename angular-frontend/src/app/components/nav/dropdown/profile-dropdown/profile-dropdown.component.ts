@@ -3,6 +3,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { ViewChild } from '@angular/core';
 import { Renderer2 } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { KeydownService } from '../../../../services/keydown/keydown.service';
+import { UserService } from '../../../../services/user/user.service';
+
 
 @Component({
   selector: 'app-profile-dropdown',
@@ -35,24 +39,31 @@ import { AfterViewInit } from '@angular/core';
   ]
 })
 
-
 export class ProfileDropdownComponent implements OnInit, AfterViewInit {
-  username: string = "Anonymous";
+  username: string;
   isDropdownOpen: boolean = false;
+  isLoggedIn: boolean;
 
-  constructor(private renderer: Renderer2) {
-    
+  constructor(private renderer: Renderer2, private keydownService: KeydownService, private userService: UserService) {
+    this.username = this.userService.getUsername();
+    this.isLoggedIn = this.userService.getIsLoggedIn();
   }
 
   ngOnInit(): void {
+    this.userService.watchUser().subscribe(user => {
+      this.username = user.username;
+      this.isLoggedIn = this.userService.getIsLoggedIn();
+    });
   }
 
   ngAfterViewInit() {
-  
-}
+  }
 
   setIsDropdownOpen(open: boolean) {
     this.isDropdownOpen = open;
+    this.isLoggedIn = this.userService.getIsLoggedIn();
+    if (this.isDropdownOpen) this.keydownService.disableKeydown();
+    else this.keydownService.enableKeydown();
   }
 
 }

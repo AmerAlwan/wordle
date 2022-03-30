@@ -1,0 +1,90 @@
+.box {
+  padding: 70px;
+  margin: 2rem;
+  border-radius: 20px;
+  background-color: #292b2c;
+}
+.name{
+    padding-block: 0px;
+    margin-left: 290px;
+}
+.profile {
+  margin-left: 1rem;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 250px;
+  height: 250px;
+  float: left;
+}
+.line {
+  border-bottom: 2px solid #565e64;
+  padding-bottom: 250px;
+}
+.user-info {
+    font-family: candara;
+    color: white;
+}
+.title {
+    transition: color .3s ease-in-out;
+}
+.title:hover {
+    color: gold;
+}
+.mode {
+  border: 2px solid #565e64;
+  margin-top: 20px;
+  border-radius: 30px;
+  padding-block:50px;
+}
+.daily {
+  background-color: grey;
+}
+.unlimited {
+  background-color: #002800;
+}
+
+.timed {
+  background-color: #db6b08;
+}
+
+.blitz {
+  background-color: #8c0000;
+}
+
+
+.desc {
+  color: white;
+  font-family: candara;
+  font-weight: bold;
+  padding-left: 2rem;
+}
+
+
+.m-box {
+  background-color: #292b2c;
+}
+.m-img {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+  width: 50%;
+  height: auto;
+  display: block;
+}
+.m-text {
+  color: white;
+  text-align: center
+}
+.m-line {
+  border-bottom: 2px solid #565e64;
+  padding-bottom: 20px;
+}
+.m-mode {
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border: 2px solid #565e64;
+  margin-top: 20px;
+  border-radius: 30px;
+  padding-block: 20px;
+}

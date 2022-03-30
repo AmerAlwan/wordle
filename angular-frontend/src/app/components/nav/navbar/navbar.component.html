@@ -13,7 +13,13 @@
     <div class="collapse navbar-collapse" id="navbarContent" [ngbCollapse]="!isCollapsed">
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link active" href="/game">Home</a>
+          <a class="nav-link active nav-word" href="/game">Home</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <fa-icon class="settings-icon" [icon]="faCircleInfo" *ngIf="!isMobileDevice" style="cursor: pointer" (click)="displayGameInfo()"></fa-icon>
+          <span class="nav-link active" *ngIf="isMobileDevice" style="cursor: pointer" (click)="displayGameInfo()">Game Info</span>
         </li>
       </ul>
       <ul class="navbar-nav">

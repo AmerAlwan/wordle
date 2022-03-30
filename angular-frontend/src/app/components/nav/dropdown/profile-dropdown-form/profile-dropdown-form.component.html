@@ -1,25 +1,21 @@
 <div>
-  <form class="px-4 py-3">
+  <form class="px-4 py-2">
+    <div class="alert alert-success" role="alert" *ngIf="isSuccess || isRegistered" [ngStyle]="{'margin-top': isRegisterMode ? '10px' : '0'}">{{responseMessage}}</div>
+    <div class="alert alert-danger" role="alert" *ngIf="isError" [ngStyle]="{'margin-top': isRegisterMode ? '10px' : '0'}">{{responseMessage}}</div>
     <div class="mb-3" [@revealUsernameField]="isRegisterMode ? 'reveal' : 'hide'">
-      <label for="exampleDropdownFormEmail1">Username</label>
-      <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="Enter username" autocomplete="username">
+      <label class="input-label" for="usernameField">Username</label>
+      <input type="text" class="form-control" id="usernameField" placeholder="Enter username" autocomplete="username" name="username" [(ngModel)]="username" />
     </div>
     <div class="mb-3">
-      <label for="exampleDropdownFormEmail1">{{isRegisterMode ? "Email Address:" : "Username/Email Address"}}</label>
-      <input type="email" class="form-control" id="exampleDropdownFormEmail1" [placeholder]="isRegisterMode ? 'Enter email address' : 'Enter username/email'" autocomplete="username">
+      <label class="input-label" for="usernameEmailAddressField">{{isRegisterMode ? "Email Address:" : "Username/Email Address"}}</label>
+      <input type="text" class="form-control" id="usernameEmailAddressField" [placeholder]="isRegisterMode ? 'Enter email address' : 'Enter username/email'" autocomplete="username" name="email" [(ngModel)]="email" [disabled]="isSuccess" />
     </div>
     <div class="mb-3">
-      <label for="exampleDropdownFormPassword1">Password</label>
-      <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password" autocomplete="current-password">
+      <label class="input-label" for="passwordField">Password</label>
+      <input type="password" class="form-control" id="passwordField" placeholder="Password" autocomplete="current-password" name="password" [(ngModel)]="password" [disabled]="isSuccess" />
     </div>
-    <div class="form-check">
-      <input type="checkbox" class="form-check-input" id="dropdownCheck">
-      <label class="form-check-label" for="dropdownCheck">
-        Remember me
-      </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Sign in</button>
+    <button id="submitButton" type="submit" class="btn btn-primary" (click)="submitForm()" [disabled]="isSuccess">{{isRegisterMode ? "Sign Up" : "Sign In"}}</button>
   </form>
   <div class="dropdown-divider"></div>
-  <button id="showRegisterButton" #showRegisterButton ngbDropdownItem (click)="toggleRegisterMode()">{{isRegisterMode ? "Login" : "Register"}}</button>
+  <button id="showRegisterButton" #showRegisterButton ngbDropdownItem (click)="toggleRegisterMode()" [disabled]="isSuccess">{{isRegisterMode ? "Login" : "Register"}}</button>
 </div>

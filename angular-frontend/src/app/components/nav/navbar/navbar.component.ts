@@ -1,5 +1,8 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faGear, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-navbar',
@@ -10,9 +13,11 @@ export class NavbarComponent implements OnInit {
   @Input() showRegister: boolean = false;
   @Input() showLogin: boolean = false;
   @Output() displaySettingsEmitter = new EventEmitter<boolean>();
+  @Output() displayGameInfoEmitter = new EventEmitter<boolean>();
   isMobileDevice: boolean = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   isCollapsed: boolean = false;
-  faGear=faGear
+  faGear = faGear as IconProp
+  faCircleInfo = faCircleInfo as IconProp
 
   constructor() { }
 
@@ -21,6 +26,10 @@ export class NavbarComponent implements OnInit {
 
   displaySettings() {
     this.displaySettingsEmitter.emit(true);
+  }
+
+  displayGameInfo() {
+    this.displayGameInfoEmitter.emit(true);
   }
 
 }

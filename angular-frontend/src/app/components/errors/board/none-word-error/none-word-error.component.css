@@ -11,4 +11,9 @@
   font-size: 16px;
   font-weight: bold;
   padding: 0.8rem;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 70%;
+  z-index: 1000;
 }

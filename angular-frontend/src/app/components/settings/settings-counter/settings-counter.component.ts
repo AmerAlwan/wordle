@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { IconProp, library } from '@fortawesome/fontawesome-svg-core';
+import {faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-settings-counter',
@@ -11,8 +12,9 @@ export class SettingsCounterComponent implements OnInit {
   @Input() min: number = 0;
   @Input() max: number = 0;
   @Output() onValueChange = new EventEmitter<number>();
-  faCirclePlus = faCirclePlus
-  faCircleMinus = faCircleMinus
+  faCirclePlus = faCirclePlus as IconProp
+  faCircleMinus = faCircleMinus as IconProp
+  isMobileDevice: boolean = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
   constructor() { }
 
@@ -20,14 +22,22 @@ export class SettingsCounterComponent implements OnInit {
   }
 
   increaseValue() {
-    if (this.value < this.max) {
-      this.onValueChange.emit(++this.value);
+    this.value++;
+    if (this.value <= this.max) {
+      this.onValueChange.emit(this.value);
+    } else {
+      this.onValueChange.emit(this.min);
+      this.value = this.min;
     }
   }
 
   decreaseValue() {
-    if (this.value > this.min) {
-      this.onValueChange.emit(--this.value);
+    this.value--;
+    if (this.value >= this.min) {
+      this.onValueChange.emit(this.value);
+    } else {
+      this.onValueChange.emit(this.max);
+      this.value = this.max;
     }
   }
 

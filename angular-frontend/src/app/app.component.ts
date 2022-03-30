@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-frontend';
+  constructor(private router: Router, userService: UserService) {
+    router.events.subscribe((val) => {
+      userService.loadUserFromLocalStorage();
+    });
+  }
 }

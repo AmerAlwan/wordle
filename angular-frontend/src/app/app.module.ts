@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { NgToggleModule } from '@nth-cloud/ng-toggle';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GamePageComponent } from './pages/game-page/game-page.component';
@@ -22,6 +22,13 @@ import { SettingsContainerComponent } from './components/settings/settings-conta
 import { SettingsContentComponent } from './components/settings/settings-content/settings-content.component';
 import { SettingsCounterComponent } from './components/settings/settings-counter/settings-counter.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SettingsToggleComponent } from './components/settings/settings-toggle/settings-toggle.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
+import { AppSettingsService } from './services/appsettings/app-settings.service';
+import { GameInfoContainerComponent } from './components/stats/gameinfo/game-info-container/game-info-container.component';
+import { GameInfoContentComponent } from './components/stats/gameinfo/game-info-content/game-info-content.component';
 
 
 @NgModule({
@@ -42,16 +49,22 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NoneWordErrorComponent,
     SettingsContainerComponent,
     SettingsContentComponent,
-    SettingsCounterComponent
+    SettingsCounterComponent,
+    SettingsToggleComponent,
+    ProfilePageComponent,
+    GameInfoContainerComponent,
+    GameInfoContentComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    NgToggleModule
   ],
-  providers: [],
+  providers: [AppSettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
