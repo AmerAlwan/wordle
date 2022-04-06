@@ -57,6 +57,22 @@ export class AppSettingsService {
     return this.settings.difficulty;
   }
 
+  getTimedModeTimeLimitInMinutes(): number {
+    return this.settings.timedModeTimeLimitInMinutes;
+  }
+
+  getBlitzModeTimeLimitInMinutes(): number {
+    return this.settings.blitzModeTimeLimitInMinutes;
+  }
+
+  getTimeLimitInMinutes(): number {
+    return this.settings.gameMode === 'timed' ? this.settings.timedModeTimeLimitInMinutes : this.settings.gameMode === 'blitz' ? this.settings.blitzModeTimeLimitInMinutes : 1;
+  }
+
+  getTimeLimitInSeconds(): number {
+    return this.getTimeLimitInMinutes() * 60;
+  }
+
   setGameMode(value: string) {
     this.savePrevSettings();
     this.settings.gameMode = value;
@@ -68,6 +84,14 @@ export class AppSettingsService {
 
   setNumOfLetters(value: number) {
     this.settings.numOfLetters = value;
+  }
+
+  setTimedModeTimeLimitInMinutes(value: number) {
+    this.settings.timedModeTimeLimitInMinutes = value;
+  }
+
+  setBlitzModeTimeLimitInMinutes(value: number) {
+    this.settings.blitzModeTimeLimitInMinutes = value;
   }
 
   setDifficulty(value: string) {
@@ -112,6 +136,8 @@ export class AppSettingsService {
       this.settings.backgroundMode = lcSettings.backgroundMode;
       this.settings.colorValue = lcSettings.colorValue;
       this.settings.backgroundValue = lcSettings.backgroundValue;
+      this.settings.timedModeTimeLimitInMinutes = lcSettings.timedModeTimeLimitInMinutes;
+      this.settings.blitzModeTimeLimitInMinutes = lcSettings.blitzModeTimeLimitInMinutes;
       this.settings.screenHeight = this.calcScreenHeight();
     }
     this.applyChanges();

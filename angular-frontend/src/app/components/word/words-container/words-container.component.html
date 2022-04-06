@@ -1,4 +1,10 @@
 <!--<div class="words-game">-->
+<div class="blitz-words-row" *ngIf="blitzWords.length !== 0">
+  <app-blitz-words [blitzWords]="blitzWords"></app-blitz-words>
+</div>
+<div class="countdown-row" *ngIf="isTimerDisplay">
+  <app-countdown-timer [initialTimeValue]="countdownValue" [isTimerStart]="isCountdownStart" (timeoutEventEmitter)="isCountdownTimeout()"></app-countdown-timer>
+</div>
 <app-none-word-error [displayError]="displayNoneWordError" (onDisplayedError)="hideNoneWordError()"></app-none-word-error>
 <div class="words-container">
   <div class="words-board" [ngStyle]="{'grid-template-rows': 'repeat(' + numOfAttempts.length + ', 1fr)', 'width': 70 * numOfLetters.length + 'px', 'height': 60 * numOfAttempts.length, 'max-width': maxScreenWidth + 'px'}">

@@ -12,7 +12,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
   @Input() isSaved: boolean = false;
   wordLength: number = 5;
   numOfAttempts: number = 6;
-  timeLimit: number = 2;
+  timedModeTimeLimit: number = 1;
+  blitzModeTimeLimit: number = 1;
   forcedReuseMode: boolean = false;
   noSecondChanceMode: boolean = false;
   isToggleInit: boolean = false;
@@ -42,6 +43,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       this.backgroundMode = settings.backgroundMode;
       this.chosenBackgroundValue = settings.backgroundValue;
       this.chosenColorValue = settings.colorValue;
+      this.timedModeTimeLimit = settings.timedModeTimeLimitInMinutes;
+      this.blitzModeTimeLimit = settings.blitzModeTimeLimitInMinutes;
     } else {
       this.difficulty = 'easy';
       this.gameMode = 'daily';
@@ -50,6 +53,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       this.backgroundMode = 'color';
       this.chosenBackgroundValue = '';
       this.chosenColorValue = this.colorOptions[0];
+      this.timedModeTimeLimit = 1;
+      this.blitzModeTimeLimit = 1;
     }
    
 
@@ -83,16 +88,32 @@ export class SettingsContentComponent implements OnInit, OnChanges {
     this.appSettingsService.setNumOfAttempts(this.numOfAttempts);
     this.appSettingsService.setGameMode(this.gameMode);
     this.appSettingsService.setDifficulty(this.difficulty);
+    this.appSettingsService.setTimedModeTimeLimitInMinutes(this.timedModeTimeLimit);
+    this.appSettingsService.setBlitzModeTimeLimitInMinutes(this.blitzModeTimeLimit);
     this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenColorValue, this.chosenBackgroundValue);
     this.appSettingsService.applyChanges();
     this.isSaved = false;
-    let settingsJSON: object = { numOfLetters: this.wordLength, numOfAttempts: this.numOfAttempts, difficulty: this.difficulty, gameMode: this.gameMode, backgroundMode: this.backgroundMode, colorValue: this.chosenColorValue, backgroundValue: this.chosenBackgroundValue };
+    let settingsJSON: object = {
+      numOfLetters: this.wordLength,
+      numOfAttempts: this.numOfAttempts,
+      difficulty: this.difficulty,
+      gameMode: this.gameMode,
+      backgroundMode: this.backgroundMode,
+      colorValue: this.chosenColorValue,
+      backgroundValue: this.chosenBackgroundValue,
+      timedModeTimeLimitInMinutes: this.timedModeTimeLimit,
+      blitzModeTimeLimitInMinutes: this.blitzModeTimeLimit
+    };
     localStorage.setItem('settings', JSON.stringify(settingsJSON));
 
   }
 
   onTimeLimitChange(value: number) {
-    this.timeLimit = value;
+    if (this.gameMode === 'timed') {
+      this.timedModeTimeLimit = value;
+    } else if (this.gameMode === 'blitz') {
+      this.blitzModeTimeLimit = value;
+    }
   }
 
   onWordLengthChange(value: number) {

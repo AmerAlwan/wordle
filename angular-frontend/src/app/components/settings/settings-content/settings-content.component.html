@@ -109,7 +109,7 @@
           <div class="input-setting-title text-center">Time Limit</div>
           <div class="input-setting-description text-center">Time limit in minutes</div>
           <div class="setting-counter">
-            <app-settings-counter [value]="timeLimit" (onValueChange)="onTimeLimitChange($event)" [min]="1" [max]="60"></app-settings-counter>
+            <app-settings-counter [value]="gameMode === 'timed' ? timedModeTimeLimit : gameMode === 'blitz' ? blitzModeTimeLimit : 1" (onValueChange)="onTimeLimitChange($event)" [min]="1" [max]="60"></app-settings-counter>
           </div>
         </div>
       </div>

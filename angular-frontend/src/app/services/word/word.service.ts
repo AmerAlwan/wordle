@@ -54,7 +54,7 @@ export class WordService {
           customFunction();
         }
       });
-    } else if (this.appSettingsService.getGameMode() === 'unlimited') {
+    } else if (this.appSettingsService.getGameMode() === 'unlimited' || this.appSettingsService.getGameMode() === 'timed' || this.appSettingsService.getGameMode() === 'blitz') {
       this.requestUnlimitedWord().then(response => {
         if (response) {
           this.setCurrWord(response.data.word);

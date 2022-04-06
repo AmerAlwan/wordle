@@ -8,5 +8,7 @@ export class AppSettings {
   backgroundValue: string = '';
   difficulty: string = 'easy';
   gameMode: string = 'daily';
+  timedModeTimeLimitInMinutes: number = 60;
+  blitzModeTimeLimitInMinutes: number = 60;
   screenHeight: number = window.innerHeight;
 }

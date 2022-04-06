@@ -23,12 +23,14 @@ import { SettingsContentComponent } from './components/settings/settings-content
 import { SettingsCounterComponent } from './components/settings/settings-counter/settings-counter.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SettingsToggleComponent } from './components/settings/settings-toggle/settings-toggle.component';
-import { CommonModule } from '@angular/common';
+import { CountdownModule } from 'ngx-countdown';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { AppSettingsService } from './services/appsettings/app-settings.service';
 import { GameInfoContainerComponent } from './components/stats/gameinfo/game-info-container/game-info-container.component';
 import { GameInfoContentComponent } from './components/stats/gameinfo/game-info-content/game-info-content.component';
+import { CountdownTimerComponent } from './components/timer/countdown-timer/countdown-timer.component';
+import { BlitzWordsComponent } from './components/timer/blitz-words/blitz-words.component';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { GameInfoContentComponent } from './components/stats/gameinfo/game-info-
     SettingsToggleComponent,
     ProfilePageComponent,
     GameInfoContainerComponent,
-    GameInfoContentComponent
+    GameInfoContentComponent,
+    CountdownTimerComponent,
+    BlitzWordsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,8 @@ import { GameInfoContentComponent } from './components/stats/gameinfo/game-info-
     NgbModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
-    NgToggleModule
+    NgToggleModule,
+    CountdownModule
   ],
   providers: [AppSettingsService],
   bootstrap: [AppComponent]

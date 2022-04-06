@@ -27,6 +27,10 @@ export class WordsContainerComponent implements OnInit {
   letterStatus: { [index: number]: Array<string> };
   maxScreenWidth: number = screen.width * window.devicePixelRatio - 400;
   displayNoneWordError: boolean = false;
+  isTimerDisplay: boolean = false;
+  isCountdownStart: boolean = false;
+  countdownValue: number;
+  blitzWords: Array<{ [index: string]: string }>;
 
   constructor(private appSettingsService: AppSettingsService, private spellChecker: SpellCheckerClientService, private keydownService: KeydownService, private wordService: WordService, private gameInfoService: GameInfoService) {
     this.word = "";
@@ -38,6 +42,9 @@ export class WordsContainerComponent implements OnInit {
     this.typed_words = {};
     this.letterStatus = {};
     this.setNewWord();
+    this.countdownValue = this.appSettingsService.getTimeLimitInSeconds();
+    this.isTimerDisplay = this.appSettingsService.getGameMode() === 'timed' || this.appSettingsService.getGameMode() === 'blitz';
+    this.blitzWords = [];
   }
 
   ngOnInit(): void {
@@ -48,6 +55,7 @@ export class WordsContainerComponent implements OnInit {
       console.log("Prev Game Mode: " + prevGameMode);
       console.log("Curr Game Mode: " + settings.gameMode);
       if (settings.gameMode !== prevGameMode) {
+        this.isTimerDisplay = this.appSettingsService.getGameMode() === 'timed' || this.appSettingsService.getGameMode() === 'blitz';
         this.getNewWord();
       }
       else if (settings.numOfAttempts < this.numOfAttempts.length || this.numOfLetters.length !== settings.numOfLetters) {
@@ -67,8 +75,10 @@ export class WordsContainerComponent implements OnInit {
         this.numOfAttempts = Array(settings.numOfAttempts).fill(0).map((x, i) => i);
       }
 
+      this.countdownValue = this.appSettingsService.getTimeLimitInSeconds();
 
-      let screenHeight = window.innerHeight;
+
+      /*let screenHeight = window.innerHeight;
       let rowSize = 62;
       let takenSpace = 310;
       let screenHeightCalculation = Math.min(
@@ -78,14 +88,14 @@ export class WordsContainerComponent implements OnInit {
         this.numOfAttempts.length,
         rowSize  
           )
-         * rowSize);
+         * rowSize);*/
 
      // console.log("Screen height: " + screenHeight);
      // console.log("Overflowing Tiles: " + this.getNumRowsOverflowingHeight(screenHeight - 279, this.numOfAttempts.length));
 
-      if (this.appSettingsService.getScreenHeight() !== screenHeightCalculation) {
-        this.appSettingsService.setScreenHeight(screenHeightCalculation);
-      }
+      //if (this.appSettingsService.getScreenHeight() !== screenHeightCalculation) {
+        //this.appSettingsService.setScreenHeight(screenHeightCalculation);
+      //}
 
       console.log("Attempts: " + this.numOfAttempts.length);
       console.log("Letters: " + this.numOfLetters.length);
@@ -122,6 +132,40 @@ export class WordsContainerComponent implements OnInit {
         this.letterStatus[i][j] = '';
       }
     }
+  }
+
+  isCountdownTimeout() {
+    if (this.appSettingsService.getGameMode() === 'blitz') {
+      if (this.blitzWords.length === 0) this.declareGameLost();
+      else this.declareGameWon();
+    } else this.declareGameLost();
+  }
+
+  declareGameStatus() {
+    if (this.appSettingsService.getGameMode() === 'blitz') {
+      if (this.isGameWon()) {
+        this.blitzWords.push({ word: this.word, status: 'win' });
+        setTimeout(() => this.getNewWord(), 1500);
+      } else if (this.isGameLost()) {
+        this.blitzWords.push({ word: this.word, status: 'lose' });
+        setTimeout(() => this.getNewWord(), 1500);
+      }
+    }
+    else if (this.isGameWon()) this.declareGameWon();
+    else if (this.isGameLost()) this.declareGameLost();
+    
+  }
+
+  declareGameWon() {
+    console.log('WIN');
+    this.isCountdownStart = false;
+    setTimeout(() => this.gameInfoService.setGameStatus('win'), 1500);
+  }
+
+  declareGameLost() {
+    console.log('LOST');
+    this.isCountdownStart = false;
+    setTimeout(() => this.gameInfoService.setGameStatus('lose'), 1500);
   }
 
   getNumRowsOverflowingHeight(freeSpace: number, maxRows: number, rowSize: number): number {
@@ -178,8 +222,8 @@ export class WordsContainerComponent implements OnInit {
     return isGameWon;
   }
 
-  isGameLost(): boolean {
-    return !this.isGameWon() && this.curr_typed_word_index === this.numOfAttempts.length;
+  isGameLost(lossOverride: boolean = false): boolean {
+    return !this.isGameWon() && (this.curr_typed_word_index === this.numOfAttempts.length || lossOverride);
   }
 
   async setTypedWordStatus(text: string): Promise<boolean> {
@@ -220,13 +264,7 @@ export class WordsContainerComponent implements OnInit {
       this.curr_typed_word_index++;
       this.keyboard_letter_status_change.emit(this.keyboard_letter_status);
 
-      if (this.isGameWon()) {
-        console.log('WIN');
-        setTimeout(() => this.gameInfoService.setGameStatus('win'), 1500);
-      } else if (this.isGameLost()) {
-        console.log('LOST');
-        setTimeout(() => this.gameInfoService.setGameStatus('lose'), 1500);
-      }
+      this.declareGameStatus();
 
       return true;
     });
@@ -249,6 +287,7 @@ export class WordsContainerComponent implements OnInit {
     if (this.keydownService.isEnabled()) {
       if (key.length === 1 && key.match(/^[a-z]/) && this.wordIndex < this.maxWordIndex) {
         this.typed_words[this.curr_typed_word_index][this.wordIndex++] = key;
+        this.isCountdownStart = true;
       } else if (key === 'backspace' && this.wordIndex > 0) {
         this.typed_words[this.curr_typed_word_index][--this.wordIndex] = ''
       } else if (key === 'enter' && this.wordIndex === this.maxWordIndex) {

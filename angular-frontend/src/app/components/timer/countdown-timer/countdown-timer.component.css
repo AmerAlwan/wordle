@@ -1,0 +1,25 @@
+#TIMER-CONTAINER {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+}
+
+#TIMER-CONTENT {
+  border: 1px solid black;
+  padding: 5px 30px;
+  opacity: 0.9;
+  font-weight: bold;
+  font-size: 60px;
+  font-family: 'Times New Roman' 'Courier New';
+}
+
+.timer-content-absolute {
+    position: absolute;
+}
+
+.timer-content-fixed {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}

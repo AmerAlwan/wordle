@@ -27,7 +27,6 @@ export class GamePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSettingsService.setSettingsFromLocalStorage();
     this.appSettingsService.getSettings().subscribe((settings) => {
       console.log("New color: " + settings.backgroundValue);
       this.backgroundMode = settings.backgroundMode;
@@ -36,9 +35,12 @@ export class GamePageComponent implements OnInit {
       } else if (settings.backgroundMode === 'color') {
         this.backgroundValue = settings.colorValue;
       }
+
+      document.body.style.background = this.backgroundValue;
+      document.body.style.backgroundSize = 'cover';
       
-      this.screenHeight = settings.screenHeight;
-      this.screenWidth = window.innerWidth;
+    //  this.screenHeight = settings.screenHeight;
+     // this.screenWidth = window.innerWidth;
     });
 
     this.gameInfoService.watchGameInfo().subscribe(gameInfo => {
