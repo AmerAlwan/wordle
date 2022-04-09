@@ -43,7 +43,7 @@ export class WordService {
 
   public requestWord(customFunction: Function = (() => true)) {
     this.setLastWord(this.getCurrWord() !== this.getLastWord() ? this.getCurrWord() : '');
-    this.setLastDefinition(this.getCurrWord() !== this.getLastWord() ? this.getCurrWord() : '');
+    this.setLastDefinition(this.getCurrDefinition() !== this.getLastDefinition() ? this.getCurrDefinition() : '');
     let data = {word: '', definition: ''}
     if (this.appSettingsService.getGameMode() === 'daily') {
       this.requestDailyWord().then(response => {
@@ -54,7 +54,9 @@ export class WordService {
           customFunction();
         }
       });
-    } else if (this.appSettingsService.getGameMode() === 'unlimited' || this.appSettingsService.getGameMode() === 'timed' || this.appSettingsService.getGameMode() === 'blitz') {
+    } else if (this.appSettingsService.getGameMode() === 'unlimited' ||
+      this.appSettingsService.getGameMode() === 'timed' ||
+      this.appSettingsService.getGameMode() === 'blitz') {
       this.requestUnlimitedWord().then(response => {
         if (response) {
           this.setCurrWord(response.data.word);

@@ -1,0 +1,21 @@
+<div @toggleGameInfo
+     class="modal"
+     id="leaderboard-container"
+     tabindex="-1"
+     role="dialog"
+     *ngIf="isDisplayLeaderboard">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Leaderboard</h4>
+      </div>
+      <app-leaderboard-content></app-leaderboard-content>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger"
+                (click)="closePopup()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,3 @@
 <div id="BLITZ-WORDS-CONTAINER">
-  <p *ngFor="let word of blitzWords" [ngClass]="{'win-status': word['status'] === 'win', 'lose-status': word['status'] === 'lose'}">{{word['word']}}</p>
+  <p *ngFor="let word of blitzWords" class="blitz-word" [ngClass]="{'win-status': word['status'] === 'win', 'lose-status': word['status'] === 'lose'}">{{word['word']}}</p>
 </div>

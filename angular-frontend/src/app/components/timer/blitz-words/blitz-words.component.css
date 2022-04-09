@@ -1,7 +1,30 @@
+#BLITZ-WORDS-CONTAINER {
+  /*display: flex;
+  height: 40px;
+  margin-top: 10px;*/
+  background-color: #2125298c;
+  border-radius: 5px;
+  /*align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;*/
+  padding: 5px 10px;
+}
+
+.blitz-word {
+    display: inline-block;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
 .win-status {
-    color: green;
+  color: #0a910a;
 }
 
 .lose-status {
-    color: red;
+  color: #b30000;
 }
+
+p {
+  margin: unset;
+}
+

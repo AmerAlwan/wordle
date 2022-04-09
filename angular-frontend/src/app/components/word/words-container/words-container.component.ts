@@ -21,6 +21,7 @@ export class WordsContainerComponent implements OnInit {
   curr_typed_word_index: number;
   numOfAttempts: Array<number>;
   numOfLetters: Array<number>;
+  gridSize: number = 62;
   typed_words: { [index: number]: Array<string> };
   wordIndex: number;
   maxWordIndex: number;
@@ -139,6 +140,16 @@ export class WordsContainerComponent implements OnInit {
       if (this.blitzWords.length === 0) this.declareGameLost();
       else this.declareGameWon();
     } else this.declareGameLost();
+  }
+
+  setGridSize() {
+    let size = (this.numOfLetters.length * 62) + ((this.numOfLetters.length - 1) * 5) + 10;
+    if (size > window.innerWidth) {
+      this.gridSize = (this.numOfLetters.length * (window.innerWidth / (this.numOfLetters.length + 2))) + ((this.numOfLetters.length - 1) * 5) + 10;
+    } else {
+      this.gridSize = size;
+    }
+    console.log("GRID SIZE: " + this.gridSize);
   }
 
   declareGameStatus() {
@@ -275,6 +286,7 @@ export class WordsContainerComponent implements OnInit {
     this.resetValues();
     this.word = this.wordService.getCurrWord();
     this.maxWordIndex = this.word.length;
+    this.setGridSize();
   }
 
   getNewWord() {

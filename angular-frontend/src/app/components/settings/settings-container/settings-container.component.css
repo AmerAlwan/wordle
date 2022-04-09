@@ -2,12 +2,16 @@
    display: block;
 }
 
+.modal-title {
+  font-weight: bold;
+}
+
 .modal-content {
   background-color: #121213;
   color: white;
   opacity: 0.85;
 }
 
-.modal-title {
-    font-weight: bold;
+.modal-body {
+    overflow-y: scroll;
 }

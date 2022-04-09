@@ -1,0 +1,25 @@
+.draggable-container {
+  position: fixed;
+  cursor: move;
+  background: inherit;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .3);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.draggable-container:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  box-shadow: inset 0 0 2000px rgba(207, 207, 207, .5);
+  filter: blur(5px);
+  background: inherit;
+}
+
+.timer-container {
+    width: 200px !important;
+}

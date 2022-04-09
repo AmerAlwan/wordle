@@ -1,13 +1,14 @@
 <!--<div class="words-game">-->
-<div class="blitz-words-row" *ngIf="blitzWords.length !== 0">
+<div class="blitz-words-row" *ngIf="blitzWords.length !== 0" [ngStyle]="{'width': ((numOfLetters.length * 62) + ((numOfLetters.length - 1) * 5)) + 'px'}">
   <app-blitz-words [blitzWords]="blitzWords"></app-blitz-words>
 </div>
 <div class="countdown-row" *ngIf="isTimerDisplay">
   <app-countdown-timer [initialTimeValue]="countdownValue" [isTimerStart]="isCountdownStart" (timeoutEventEmitter)="isCountdownTimeout()"></app-countdown-timer>
+  <!--<app-draggable-container></app-draggable-container>-->
 </div>
 <app-none-word-error [displayError]="displayNoneWordError" (onDisplayedError)="hideNoneWordError()"></app-none-word-error>
 <div class="words-container">
-  <div class="words-board" [ngStyle]="{'grid-template-rows': 'repeat(' + numOfAttempts.length + ', 1fr)', 'width': 70 * numOfLetters.length + 'px', 'height': 60 * numOfAttempts.length, 'max-width': maxScreenWidth + 'px'}">
+  <div class="words-board" [ngStyle]="{'grid-template-rows': 'repeat(' + numOfAttempts.length + ', 1fr)', 'width': gridSize + 'px', 'height': 60 * numOfAttempts.length, 'max-width': maxScreenWidth + 'px'}">
     <app-full-word *ngFor="let currAttempt of numOfAttempts; let i=index" [word]="typed_words[i]" [letterStatus]="letterStatus[i]" [keyboard_letter_status]="keyboard_letter_status" (keydown)="handleKeydownEvent($event)"></app-full-word>
   </div>
 </div>

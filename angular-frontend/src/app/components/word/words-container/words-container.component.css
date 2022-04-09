@@ -25,3 +25,9 @@
     padding: 10px;
     box-sizing: border-box;
 }
+
+.blitz-words-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}

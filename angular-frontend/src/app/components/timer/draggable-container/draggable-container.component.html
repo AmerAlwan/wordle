@@ -1,0 +1,14 @@
+<div #container class="draggable-container"
+     [style.width.px]="width"
+     [style.height.px]="height"
+     [style.transform]="'translate3d(' + left + 'px,' + top + 'px,' + '0px)'"
+     (mousedown)="setIsClicked($event)"
+     (window:mouseup)="setIsNotClicked()"
+     [ngClass]="{'timer-container': content === 'timer'}"
+     >
+  <div class="draggable-container-content">
+    <div class="countdown-timer-content" *ngIf="content === 'timer'">
+      <app-countdown-timer></app-countdown-timer>
+    </div>
+  </div>
+</div>

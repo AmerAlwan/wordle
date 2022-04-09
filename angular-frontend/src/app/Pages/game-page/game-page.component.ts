@@ -12,6 +12,7 @@ import { GameInfoService } from '../../services/gameinfo/game-info.service';
 export class GamePageComponent implements OnInit {
   isDisplaySettings: boolean = false;
   isDisplayGameInfo: boolean = false;
+  isDisplayLeaderboard: boolean = false;
   isBlurPage: boolean = false;
   backgroundMode: string = 'background-color'
   backgroundValue: string = '#121213';
@@ -70,6 +71,13 @@ export class GamePageComponent implements OnInit {
     this.isDisplayGameInfo = GameInfoStatus;
     this.isBlurPage = GameInfoStatus;
     if (this.isDisplayGameInfo) this.keydownService.disableKeydown();
+    else if (this.gameInfoService.isGameStatusOngoing()) this.keydownService.enableKeydown();
+  }
+
+  displayLeaderboard(leaderboardStatus: boolean) {
+    this.isDisplayLeaderboard = leaderboardStatus;
+    this.isBlurPage = leaderboardStatus;
+    if (this.isDisplayLeaderboard) this.keydownService.disableKeydown();
     else if (this.gameInfoService.isGameStatusOngoing()) this.keydownService.enableKeydown();
   }
 
