@@ -1,6 +1,7 @@
 <app-settings-container [isDisplaySettings]="isDisplaySettings" (displaySettingsEmitter)="displaySettings($event)"></app-settings-container>
+<app-leaderboard-container [isDisplayLeaderboard]="isDisplayLeaderboard" (displayLeaderboardEmitter)="displayLeaderboard($event)"></app-leaderboard-container>
 <app-game-info-container [isDisplayGameInfo]="isDisplayGameInfo" (displayGameInfoEmitter)="displayGameInfo($event)"></app-game-info-container>
 <div class="game-page-container" [ngClass]="{'blur-page': isBlurPage}" [ngStyle]="{'background' : backgroundValue}">
-  <app-navbar [showLogin]="true" (displaySettingsEmitter)="displaySettings($event)" (displayGameInfoEmitter)="displayGameInfo($event)"></app-navbar>
+  <app-navbar [showLogin]="true" (displaySettingsEmitter)="displaySettings($event)" (displayGameInfoEmitter)="displayGameInfo($event)" (displayLeaderboardEmitter)="displayLeaderboard($event)"></app-navbar>
   <app-board-container></app-board-container>
 </div>

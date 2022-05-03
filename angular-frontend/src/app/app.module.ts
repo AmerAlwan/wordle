@@ -31,6 +31,9 @@ import { GameInfoContainerComponent } from './components/stats/gameinfo/game-inf
 import { GameInfoContentComponent } from './components/stats/gameinfo/game-info-content/game-info-content.component';
 import { CountdownTimerComponent } from './components/timer/countdown-timer/countdown-timer.component';
 import { BlitzWordsComponent } from './components/timer/blitz-words/blitz-words.component';
+import { DraggableContainerComponent } from './components/timer/draggable-container/draggable-container.component';
+import { LeaderboardContainerComponent } from './components/stats/leaderboard/leaderboard-container/leaderboard-container.component';
+import { LeaderboardContentComponent } from './components/stats/leaderboard/leaderboard-content/leaderboard-content.component';
 
 
 @NgModule({
@@ -57,7 +60,10 @@ import { BlitzWordsComponent } from './components/timer/blitz-words/blitz-words.
     GameInfoContainerComponent,
     GameInfoContentComponent,
     CountdownTimerComponent,
-    BlitzWordsComponent
+    BlitzWordsComponent,
+    DraggableContainerComponent,
+    LeaderboardContainerComponent,
+    LeaderboardContentComponent
   ],
   imports: [
     BrowserModule,

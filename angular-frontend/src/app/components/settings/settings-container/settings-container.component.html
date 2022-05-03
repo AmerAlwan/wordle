@@ -5,7 +5,7 @@
      role="dialog"
      *ngIf="isDisplaySettings">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
+    <div class="modal-content" [ngStyle]="{'max-height': maxHeight + 'px'}">
       <div class="modal-header">
         <h4 class="modal-title">Settings</h4>
       </div>

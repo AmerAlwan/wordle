@@ -24,12 +24,15 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 export class SettingsContainerComponent implements OnInit {
   @Input() isDisplaySettings: boolean = false;
   @Output() displaySettingsEmitter = new EventEmitter<boolean>();
-  isSaved: boolean = false;
+  isSaved: boolean;
+  maxHeight: number;
 
-  constructor() { }
+  constructor() {
+    this.isSaved = false;
+    this.maxHeight = window.innerHeight - 100;
+  }
 
   ngOnInit(): void {
-    this.isSaved = false;
   }
 
   saveChanges() {
