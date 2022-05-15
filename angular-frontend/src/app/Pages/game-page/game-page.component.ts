@@ -28,7 +28,7 @@ export class GamePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSettingsService.getSettings().subscribe((settings) => {
+    this.appSettingsService.watchSettings().subscribe((settings) => {
       console.log("New color: " + settings.backgroundValue);
       this.backgroundMode = settings.backgroundMode;
       if (settings.backgroundMode === 'image') {

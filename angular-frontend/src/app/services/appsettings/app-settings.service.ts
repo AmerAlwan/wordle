@@ -19,8 +19,12 @@ export class AppSettingsService {
     this.settingsBS = new BehaviorSubject<AppSettings>(this.settings);
   }
 
-  getSettings(): Observable<AppSettings> {
+  watchSettings(): Observable<AppSettings> {
     return this.settingsBS.asObservable();
+  }
+
+  getSettings(): AppSettings {
+    return this.settings;
   }
 
   getPrevSettings(): AppSettings {
@@ -57,6 +61,14 @@ export class AppSettingsService {
     return this.settings.difficulty;
   }
 
+  getIsNoSecondChanceMode(): boolean {
+    return this.settings.noSecondChance;
+  }
+
+  getIsForcedReuseMode(): boolean {
+    return this.settings.forcedReuse;
+}
+
   getTimedModeTimeLimitInMinutes(): number {
     return this.settings.timedModeTimeLimitInMinutes;
   }
@@ -84,6 +96,14 @@ export class AppSettingsService {
 
   setNumOfLetters(value: number) {
     this.settings.numOfLetters = value;
+  }
+
+  setForcedReuseMode(value: boolean) {
+    this.settings.forcedReuse = value;
+  }
+
+  setNoSecondChanceMode(value: boolean) {
+    this.settings.noSecondChance = value;
   }
 
   setTimedModeTimeLimitInMinutes(value: number) {
@@ -136,11 +156,14 @@ export class AppSettingsService {
       this.settings.backgroundMode = lcSettings.backgroundMode;
       this.settings.colorValue = lcSettings.colorValue;
       this.settings.backgroundValue = lcSettings.backgroundValue;
+      this.settings.forcedReuse = lcSettings.forcedReuse;
+      this.settings.noSecondChance = lcSettings.noSecondChance;
       this.settings.timedModeTimeLimitInMinutes = lcSettings.timedModeTimeLimitInMinutes;
       this.settings.blitzModeTimeLimitInMinutes = lcSettings.blitzModeTimeLimitInMinutes;
       this.settings.screenHeight = this.calcScreenHeight();
     }
     this.applyChanges();
+    console.log(this.settings);
   }
 
   savePrevSettings() {

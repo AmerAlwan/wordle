@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { AppSettingsService } from '../../../services/appsettings/app-settings.service';
 import { AppSettings } from '../../../shared/AppSettings';
 
@@ -10,6 +10,7 @@ import { AppSettings } from '../../../shared/AppSettings';
 
 export class SettingsContentComponent implements OnInit, OnChanges {
   @Input() isSaved: boolean = false;
+  @Output() isSavedEmitter = new EventEmitter(false);
   wordLength: number = 5;
   numOfAttempts: number = 6;
   timedModeTimeLimit: number = 1;
@@ -45,6 +46,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       this.chosenColorValue = settings.colorValue;
       this.timedModeTimeLimit = settings.timedModeTimeLimitInMinutes;
       this.blitzModeTimeLimit = settings.blitzModeTimeLimitInMinutes;
+      this.forcedReuseMode = settings.forcedReuse;
+      this.noSecondChanceMode = settings.noSecondChance;
     } else {
       this.difficulty = 'easy';
       this.gameMode = 'daily';
@@ -90,6 +93,8 @@ export class SettingsContentComponent implements OnInit, OnChanges {
     this.appSettingsService.setDifficulty(this.difficulty);
     this.appSettingsService.setTimedModeTimeLimitInMinutes(this.timedModeTimeLimit);
     this.appSettingsService.setBlitzModeTimeLimitInMinutes(this.blitzModeTimeLimit);
+    this.appSettingsService.setForcedReuseMode(this.forcedReuseMode);
+    this.appSettingsService.setNoSecondChanceMode(this.noSecondChanceMode);
     this.appSettingsService.setBackgroundValues(this.backgroundMode, this.chosenColorValue, this.chosenBackgroundValue);
     this.appSettingsService.applyChanges();
     this.isSaved = false;
@@ -102,9 +107,13 @@ export class SettingsContentComponent implements OnInit, OnChanges {
       colorValue: this.chosenColorValue,
       backgroundValue: this.chosenBackgroundValue,
       timedModeTimeLimitInMinutes: this.timedModeTimeLimit,
-      blitzModeTimeLimitInMinutes: this.blitzModeTimeLimit
+      blitzModeTimeLimitInMinutes: this.blitzModeTimeLimit,
+      forcedReuse: this.forcedReuseMode,
+      noSecondChance: this.noSecondChanceMode
     };
     localStorage.setItem('settings', JSON.stringify(settingsJSON));
+    console.log(settingsJSON);
+    this.isSavedEmitter.emit(true);
 
   }
 

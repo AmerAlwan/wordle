@@ -16,7 +16,7 @@
           Close
         </button>
         <button type="button" class="btn btn-primary"
-                (click)="togglePlayAgain()">
+                (click)="togglePlayAgain()" *ngIf="gameMode !== 'daily'">
           Play Again
         </button>
       </div>

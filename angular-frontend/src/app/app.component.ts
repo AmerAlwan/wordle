@@ -12,8 +12,8 @@ export class AppComponent {
   title = 'angular-frontend';
   constructor(private router: Router, private userService: UserService, private appSettingsService : AppSettingsService) {
     router.events.subscribe((val) => {
-      this.userService.loadUserFromLocalStorage();
-      this.appSettingsService.setSettingsFromLocalStorage();
     });
+    this.userService.loadUserFromLocalStorage();
+    this.appSettingsService.setSettingsFromLocalStorage();
   }
 }

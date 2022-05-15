@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\YESYESYES\Desktop\wordle\python-backend\venv"
+VIRTUAL_ENV="C:\Users\me\Desktop\Projects\wordle\python-backend\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

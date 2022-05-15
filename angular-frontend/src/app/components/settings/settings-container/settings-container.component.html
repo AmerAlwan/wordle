@@ -10,7 +10,7 @@
         <h4 class="modal-title">Settings</h4>
       </div>
       <div class="modal-body">
-        <app-settings-content [isSaved]="isSaved"></app-settings-content>
+        <app-settings-content [isSaved]="isSaved" (isSavedEmitter)="closePopup()"></app-settings-content>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger"

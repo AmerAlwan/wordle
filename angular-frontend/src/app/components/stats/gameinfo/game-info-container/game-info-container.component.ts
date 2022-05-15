@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { WordService } from '../../../../services/word/word.service';
 import { GameInfoService } from '../../../../services/gameinfo/game-info.service';
+import { AppSettingsService } from '../../../../services/appsettings/app-settings.service';
 
 @Component({
   selector: 'app-game-info-container',
@@ -22,15 +23,20 @@ import { GameInfoService } from '../../../../services/gameinfo/game-info.service
     ])
   ]
 })
-export class GameInfoContainerComponent implements OnInit {
+export class GameInfoContainerComponent implements OnInit, OnChanges {
   @Input() isDisplayGameInfo: boolean = false;
   @Output() displayGameInfoEmitter = new EventEmitter<boolean>();
+  gameMode: string = "";
 
-  constructor(private wordService: WordService, private gameInfoService: GameInfoService) {
-
+  constructor(private wordService: WordService, private gameInfoService: GameInfoService, private appSettingsService: AppSettingsService) {
   }
 
   ngOnInit(): void {
+    this.gameMode = this.appSettingsService.getGameMode();
+  }
+
+  ngOnChanges(): void {
+    this.gameMode = this.appSettingsService.getGameMode();
   }
 
   closePopup() {

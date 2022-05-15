@@ -50,7 +50,7 @@ export class WordsContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.getNewWord();
-    this.appSettingsService.getSettings().subscribe((settings) => {
+    this.appSettingsService.watchSettings().subscribe((settings) => {
 
       let prevGameMode = this.appSettingsService.getPrevSettings().gameMode;
       console.log("Prev Game Mode: " + prevGameMode);
@@ -237,37 +237,66 @@ export class WordsContainerComponent implements OnInit {
     return !this.isGameWon() && (this.curr_typed_word_index === this.numOfAttempts.length || lossOverride);
   }
 
+  isAllLettersReused(): boolean {
+    if (this.curr_typed_word_index === 0) {
+      return true;
+    }
+    let prev_typed_word_index = this.curr_typed_word_index - 1;
+    for (let word_index = 0; word_index < this.curr_typed_word_index; word_index++) {
+      for (let i = 0; i < this.numOfLetters.length; i++) {
+        if (this.letterStatus[word_index][i] !== 'wrong' && !this.typed_words[this.curr_typed_word_index].includes(this.typed_words[word_index][i])) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   async setTypedWordStatus(text: string): Promise<boolean> {
     return await this.spellChecker.get(text).then(data => {
-      if (!data) {
+      console.log(this.appSettingsService.getSettings());
+      // Word Not Valid in No Second Chance Mode
+      if (!data && this.appSettingsService.getIsNoSecondChanceMode()) {
+        for (let i = 0; i < this.numOfLetters.length; i++) {
+          this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
+        }
+      }
+      // Word Not Valid without No Second Chance Mode
+      else if (!data && !this.appSettingsService.getIsNoSecondChanceMode()) {
         this.displayNoneWordError = true;
         return false;
       }
-      let occurences: { [index: string]: number } = {}
-      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-        occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
+      else if (this.appSettingsService.getIsForcedReuseMode() && !this.isAllLettersReused()) {
+        this.displayNoneWordError = true;
+        return false;
       }
-      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-        if (this.typed_words[this.curr_typed_word_index][i] === this.word[i]) {
-          this.letterStatus[this.curr_typed_word_index][i] = 'correct';
-          this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'correct';
-          occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+      else {
+        let occurences: { [index: string]: number } = {}
+        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+          occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);
         }
-      }
-      for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
-        if (!this.word.includes(this.typed_words[this.curr_typed_word_index][i])) {
-          this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
-          this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'wrong';
-        } else if (this.letterStatus[this.curr_typed_word_index][i] !== 'correct') {
-          if (this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] !== 'correct') {
-            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
-          }
-          if (occurences[this.typed_words[this.curr_typed_word_index][i]] >= 1) {
-            this.letterStatus[this.curr_typed_word_index][i] = 'almostcorrect';
-            //  this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
+        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+          if (this.typed_words[this.curr_typed_word_index][i] === this.word[i]) {
+            this.letterStatus[this.curr_typed_word_index][i] = 'correct';
+            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'correct';
             occurences[this.typed_words[this.curr_typed_word_index][i]]--;
-          } else {
+          }
+        }
+        for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
+          if (!this.word.includes(this.typed_words[this.curr_typed_word_index][i])) {
             this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
+            this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'wrong';
+          } else if (this.letterStatus[this.curr_typed_word_index][i] !== 'correct') {
+            if (this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] !== 'correct') {
+              this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
+            }
+            if (occurences[this.typed_words[this.curr_typed_word_index][i]] >= 1) {
+              this.letterStatus[this.curr_typed_word_index][i] = 'almostcorrect';
+              //  this.keyboard_letter_status[this.typed_words[this.curr_typed_word_index][i]] = 'almostcorrect';
+              occurences[this.typed_words[this.curr_typed_word_index][i]]--;
+            } else {
+              this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
+            }
           }
         }
       }
