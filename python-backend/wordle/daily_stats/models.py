@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import User
 
 
 class Daily(models.Model):
@@ -33,7 +34,7 @@ class Daily(models.Model):
     )
 
     user = models.ForeignKey(
-        'user.Users',
+        User,
         on_delete=models.CASCADE
     )
 
