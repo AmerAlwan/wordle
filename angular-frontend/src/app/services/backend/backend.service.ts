@@ -1,5 +1,6 @@
 import { Injectable, ErrorHandler } from '@angular/core';
 import axios, { AxiosInstance, AxiosError } from "axios";
+import { User } from '../../shared/UserInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class BackendService {
     try {
       var response = await this.axiosInstance.request({
         method: "post",
-        url: "http://127.0.0.1:8000/api/users/login",
+        url: "http://localhost:8000/api/users/login",
         data: {email: email, password: password}
 
       });
@@ -32,10 +33,30 @@ export class BackendService {
     try {
       var response = await this.axiosInstance.request({
         method: "post",
-        url: "http://127.0.0.1:8000/api/users/register",
+        url: "http://localhost:8000/api/users/register",
         data: { username: username, email: email, password: password }
 
       });
+      return response;
+    } catch (error) {
+      const err = error as AxiosError;
+      return err.response;
+    }
+  }
+
+  public async saveDaily(word: string, attempts: number,
+    success: boolean, difficulty: string, user: User) {
+    try {
+      var response = await this.axiosInstance.request({
+        method: "post",
+        url: "http://localhost:8000/api/stats/daily",
+        data: {
+          username: user.username, word: word, attempts: attempts,
+          success: success, difficulty: difficulty
+        }
+
+      });
+      console.log(response);
       return response;
     } catch (error) {
       const err = error as AxiosError;

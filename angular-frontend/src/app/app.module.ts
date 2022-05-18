@@ -23,7 +23,7 @@ import { SettingsContentComponent } from './components/settings/settings-content
 import { SettingsCounterComponent } from './components/settings/settings-counter/settings-counter.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SettingsToggleComponent } from './components/settings/settings-toggle/settings-toggle.component';
-import { CountdownModule } from 'ngx-countdown';
+//import { CountdownModule } from 'ngx-countdown';
 import { FormsModule } from '@angular/forms';
 import { ProfilePageComponent } from './pages/profile-page/profile-page.component';
 import { AppSettingsService } from './services/appsettings/app-settings.service';
@@ -73,7 +73,7 @@ import { LeaderboardContentComponent } from './components/stats/leaderboard/lead
     BrowserAnimationsModule,
     FontAwesomeModule,
     NgToggleModule,
-    CountdownModule
+    //CountdownModule
   ],
   providers: [AppSettingsService],
   bootstrap: [AppComponent]

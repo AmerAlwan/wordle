@@ -4,10 +4,12 @@
   border-radius: 20px;
   background-color: #292b2c;
 }
-.name{
-    padding-block: 0px;
-    margin-left: 290px;
+
+.name {
+  padding-block: 0px;
+  margin-left: 290px;
 }
+
 .profile {
   margin-left: 1rem;
   border-radius: 10px;
@@ -16,29 +18,80 @@
   height: 250px;
   float: left;
 }
+
 .line {
   border-bottom: 2px solid #565e64;
   padding-bottom: 250px;
 }
+
 .user-info {
-    font-family: candara;
-    color: white;
+  font-family: candara;
+  color: white;
 }
+
 .title {
-    transition: color .3s ease-in-out;
+  transition: color .3s ease-in-out;
 }
-.title:hover {
+
+  .title:hover {
     color: gold;
+  }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
 }
+
+th, td {
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: darkgray;
+}
+
+tr:nth-child(odd) {
+  background-color: lightgray;
+}
+
+
+.history {
+  margin-top: -50px;
+  padding-block: 50px;
+  padding-top: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 0px;
+  border-radius: 30px;
+  background-color: grey;
+  border-color: black;
+  z-index: 1;
+}
+
+.h-text {
+  color: lightgray;
+  font-family: 'Times New Roman';
+  font-style: italic;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
 .mode {
   border: 2px solid #565e64;
   margin-top: 20px;
   border-radius: 30px;
-  padding-block:50px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-right: 50px;
+  padding-left: 50px;
+  position: relative;
+  z-index: 2;
 }
+
 .daily {
   background-color: grey;
 }
+
 .unlimited {
   background-color: #002800;
 }
@@ -51,7 +104,6 @@
   background-color: #8c0000;
 }
 
-
 .desc {
   color: white;
   font-family: candara;
@@ -59,27 +111,67 @@
   padding-left: 2rem;
 }
 
+.angle {
+  color: white;
+  font-size: 2rem;
+}
+
+.stat-t {
+  color: white;
+  font-family: candara;
+  font-weight: bold;
+}
+
+.stats {
+  color: white;
+  font-family: candara;
+}
+
+.text-pad {
+  padding-bottom: 50px;
+}
+
+#info {
+  width: 30%;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+#dropdown {
+  width: 10%;
+  height: auto;
+  vertical-align: middle;
+  display: inline-block;
+  text-align: right;
+}
 
 .m-box {
   background-color: #292b2c;
 }
+
 .m-img {
+  border-radius: 10px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1rem;
   margin-bottom: .5rem;
+  max-width: 300px;
   width: 50%;
   height: auto;
   display: block;
 }
+
 .m-text {
   color: white;
   text-align: center
 }
+
 .m-line {
   border-bottom: 2px solid #565e64;
   padding-bottom: 20px;
 }
+
 .m-mode {
   margin-right: 1rem;
   margin-left: 1rem;

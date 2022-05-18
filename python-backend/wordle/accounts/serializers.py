@@ -50,4 +50,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'token')
+        fields = ('username', 'email', 'password', 'token',
+                  'daily_streak', 'timed_streak', 'unlimited_streak',
+                  'daily_best', 'timed_best', 'unlimited_best')

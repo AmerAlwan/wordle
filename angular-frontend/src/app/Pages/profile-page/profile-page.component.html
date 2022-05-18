@@ -1,27 +1,117 @@
 <app-navbar></app-navbar>
 <div class="box" *ngIf="!isMobileDevice">
-  <img class="profile" src="assets/user-profiles/{{username}}.png" onerror="this.src='assets/user-profiles/default.png'" />
+  <img class="profile" src="assets/user-profiles/{{username}}.png"
+       onerror="this.src='assets/user-profiles/default.png'" />
   <div class="name">
-    <h1 class="user-info title">{{display_name}}</h1>
+    <h1 class="user-info title">{{displayName}}</h1>
   </div>
+  <h2 class="user-info title">{{dbuser}}</h2>
   <div class="line"></div>
-  <div class="mode daily">
-    <h1 class="desc">Daily</h1>
+
+  <!-- Daily Game Mode Stats-->
+  <div class="mode daily" (click)="toggleDaily()">
+    <div id="info">
+      <h1 class="stat-t">Daily</h1>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats">Current Streak: {{dailyStreak}}</h2>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Best Streak: {{dailyBest}}</h2>
+      <h2 class="stats">Win Rate: 85%</h2>
+    </div>
+    <div id="dropdown">
+      <fa-icon class="angle" *ngIf="!dailyDrop" [icon]="faAngleDown"></fa-icon>
+      <fa-icon class="angle" *ngIf="dailyDrop" [icon]="faAngleUp"></fa-icon>
+    </div>
   </div>
-  <div class="mode unlimited">
-    <h1 class="desc">Unlimited</h1>
+  <div class="history" *ngIf="dailyDrop" [@slideInOut]>
+    <table>
+      <tr>
+        <th><b>Word</b></th>
+        <th><b>Attempts</b></th>
+        <th><b>Win/Lose</b></th>
+      </tr>
+      <tr>
+        <th>Sterp</th>
+        <th>4</th>
+        <th>Win</th>
+      </tr>
+    </table>
   </div>
-  <div class="mode timed">
-    <h1 class="desc">Timed</h1>
+
+  <!-- Unlimited Game Mode Stats-->
+  <div class="mode unlimited" (click)="toggleUnlimited()">
+    <div id="info">
+      <h1 class="stat-t">Unlimited</h1>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats">Current Streak: {{unlimitedStreak}}</h2>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Best Streak: {{unlimitedBest}}</h2>
+      <h2 class="stats">Win Rate: 85%</h2>
+    </div>
+    <div id="dropdown">
+      <fa-icon class="angle" *ngIf="!unlimitedDrop" [icon]="faAngleDown"></fa-icon>
+      <fa-icon class="angle" *ngIf="unlimitedDrop" [icon]="faAngleUp"></fa-icon>
+    </div>
   </div>
-  <div class="mode blitz">
-    <h1 class="desc">Blitz</h1>
+  <div class="history" *ngIf="unlimitedDrop" [@slideInOut]>
+    <p class="h-text" style="text-align:center">No history available</p>
+  </div>
+
+  <!-- Timed Game Mode Stats-->
+  <div class="mode timed" (click)="toggleTimed()">
+    <div id="info">
+      <h1 class="stat-t">Timed</h1>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats">Current Streak: {{timedStreak}}</h2>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Best Streak: {{timedBest}}</h2>
+      <h2 class="stats">Win Rate: 85%</h2>
+    </div>
+    <div id="dropdown">
+      <fa-icon class="angle" *ngIf="!timedDrop" [icon]="faAngleDown"></fa-icon>
+      <fa-icon class="angle" *ngIf="timedDrop" [icon]="faAngleUp"></fa-icon>
+    </div>
+  </div>
+  <div class="history" *ngIf="timedDrop" [@slideInOut]>
+    <p class="h-text" style="text-align:center">No history available</p>
+  </div>
+
+  <!-- Blitz Game Mode Stats-->
+  <div class="mode blitz" (click)="toggleBlitz()">
+    <div id="info">
+      <h1 class="stat-t">Blitz</h1>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats">Current Streak: 2</h2>
+    </div>
+    <div id="info">
+      <h2 class="stats text-pad">Best Streak: 3</h2>
+      <h2 class="stats">Win Rate: 85%</h2>
+    </div>
+    <div id="dropdown">
+      <fa-icon class="angle" *ngIf="!blitzDrop" [icon]="faAngleDown"></fa-icon>
+      <fa-icon class="angle" *ngIf="blitzDrop" [icon]="faAngleUp"></fa-icon>
+    </div>
+  </div>
+  <div class="history" *ngIf="blitzDrop" [@slideInOut]>
+    <p class="h-text" style="text-align:center">No history available</p>
   </div>
 </div>
+
 <div *ngIf="isMobileDevice">
   <img class="m-img" src="assets/user-profiles/{{username}}.png"
        onerror="this.src='assets/user-profiles/default.png'" />
-  <h1 class="m-text">{{display_name}}</h1>
+  <h1 class="m-text">{{displayName}}</h1>
   <div class="m-line"></div>
   <div class="m-mode daily">
     <h1 class="m-text">Daily</h1>
@@ -36,3 +126,7 @@
     <h1 class="m-text">Blitz</h1>
   </div>
 </div>
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
