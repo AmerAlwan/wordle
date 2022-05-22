@@ -8,9 +8,12 @@ from django.db import connection
 
 class dailyView(APIView):
     def post(self, request):
+        print('INSIDE VIEW')
+
         data = request.data
 
         user = data['username']
+        print(user)
 
         user_data = {
             'user': user,
@@ -20,8 +23,13 @@ class dailyView(APIView):
             'difficulty': data['difficulty']
         }
 
+        print(user_data)
+
         serializer = DailySerializer(data=user_data)
-        serializer.is_valid(raise_exception=True)
+        print('AFTER SERIALIZER')
+        serializer.is_valid(raise_exception=False)
+        print('AFTER ISVALID')
 
         serializer.save(user_data)
+        print('AFTER SERIALZIER SAVE')
         return Response(user_data, status=201)

@@ -25,11 +25,27 @@ export class GameInfoService {
   }
 
   getDefaultValues(): GameInfo {
-    return { gameStatus: 'ongoing' };
+    return { gameStatus: 'ongoing', timedTime: 0, blitzWords: [] };
   }
 
   getGameStatus(): string {
     return this.gameInfo.gameStatus;
+  }
+
+  getTimedTime(): number {
+    return this.gameInfo.timedTime;
+  }
+
+  getBlitzWords(): Array<{ [index: string]: string }> {
+    return this.gameInfo.blitzWords;
+  }
+
+  setTimedTime(value: number) {
+    this.gameInfo.timedTime = value;
+  }
+
+  setBlitzWords(words: Array<{ [index: string]: string }>) {
+    this.gameInfo.blitzWords = words;
   }
 
   applyChanges() {

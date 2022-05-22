@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, HostListener, OnInit, OnChanges } from '@angular/core';
 import { timer } from 'rxjs';
 import { AppSettingsService } from '../../../services/appsettings/app-settings.service';
+import { GameInfoService } from '../../../services/gameinfo/game-info.service';
 
 @Component({
   selector: 'app-countdown-timer',
@@ -18,7 +19,7 @@ export class CountdownTimerComponent implements OnInit, OnChanges {
   isScrollYOffset: boolean = false;
   timerSubscription: any;
 
-  constructor(private appSettingsService: AppSettingsService) {
+  constructor(private appSettingsService: AppSettingsService, private gameInfoService: GameInfoService) {
     this.timeLeft = this.initialTimeValue;
     this.width = (this.appSettingsService.getNumOfLetters() * 62) + ((this.appSettingsService.getNumOfLetters() - 1) * 5);
     this.setMinuteSecondValues();
@@ -44,6 +45,7 @@ export class CountdownTimerComponent implements OnInit, OnChanges {
     const source = timer(1000, 2000);
     this.timerSubscription = source.subscribe(currTimeValue => {
       this.timeLeft = this.initialTimeValue - currTimeValue;
+      this.gameInfoService.setTimedTime(currTimeValue);
       this.setMinuteSecondValues();
       if (this.timeLeft === 0) {
         console.log("DONE");

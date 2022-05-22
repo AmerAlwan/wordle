@@ -156,9 +156,11 @@ export class WordsContainerComponent implements OnInit {
     if (this.appSettingsService.getGameMode() === 'blitz') {
       if (this.isGameWon()) {
         this.blitzWords.push({ word: this.word, status: 'win' });
+        this.gameInfoService.setBlitzWords(this.blitzWords);
         setTimeout(() => this.getNewWord(), 1500);
       } else if (this.isGameLost()) {
         this.blitzWords.push({ word: this.word, status: 'lose' });
+        this.gameInfoService.setBlitzWords(this.blitzWords);
         setTimeout(() => this.getNewWord(), 1500);
       }
     }

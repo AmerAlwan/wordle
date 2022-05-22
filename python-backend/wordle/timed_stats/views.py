@@ -10,6 +10,8 @@ class timedView(APIView):
         data = request.data
         user = data['username']
 
+        print(data)
+
         user_data = {
             'user': user,
             'word': data['word'],
@@ -20,7 +22,7 @@ class timedView(APIView):
         }
 
         serializer = TimedSerializer(data=user_data)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid(raise_exception=False)
 
         serializer.save(user_data)
         return Response(user_data, status=201)

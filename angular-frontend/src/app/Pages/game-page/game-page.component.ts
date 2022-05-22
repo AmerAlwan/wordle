@@ -63,7 +63,8 @@ export class GamePageComponent implements OnInit {
               this.appSettingsService.getDifficulty(), this.userService.getUser())
             break;
           case "timed":
-            this.backendService.saveTimed(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.appSettingsService.getTimeLimitInSeconds(), this.gameInfoService.isGameStatusWin(),
+            console.log(this.gameInfoService.getTimedTime());
+            this.backendService.saveTimed(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.gameInfoService.getTimedTime(), this.gameInfoService.isGameStatusWin(),
               this.appSettingsService.getDifficulty(), this.userService.getUser())
             break;
           case "unlimited":

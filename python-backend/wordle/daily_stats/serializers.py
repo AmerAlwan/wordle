@@ -8,15 +8,15 @@ from accounts.models import User
 class DailySerializer(serializers.ModelSerializer):
     user = serializers.RelatedField(read_only=True)
 
-
     def save(self, validated_data):
-        print("inside Serilizer")
+        print("Inside Serilizer")
         print(validated_data)
         username = validated_data.get('user', None)
 
         word = validated_data.get('word', None)
 
         user = User.objects.get(username=username)
+
         if not word:
             raise serializers.ValidationError('No word provided')
 

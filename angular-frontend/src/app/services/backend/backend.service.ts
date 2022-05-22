@@ -90,7 +90,7 @@ export class BackendService {
     try {
       var response = await this.axiosInstance.request({
         method: "post",
-        url: "http://localhost:8000/api/stats/unlimited",
+        url: "http://localhost:8000/api/stats/timed",
         data: {
           username: user.username, time: time, word: word, attempts: attempts,
           success: success, difficulty: difficulty
@@ -110,7 +110,7 @@ export class BackendService {
     try {
       var response = await this.axiosInstance.request({
         method: "post",
-        url: "http://localhost:8000/api/stats/unlimited",
+        url: "http://localhost:8000/api/stats/blitz",
         data: {
           username: user.username, time: time, words: words, word_count: word_count, difficulty: difficulty
         }

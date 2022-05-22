@@ -26,7 +26,7 @@ class TimedSerializer(serializers.ModelSerializer):
             word=validated_data.get('word'),
             attempts=validated_data.get('attempts'),
             success=validated_data.get('success'),
-            time=validated_data.get('timed'),
+            time=validated_data.get('time'),
             difficulty=validated_data.get('difficulty'),
             word_length=word_length
         )
