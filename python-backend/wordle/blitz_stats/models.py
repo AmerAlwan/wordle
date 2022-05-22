@@ -1,29 +1,27 @@
 from django.db import models
+from accounts.models import User
 
 
-class Blitz(models.Model):
-    blitz_id = models.AutoField(
+class blitz(models.Model):
+
+
+    id = models.AutoField(
         primary_key=True
     )
 
-    word = models.TextField(
-        max_length=11,
+    words = models.TextField(
         null=False,
         blank=False
     )
 
-    word_length = models.IntegerField(
+    word_count = models.IntegerField(
         null=False,
         blank=False
     )
 
-    attempts = models.IntegerField(
+    time = models.IntegerField(
         null=False,
         blank=False
-    )
-
-    win = models.BooleanField(
-        default=False
     )
 
     difficulty = models.TextField(
@@ -33,7 +31,7 @@ class Blitz(models.Model):
     )
 
     user = models.ForeignKey(
-        'user.Users',
+        User,
         on_delete=models.CASCADE
     )
 

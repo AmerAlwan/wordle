@@ -4,6 +4,8 @@ import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Params } from '@angular/router';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { Observable } from 'rxjs';
+import { BackendService } from '../../services/backend/backend.service';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -13,10 +15,10 @@ import { Observable } from 'rxjs';
     trigger('slideInOut', [
       transition(':enter', [
         style({ transform: 'translateY(-100%)' }),
-        animate('200ms ease-in', style({ transform: 'translateY(0%)'}))
+        animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
       ]),
       transition(':leave', [
-        animate('200ms ease-in', style({ transform: 'translateY(-100%)'}))
+        animate('200ms ease-in', style({ transform: 'translateY(-100%)' }))
       ])
     ])
   ]
@@ -32,12 +34,31 @@ export class ProfilePageComponent implements OnInit {
   unlimitedDrop: boolean = false;
   timedDrop: boolean = false;
   blitzDrop: boolean = false;
+  backendService: BackendService;
+  userService: UserService;
+  dailyStreak: Number;
+  dailyBest: Number;
+  timedStreak: Number;
+  timedBest: Number;
+  unlimitedStreak: Number;
+  unlimitedBest: Number;
+  dbuser: String;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, backendService: BackendService, userService: UserService) {
     this.route.params.subscribe((params: Params) => {
       this.username = params['username'].toLowerCase();
       this.displayName = this.username.toUpperCase();
     })
+    this.backendService = backendService;
+    this.userService = userService;
+
+    this.dailyStreak = this.userService.getDailyStreak();
+    this.dailyBest = this.userService.getDailyBest();
+    this.timedStreak = this.userService.getTimedStreak();
+    this.timedBest = this.userService.getTimedBest();
+    this.unlimitedStreak = this.userService.getUnlimitedStreak();
+    this.unlimitedBest = this.userService.getUnlimitedBest();
+    this.dbuser = this.userService.getUsername();
   }
 
   ngOnInit(): void {
@@ -50,6 +71,9 @@ export class ProfilePageComponent implements OnInit {
     else {
       this.dailyDrop = false;
     }
+    this.userService.setDailyStreak(this.userService.getDailyStreak() + 1);
+    this.dailyStreak = this.userService.getDailyStreak();
+    this.dailyBest = this.userService.getDailyBest();
   }
 
   toggleUnlimited(): void {

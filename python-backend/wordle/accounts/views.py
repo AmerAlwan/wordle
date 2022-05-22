@@ -37,6 +37,7 @@ class UserView(APIView):
         if id:
             try:
                 cursor.execute('SELECT username FROM users WHERE id=%s', [id])
+                print("hi")
                 data = cursor.fetchone()
                 if not data:
                     return Response({'error': 'This user does not exist'}, status=404)

@@ -2,8 +2,10 @@ from django.db import models
 from accounts.models import User
 
 
-class Daily(models.Model):
-    daily_id = models.AutoField(
+class daily(models.Model):
+
+
+    id = models.AutoField(
         primary_key=True
     )
 
@@ -23,7 +25,7 @@ class Daily(models.Model):
         blank=False
     )
 
-    win = models.BooleanField(
+    success = models.BooleanField(
         default=False
     )
 

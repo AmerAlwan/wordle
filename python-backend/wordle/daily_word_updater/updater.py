@@ -10,6 +10,6 @@ sys.path.append("wordle\daily_word_updater")
 
 def start():
     scheduler = BackgroundScheduler(timezone='America/New_York')
-    trigger = OrTrigger([CronTrigger(hour=15, minute=1)])
+    trigger = OrTrigger([CronTrigger(hour=1, minute=37)])
     scheduler.add_job(getdailyword.update_daily_word, trigger)
     scheduler.start()

@@ -4,10 +4,12 @@
   border-radius: 20px;
   background-color: #292b2c;
 }
-.name{
-    padding-block: 0px;
-    margin-left: 290px;
+
+.name {
+  padding-block: 0px;
+  margin-left: 290px;
 }
+
 .profile {
   margin-left: 1rem;
   border-radius: 10px;
@@ -16,32 +18,38 @@
   height: 250px;
   float: left;
 }
+
 .line {
   border-bottom: 2px solid #565e64;
   padding-bottom: 250px;
 }
+
 .user-info {
-    font-family: candara;
-    color: white;
-}
-.title {
-    transition: color .3s ease-in-out;
-}
-.title:hover {
-    color: gold;
+  font-family: candara;
+  color: white;
 }
 
+.title {
+  transition: color .3s ease-in-out;
+}
+
+  .title:hover {
+    color: gold;
+  }
+
 table {
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 th, td {
-    text-align: center;
+  text-align: center;
 }
+
 tr:nth-child(even) {
   background-color: darkgray;
 }
+
 tr:nth-child(odd) {
   background-color: lightgray;
 }
@@ -79,9 +87,11 @@ tr:nth-child(odd) {
   position: relative;
   z-index: 2;
 }
+
 .daily {
   background-color: grey;
 }
+
 .unlimited {
   background-color: #002800;
 }
@@ -118,7 +128,7 @@ tr:nth-child(odd) {
 }
 
 .text-pad {
-    padding-bottom: 50px;
+  padding-bottom: 50px;
 }
 
 #info {
@@ -139,6 +149,7 @@ tr:nth-child(odd) {
 .m-box {
   background-color: #292b2c;
 }
+
 .m-img {
   border-radius: 10px;
   margin-left: auto;
@@ -150,14 +161,17 @@ tr:nth-child(odd) {
   height: auto;
   display: block;
 }
+
 .m-text {
   color: white;
   text-align: center
 }
+
 .m-line {
   border-bottom: 2px solid #565e64;
   padding-bottom: 20px;
 }
+
 .m-mode {
   margin-right: 1rem;
   margin-left: 1rem;

@@ -1,10 +1,11 @@
 from django.db import models
+from accounts.models import User
 
-from django.apps import apps
+
+class unlimited(models.Model):
 
 
-class Unlimited(models.Model):
-    unlimited_id = models.AutoField(
+    id = models.AutoField(
         primary_key=True
     )
 
@@ -24,7 +25,7 @@ class Unlimited(models.Model):
         blank=False
     )
 
-    win = models.BooleanField(
+    success = models.BooleanField(
         default=False
     )
 
@@ -35,7 +36,7 @@ class Unlimited(models.Model):
     )
 
     user = models.ForeignKey(
-        'user.Users',
+        User,
         on_delete=models.CASCADE
     )
 

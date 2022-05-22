@@ -254,7 +254,7 @@ export class WordsContainerComponent implements OnInit {
 
   async setTypedWordStatus(text: string): Promise<boolean> {
     return await this.spellChecker.get(text).then(data => {
-      console.log(this.appSettingsService.getSettings());
+      console.log(this.appSettingsService.watchSettings());
       // Word Not Valid in No Second Chance Mode
       if (!data && this.appSettingsService.getIsNoSecondChanceMode()) {
         for (let i = 0; i < this.numOfLetters.length; i++) {

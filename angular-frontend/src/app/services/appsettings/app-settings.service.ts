@@ -77,6 +77,7 @@ export class AppSettingsService {
     return this.settings.blitzModeTimeLimitInMinutes;
   }
 
+
   getTimeLimitInMinutes(): number {
     return this.settings.gameMode === 'timed' ? this.settings.timedModeTimeLimitInMinutes : this.settings.gameMode === 'blitz' ? this.settings.blitzModeTimeLimitInMinutes : 1;
   }

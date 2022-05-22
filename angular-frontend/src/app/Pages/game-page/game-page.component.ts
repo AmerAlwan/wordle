@@ -3,6 +3,11 @@ import { Subscription } from 'rxjs';
 import { AppSettingsService } from '../../services/appsettings/app-settings.service';
 import { KeydownService } from '../../services/keydown/keydown.service';
 import { GameInfoService } from '../../services/gameinfo/game-info.service';
+import { UserService } from '../../services/user/user.service';
+import { BackendService } from '../../services/backend/backend.service';
+import { WordService } from '../../services/word/word.service';
+import { User } from '../../shared/UserInfo';
+import { Word } from '../../shared/Word';
 
 @Component({
   selector: 'app-game-page',
@@ -20,7 +25,9 @@ export class GamePageComponent implements OnInit {
   screenHeight: number;
   screenWidth: number;
 
-  constructor(private appSettingsService: AppSettingsService, private keydownService: KeydownService, private gameInfoService: GameInfoService, changeDetectorRef: ChangeDetectorRef) {
+  constructor(private appSettingsService: AppSettingsService, private keydownService: KeydownService,
+    private gameInfoService: GameInfoService, changeDetectorRef: ChangeDetectorRef,
+    private backendService: BackendService, private userService: UserService, private wordService: WordService) {
     this.changeDetectorRef = changeDetectorRef;
 
     this.screenHeight = appSettingsService.getScreenHeight();
@@ -39,9 +46,9 @@ export class GamePageComponent implements OnInit {
 
       document.body.style.background = this.backgroundValue;
       document.body.style.backgroundSize = 'cover';
-      
-    //  this.screenHeight = settings.screenHeight;
-     // this.screenWidth = window.innerWidth;
+
+      //  this.screenHeight = settings.screenHeight;
+      // this.screenWidth = window.innerWidth;
     });
 
     this.gameInfoService.watchGameInfo().subscribe(gameInfo => {
@@ -49,6 +56,28 @@ export class GamePageComponent implements OnInit {
       if (this.gameInfoService.getGameStatus() === 'win' || this.gameInfoService.getGameStatus() === 'lose') {
         this.keydownService.disableKeydown();
         this.displayGameInfo(true);
+
+        switch (this.appSettingsService.getGameMode()) {
+          case "daily":
+            this.backendService.saveDaily(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.gameInfoService.isGameStatusWin(),
+              this.appSettingsService.getDifficulty(), this.userService.getUser())
+            break;
+          case "timed":
+            this.backendService.saveTimed(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.appSettingsService.getTimeLimitInSeconds(), this.gameInfoService.isGameStatusWin(),
+              this.appSettingsService.getDifficulty(), this.userService.getUser())
+            break;
+          case "unlimited":
+            this.backendService.saveUnlimited(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.gameInfoService.isGameStatusWin(),
+              this.appSettingsService.getDifficulty(), this.userService.getUser())
+            break;
+          case "blitz":
+            // Word_count is set to 3 here
+            // replace with method when created
+            this.backendService.saveBlitz(this.wordService.getCurrWord(), 3, this.appSettingsService.getBlitzModeTimeLimitInMinutes(), this.appSettingsService.getDifficulty(), this.userService.getUser())
+            break;
+
+        }
+
       } else if (this.gameInfoService.getGameStatus() === 'ongoing') {
         this.keydownService.enableKeydown();
       }

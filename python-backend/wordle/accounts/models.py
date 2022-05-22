@@ -60,6 +60,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=False
     )
 
+    daily_streak = models.IntegerField(default=0)
+
+    timed_streak = models.IntegerField(default=0)
+
+    unlimited_streak = models.IntegerField(default=0)
+
+    daily_best = models.IntegerField(default=0)
+
+    timed_best = models.IntegerField(default=0)
+
+    unlimited_best = models.IntegerField(default=0)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 

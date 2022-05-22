@@ -37,13 +37,66 @@ export class UserService {
   getIsLoggedIn(): boolean {
     return this.isLoggedIn;
   }
+  //user daily gamemode streak info
+  getDailyStreak(): number {
+    return this.user.daily_streak;
+  }
+
+  setDailyStreak(value: number) {
+    this.user.daily_streak = value;
+    if (this.user.daily_best < value)
+      this.user.daily_best = value;
+    this.applyChanges();
+  }
+
+  getDailyBest(): number {
+    return this.user.daily_best;
+  }
+  //user timed gamemode streak info
+  getTimedStreak(): number {
+    return this.user.timed_streak;
+  }
+
+  setTimedStreak(value: number) {
+    this.user.timed_streak = value;
+    if (this.user.timed_best < value)
+      this.user.timed_best = value;
+    this.applyChanges();
+  }
+
+  getTimedBest(): number {
+    return this.user.timed_best;
+  }
+  //user unlimited gamemode streak info
+  getUnlimitedStreak(): number {
+    return this.user.unlimited_streak;
+  }
+
+  setUnlimitedStreak(value: number) {
+    this.user.unlimited_streak = value;
+    if (this.user.unlimited_best < value)
+      this.user.unlimited_best = value;
+    this.applyChanges();
+  }
+
+  getUnlimitedBest(): number {
+    return this.user.unlimited_best;
+  }
 
   getAnonymousUser() {
-    return { username: 'Anonymous', token: '' };
+    return {
+      username: 'Anonymous', token: '',
+      daily_streak: 0, timed_streak: 0, unlimited_streak: 0,
+      daily_best: 0, timed_best: 0, unlimited_best: 0
+    };
   }
 
   setUser(username: string, token: string) {
-    this.user = { username: username, token: token }
+    this.user = {
+      username: username, token: token,
+      daily_streak: 0, timed_streak: 0, unlimited_streak: 0,
+      daily_best: 0, timed_best: 0, unlimited_best: 0
+    }
     this.applyChanges();
   }
 

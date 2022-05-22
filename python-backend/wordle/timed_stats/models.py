@@ -1,8 +1,11 @@
 from django.db import models
+from accounts.models import User
 
 
-class Timed(models.Model):
-    timed_id = models.AutoField(
+class timed(models.Model):
+
+
+    id = models.AutoField(
         primary_key=True
     )
 
@@ -22,8 +25,13 @@ class Timed(models.Model):
         blank=False
     )
 
-    win = models.BooleanField(
+    success = models.BooleanField(
         default=False
+    )
+
+    time = models.IntegerField(
+        null=False,
+        blank=False
     )
 
     difficulty = models.TextField(
@@ -33,7 +41,7 @@ class Timed(models.Model):
     )
 
     user = models.ForeignKey(
-        'user.Users',
+        User,
         on_delete=models.CASCADE
     )
 
