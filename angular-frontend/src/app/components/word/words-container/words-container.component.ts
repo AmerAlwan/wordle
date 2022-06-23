@@ -259,6 +259,7 @@ export class WordsContainerComponent implements OnInit {
       console.log(this.appSettingsService.watchSettings());
       // Word Not Valid in No Second Chance Mode
       if (!data && this.appSettingsService.getIsNoSecondChanceMode()) {
+        this.wordService.incrementCurrAttempt();
         for (let i = 0; i < this.numOfLetters.length; i++) {
           this.letterStatus[this.curr_typed_word_index][i] = 'wrong';
         }
@@ -273,6 +274,7 @@ export class WordsContainerComponent implements OnInit {
         return false;
       }
       else {
+        this.wordService.incrementCurrAttempt();
         let occurences: { [index: string]: number } = {}
         for (let i = 0; i < this.typed_words[this.curr_typed_word_index].length; i++) {
           occurences[this.typed_words[this.curr_typed_word_index][i]] = this.countOccurenceString(this.typed_words[this.curr_typed_word_index][i], this.word);

@@ -46,6 +46,11 @@ th, td {
   text-align: center;
 }
 
+th {
+  background-color: black;
+  color: azure;
+}
+
 tr:nth-child(even) {
   background-color: darkgray;
 }

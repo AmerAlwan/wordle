@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/', include('daily_stats.urls')),
     path('api/', include('timed_stats.urls')),
     path('api/', include('unlimited_stats.urls')),
+    path('api/', include('blitz_stats.urls')),
 ]

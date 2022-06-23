@@ -101,6 +101,10 @@ export class WordService {
     this.currAttempt = value;
   }
 
+  incrementCurrAttempt() {
+    this.setCurrAttempt(this.currAttempt + 1);
+  }
+
   setCurrWord(value: string) {
     let gameMode = this.appSettingsService.getGameMode();
     if (gameMode === 'daily') this.currWord.daily = value;

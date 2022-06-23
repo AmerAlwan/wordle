@@ -28,7 +28,7 @@ class UnlimitedSerializer(serializers.ModelSerializer):
         return unlimited.objects.create(
             user=user,
             word=word,
-            attempts=validated_data.get('attempts')+1,
+            attempts=validated_data.get('attempts'),
             success=validated_data.get('success'),
             difficulty=validated_data.get('difficulty'),
             word_length=word_length

@@ -24,6 +24,7 @@ export class GamePageComponent implements OnInit {
   changeDetectorRef: ChangeDetectorRef;
   screenHeight: number;
   screenWidth: number;
+  word_count: number = 0;
 
   constructor(private appSettingsService: AppSettingsService, private keydownService: KeydownService,
     private gameInfoService: GameInfoService, changeDetectorRef: ChangeDetectorRef,
@@ -64,7 +65,7 @@ export class GamePageComponent implements OnInit {
             break;
           case "timed":
             console.log(this.gameInfoService.getTimedTime());
-            this.backendService.saveTimed(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.gameInfoService.getTimedTime(), this.gameInfoService.isGameStatusWin(),
+            this.backendService.saveTimed(this.wordService.getCurrWord(), this.wordService.getCurrAttempt(), this.appSettingsService.getTimeLimitInSeconds(), this.gameInfoService.isGameStatusWin(),
               this.appSettingsService.getDifficulty(), this.userService.getUser())
             break;
           case "unlimited":
@@ -72,10 +73,17 @@ export class GamePageComponent implements OnInit {
               this.appSettingsService.getDifficulty(), this.userService.getUser())
             break;
           case "blitz":
-            // Word_count is set to 3 here
-            // replace with method when created
-            this.backendService.saveBlitz(this.wordService.getCurrWord(), 3, this.appSettingsService.getBlitzModeTimeLimitInMinutes(), this.appSettingsService.getDifficulty(), this.userService.getUser())
-            break;
+            let words = "";
+            let length = 0
+            for (let i = 0; i < this.gameInfoService.getBlitzWords().length; i++) {
+              let value = this.gameInfoService.getBlitzWords()[i];
+              if (value["status"] == "win") {
+                words += (length != 0) ? ", " + value["word"] : value["word"];
+                length += 1;
+              }
+            }
+            this.backendService.saveBlitz(words, length, this.appSettingsService.getBlitzModeTimeLimitInMinutes()*60, this.appSettingsService.getDifficulty(), this.userService.getUser())
+
 
         }
 

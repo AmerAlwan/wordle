@@ -1,6 +1,6 @@
 
 import { Injectable, ErrorHandler } from '@angular/core';
-import axios, { AxiosInstance, AxiosError } from "axios";
+import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
 import { User } from '../../shared/UserInfo';
 
 @Injectable({
@@ -45,6 +45,24 @@ export class BackendService {
     }
   }
 
+  public async modifyUser(username: String, mode: String, win: Boolean) {
+    try {
+      var response = await this.axiosInstance.request({
+        method: "patch",
+        url: "http://localhost:8000/api/users/modify",
+        data: {
+          username: username, mode: mode, win: win
+        }
+
+      });
+      console.log(response);
+      return response;
+    } catch (error) {
+      const err = error as AxiosError;
+      return err.response;
+    }
+  }
+
   public async saveDaily(word: string, attempts: number,
     success: boolean, difficulty: string, user: User) {
     try {
@@ -57,6 +75,7 @@ export class BackendService {
         }
 
       });
+      this.modifyUser(user.username, "daily", success);
       console.log(response);
       return response;
     } catch (error) {
@@ -77,6 +96,7 @@ export class BackendService {
         }
 
       });
+      this.modifyUser(user.username, "unlimited", success);
       console.log(response);
       return response;
     } catch (error) {
@@ -95,8 +115,8 @@ export class BackendService {
           username: user.username, time: time, word: word, attempts: attempts,
           success: success, difficulty: difficulty
         }
-
       });
+      this.modifyUser(user.username, "timed", success);
       console.log(response);
       return response;
     } catch (error) {
@@ -123,4 +143,20 @@ export class BackendService {
       return err.response;
     }
   }
+
+
+
+
+  public async getUser(username: String) {
+    try {
+      var response = await this.axiosInstance.request({
+        method: "get",
+        url: "http://localhost:8000/api/users/stats/"+username
+      });
+      return response["data"];
+    } catch (error) {
+      const err = error as AxiosError;
+      return err.response;
+    }
+  };
 }

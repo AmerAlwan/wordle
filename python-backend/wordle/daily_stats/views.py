@@ -13,7 +13,6 @@ class dailyView(APIView):
         data = request.data
 
         user = data['username']
-        print(user)
 
         user_data = {
             'user': user,
@@ -26,10 +25,6 @@ class dailyView(APIView):
         print(user_data)
 
         serializer = DailySerializer(data=user_data)
-        print('AFTER SERIALIZER')
         serializer.is_valid(raise_exception=False)
-        print('AFTER ISVALID')
-
         serializer.save(user_data)
-        print('AFTER SERIALZIER SAVE')
         return Response(user_data, status=201)

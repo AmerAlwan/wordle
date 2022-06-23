@@ -1,3 +1,4 @@
+from django.db import connection
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import authenticate
@@ -51,5 +52,33 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'token',
+                  'daily_streak', 'timed_streak', 'unlimited_streak',
+                  'daily_best', 'timed_best', 'unlimited_best')
+
+class UserUpdate(serializers.ModelSerializer):
+    def validate(self, data):
+        mode = data["mode"].lower()
+        if mode == "daily":
+            cursor = connection.cursor()
+            cursor.execute("SELECT daily_streak, daily_best FROM users WHERE id=%s", [data["username"]])
+            win = data["win"]
+            result = cursor.fetchone()
+            if win:
+                self.daily_streak = 1 + result[0]
+                daily_best = result[1]
+                if user.daily_streak > daily_best:
+                    user.daily_best = user.daily_streak
+            else:
+                user.daily_streak = 0
+        elif mode == "timed":
+            cursor.execute("SELECT timed_streak, timed_best FROM users WHERE id=%s", [uid])
+            print(cursor.fetchall())
+        elif mode == "unlimited":
+            cursor.execute("SELECT unlimited_streak, unlimited_best FROM users WHERE id=%s", [uid])
+            print(cursor.fetchall())
+
+    class Meta:
+        model = User
+        fields = ('username',
                   'daily_streak', 'timed_streak', 'unlimited_streak',
                   'daily_best', 'timed_best', 'unlimited_best')

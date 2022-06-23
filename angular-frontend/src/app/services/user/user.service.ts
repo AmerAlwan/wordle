@@ -11,6 +11,7 @@ export class UserService {
   private user: User;
   private isLoggedIn: boolean;
   private userBS: BehaviorSubject<User>;
+  pageUser: any;
 
   constructor() {
     this.isLoggedIn = false;

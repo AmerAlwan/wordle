@@ -79,7 +79,7 @@ export class AppSettingsService {
 
 
   getTimeLimitInMinutes(): number {
-    return this.settings.gameMode === 'timed' ? this.settings.timedModeTimeLimitInMinutes : this.settings.gameMode === 'blitz' ? this.settings.blitzModeTimeLimitInMinutes : 1;
+    return this.settings.gameMode === 'timed' ? this.settings.timedModeTimeLimitInMinutes : this.settings.gameMode === 'blitz' ? this.settings.blitzModeTimeLimitInMinutes: 1;
   }
 
   getTimeLimitInSeconds(): number {
@@ -112,7 +112,7 @@ export class AppSettingsService {
   }
 
   setBlitzModeTimeLimitInMinutes(value: number) {
-    this.settings.blitzModeTimeLimitInMinutes = value;
+    this.settings.blitzModeTimeLimitInMinutes= value;
   }
 
   setDifficulty(value: string) {
@@ -160,7 +160,7 @@ export class AppSettingsService {
       this.settings.forcedReuse = lcSettings.forcedReuse;
       this.settings.noSecondChance = lcSettings.noSecondChance;
       this.settings.timedModeTimeLimitInMinutes = lcSettings.timedModeTimeLimitInMinutes;
-      this.settings.blitzModeTimeLimitInMinutes = lcSettings.blitzModeTimeLimitInMinutes;
+      this.settings.blitzModeTimeLimitInMinutes = lcSettings.blitzModeTimeLimit;
       this.settings.screenHeight = this.calcScreenHeight();
     }
     this.applyChanges();

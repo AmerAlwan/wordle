@@ -5,7 +5,6 @@
   <div class="name">
     <h1 class="user-info title">{{displayName}}</h1>
   </div>
-  <h2 class="user-info title">{{dbuser}}</h2>
   <div class="line"></div>
 
   <!-- Daily Game Mode Stats-->
@@ -14,12 +13,12 @@
       <h1 class="stat-t">Daily</h1>
     </div>
     <div id="info">
-      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats text-pad">Games Played: {{dailyGames}}</h2>
       <h2 class="stats">Current Streak: {{dailyStreak}}</h2>
     </div>
     <div id="info">
       <h2 class="stats text-pad">Best Streak: {{dailyBest}}</h2>
-      <h2 class="stats">Win Rate: 85%</h2>
+      <h2 class="stats">Win Rate: {{dailyWin}}%</h2>
     </div>
     <div id="dropdown">
       <fa-icon class="angle" *ngIf="!dailyDrop" [icon]="faAngleDown"></fa-icon>
@@ -27,18 +26,23 @@
     </div>
   </div>
   <div class="history" *ngIf="dailyDrop" [@slideInOut]>
-    <table>
+    <table *ngIf="dailyTB" id="dailyTable">
       <tr>
         <th><b>Word</b></th>
         <th><b>Attempts</b></th>
-        <th><b>Win/Lose</b></th>
+        <th><b>Success</b></th>
+        <th><b>Difficulty</b></th>
       </tr>
-      <tr>
-        <th>Sterp</th>
-        <th>4</th>
-        <th>Win</th>
-      </tr>
+      <tbody>
+        <tr *ngFor="let data of dailyData">
+          <td>{{data.word}}</td>
+          <td>{{data.attempts}}</td>
+          <td>{{data.success}}</td>
+          <td>{{data.difficulty}}</td>
+        </tr>
+      </tbody>
     </table>
+    <p class="h-text" *ngIf="!dailyTB" id="dailyNoData" style="text-align:center">No history available</p>
   </div>
 
   <!-- Unlimited Game Mode Stats-->
@@ -47,12 +51,12 @@
       <h1 class="stat-t">Unlimited</h1>
     </div>
     <div id="info">
-      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats text-pad">Games Played: {{unlimitedGames}}</h2>
       <h2 class="stats">Current Streak: {{unlimitedStreak}}</h2>
     </div>
     <div id="info">
       <h2 class="stats text-pad">Best Streak: {{unlimitedBest}}</h2>
-      <h2 class="stats">Win Rate: 85%</h2>
+      <h2 class="stats">Win Rate: {{unlimitedWin}}%</h2>
     </div>
     <div id="dropdown">
       <fa-icon class="angle" *ngIf="!unlimitedDrop" [icon]="faAngleDown"></fa-icon>
@@ -60,7 +64,23 @@
     </div>
   </div>
   <div class="history" *ngIf="unlimitedDrop" [@slideInOut]>
-    <p class="h-text" style="text-align:center">No history available</p>
+    <table *ngIf="unlimitedTB" id="unlimitedTable">
+      <tr>
+        <th><b>Word</b></th>
+        <th><b>Attempts</b></th>
+        <th><b>Success</b></th>
+        <th><b>Difficulty</b></th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let data of unlimitedData">
+          <td>{{data.word}}</td>
+          <td>{{data.attempts}}</td>
+          <td>{{data.success}}</td>
+          <td>{{data.difficulty}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="h-text" *ngIf="!unlimitedTB" id="unlimitedNoData" style="text-align:center">No history available</p>
   </div>
 
   <!-- Timed Game Mode Stats-->
@@ -69,12 +89,12 @@
       <h1 class="stat-t">Timed</h1>
     </div>
     <div id="info">
-      <h2 class="stats text-pad">Leaderboard #1</h2>
+      <h2 class="stats text-pad">Games Played: {{timedGames}}</h2>
       <h2 class="stats">Current Streak: {{timedStreak}}</h2>
     </div>
     <div id="info">
       <h2 class="stats text-pad">Best Streak: {{timedBest}}</h2>
-      <h2 class="stats">Win Rate: 85%</h2>
+      <h2 class="stats">Win Rate: {{timedWin}}%</h2>
     </div>
     <div id="dropdown">
       <fa-icon class="angle" *ngIf="!timedDrop" [icon]="faAngleDown"></fa-icon>
@@ -82,7 +102,25 @@
     </div>
   </div>
   <div class="history" *ngIf="timedDrop" [@slideInOut]>
-    <p class="h-text" style="text-align:center">No history available</p>
+    <table *ngIf="timedTB" id="timedTable">
+      <tr>
+        <th><b>Word</b></th>
+        <th><b>Attempts</b></th>
+        <th><b>Success</b></th>
+        <th><b>Time (s)</b></th>
+        <th><b>Difficulty</b></th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let data of timedData">
+          <td>{{data.word}}</td>
+          <td>{{data.attempts}}</td>
+          <td>{{data.success}}</td>
+          <td>{{data.time}}</td>
+          <td>{{data.difficulty}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="h-text" *ngIf="!timedTB" id="timedNoData" style="text-align:center">No history available</p>
   </div>
 
   <!-- Blitz Game Mode Stats-->
@@ -91,12 +129,12 @@
       <h1 class="stat-t">Blitz</h1>
     </div>
     <div id="info">
-      <h2 class="stats text-pad">Leaderboard #1</h2>
-      <h2 class="stats">Current Streak: 2</h2>
+      <h2 class="stats text-pad">Games Played: {{blitzGames}}</h2>
+      <h2 class="stats">Avg Words: {{blitzAvg}}</h2>
     </div>
     <div id="info">
-      <h2 class="stats text-pad">Best Streak: 3</h2>
-      <h2 class="stats">Win Rate: 85%</h2>
+      <h2 class="stats text-pad">Words Per Min: {{blitzMin}}</h2>
+      <h2 class="stats">Total time: {{blitzTime}}</h2>
     </div>
     <div id="dropdown">
       <fa-icon class="angle" *ngIf="!blitzDrop" [icon]="faAngleDown"></fa-icon>
@@ -104,7 +142,23 @@
     </div>
   </div>
   <div class="history" *ngIf="blitzDrop" [@slideInOut]>
-    <p class="h-text" style="text-align:center">No history available</p>
+    <table *ngIf="blitzTB" id="blitzTable">
+      <tr>
+        <th><b>Words</b></th>
+        <th><b>Word Count</b></th>
+        <th><b>Time (s)</b></th>
+        <th><b>Difficulty</b></th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let data of blitzData">
+          <td>{{data.words}}</td>
+          <td>{{data.word_count}}</td>
+          <td>{{data.time}}</td>
+          <td>{{data.difficulty}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="h-text" *ngIf="!blitzTB" id="blitzNoData" style="text-align:center">No history available</p>
   </div>
 </div>
 

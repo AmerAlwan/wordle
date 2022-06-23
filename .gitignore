@@ -252,3 +252,12 @@ settings.py
 
 #virtual env
 python-backend/venv
+
+#Migrations
+*/migrations
+/python-backend/wordle/words/migrations/
+/python-backend/wordle/unlimited_stats/migrations/
+/python-backend/wordle/timed_stats/migrations/
+/python-backend/wordle/daily_stats/migrations/
+/python-backend/wordle/blitz_stats/migrations/
+/python-backend/wordle/accounts/migrations/
